@@ -1292,7 +1292,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
-      getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot 
+      getFirestore, collection, doc, setDoc, deleteDoc, getDoc, onSnapshot 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { 
       getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged 
@@ -1393,6 +1393,20 @@
       } catch (err) {
         console.error("Firestore Delete Error:", err);
       }
+    };
+
+    // Cloud Fetch: Fetch single student by room & no from Firestore
+    window.fetchStudentFromFirestore = async function(studentId) {
+      if (!db) return null;
+      try {
+        const snap = await getDoc(doc(db, "students", studentId));
+        if (snap.exists()) {
+          return snap.data();
+        }
+      } catch (err) {
+        console.warn("Firestore fetch error:", err);
+      }
+      return null;
     };
 
     // Cloud Sync: Save Canva Work to Firestore
@@ -2382,11 +2396,105 @@
       document.getElementById('inputStudentNo').value = activeStudent.no || '';
       document.getElementById('inputStudentName').value = activeStudent.name || '';
       document.getElementById('inputStudentClass').value = activeStudent.room || 'ม.2/1';
+      document.getElementById('quickLoginClass').value = activeStudent.room || 'ม.2/1';
+      document.getElementById('quickLoginNo').value = activeStudent.no || '';
       lucide.createIcons();
     }
 
     function closeStudentModal() {
       document.getElementById('studentModal').classList.add('hidden');
+    }
+
+    // Classroom Sign-In: Load existing student progress from Cloud (for home study)
+    async function loginStudentFromCloud() {
+      const room = document.getElementById('quickLoginClass').value;
+      const noVal = document.getElementById('quickLoginNo').value.trim();
+
+      if (!noVal) {
+        showToast('กรุณาระบุเลขที่นักเรียน', 'warning');
+        return;
+      }
+
+      const no = parseInt(noVal);
+      const cleanRoom = room.replace(/[^a-zA-Z0-9]/g, '');
+      const uniqueId = `std_${cleanRoom}_${no}`;
+
+      let foundStudent = null;
+
+      // 1. Try finding in loaded Firestore records
+      if (window.allStudents && window.allStudents.length > 0) {
+        foundStudent = window.allStudents.find(s => (s.id === uniqueId) || (s.room === room && parseInt(s.no) === no));
+      }
+
+      // 2. If not found in memory, try direct fetch from Cloud Firestore
+      if (!foundStudent && window.fetchStudentFromFirestore) {
+        showToast('กำลังค้นหาข้อมูลจาก Cloud...', 'info');
+        foundStudent = await window.fetchStudentFromFirestore(uniqueId);
+      }
+
+      if (foundStudent) {
+        // Hydrate activeStudent
+        activeStudent = {
+          id: foundStudent.id || uniqueId,
+          no: parseInt(foundStudent.no || no),
+          name: foundStudent.name || `นักเรียนเลขที่ ${no}`,
+          room: foundStudent.room || room,
+          preDone: foundStudent.preDone !== undefined ? foundStudent.preDone : (foundStudent.preScore !== null && foundStudent.preScore !== undefined),
+          preScore: foundStudent.preScore !== undefined ? foundStudent.preScore : null,
+          formativeDone: foundStudent.formativeDone || { 1: false, 2: false, 3: false, 4: false },
+          formativeScores: foundStudent.formativeScores || { 1: 0, 2: 0, 3: 0, 4: 0 },
+          canvaLink: foundStudent.canvaLink || '',
+          canvaTopic: foundStudent.canvaTopic || '',
+          canvaScore: foundStudent.canvaScore !== undefined ? foundStudent.canvaScore : null,
+          postDone: foundStudent.postDone !== undefined ? foundStudent.postDone : (foundStudent.postScore !== null && foundStudent.postScore !== undefined),
+          postScore: foundStudent.postScore !== undefined ? foundStudent.postScore : null
+        };
+
+        localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+
+        // Update nav badge & inputs
+        document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room} เลขที่ ${activeStudent.no})`;
+        const preNameEl = document.getElementById('pretestStudentName');
+        const preNoEl = document.getElementById('pretestStudentNo');
+        const preClassEl = document.getElementById('pretestStudentClass');
+        if (preNameEl) preNameEl.value = activeStudent.name;
+        if (preNoEl) preNoEl.value = activeStudent.no;
+        if (preClassEl) preClassEl.value = activeStudent.room;
+
+        closeStudentModal();
+        updateLMSProgress();
+
+        // Check if pre-test was already completed
+        if (activeStudent.preDone) {
+          showCustomModal(
+            'ดึงข้อมูลสำเร็จ (ยินดีต้อนรับกลับมา)',
+            `สวัสดี <strong>${activeStudent.name}</strong> (${activeStudent.room} เลขที่ ${activeStudent.no})<br>ระบบได้ดึงคะแนนก่อนเรียน <strong>${activeStudent.preScore}/20 คะแนน</strong> และปลดล็อกบทเรียนทั้ง 4 แกนให้เรียบร้อยแล้ว สามารถเรียนต่อหรือทำภารกิจ Canva ต่อได้ทันทีครับ`,
+            'check-circle',
+            true
+          );
+          navigateStep('step-modules');
+        } else {
+          showCustomModal(
+            'เข้าสู่ระบบเรียบร้อย',
+            `ยินดีต้อนรับ <strong>${activeStudent.name}</strong> (${activeStudent.room} เลขที่ ${activeStudent.no})<br>นักเรียนสามารถเริ่มทำแบบทดสอบก่อนเรียน (Pre-test) 20 ข้อ เพื่อเริ่มเข้าสู่บทเรียนได้ทันที`,
+            'info',
+            true
+          );
+          navigateStep('step-pretest');
+        }
+
+        confetti({ particleCount: 50, spread: 60, origin: { y: 0.6 } });
+      } else {
+        showCustomModal(
+          'ไม่พบข้อมูลเดิมในระบบ',
+          `ยังไม่พบประวัติการทำแบบทดสอบของ <strong>${room} เลขที่ ${no}</strong> บนคลาวด์<br><br>นักเรียนสามารถกรอกชื่อ-นามสกุล และเริ่มต้นทำ <strong>แบบทดสอบก่อนเรียน (Pre-test)</strong> ในขั้นตอนที่ 1 ได้ทันทีครับ`,
+          'info',
+          false
+        );
+        document.getElementById('inputStudentClass').value = room;
+        document.getElementById('inputStudentNo').value = no;
+        document.getElementById('inputStudentName').focus();
+      }
     }
 
     function saveStudentProfile() {
