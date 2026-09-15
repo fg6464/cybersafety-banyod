@@ -283,6 +283,39 @@
               </div>
             </div>
 
+            <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 border border-indigo-500/30 space-y-4 shadow-xl">
+              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-indigo-500/20 text-indigo-400">
+                    <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">มินิเกมฐานที่ 1</span>
+                    <h4 class="font-bold text-sm text-white font-heading">Password Cracker Simulator (ทดสอบแฮกรหัสผ่าน)</h4>
+                  </div>
+                </div>
+                <span class="text-[10px] bg-indigo-500/30 text-indigo-200 px-2.5 py-1 rounded-full font-bold">พิมพ์ทดสอบสด</span>
+              </div>
+
+              <div class="space-y-3">
+                <div class="relative">
+                  <input type="text" id="gamePwInput" oninput="runPasswordGame()" placeholder="ลองพิมพ์รหัสผ่าน เช่น 123456 หรือ K@oMao#89!Safe" class="w-full px-4 py-3 bg-slate-800/90 border border-slate-600 rounded-2xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 font-mono pr-28" />
+                  <span id="gamePwTimeText" class="absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-600 text-white">0 วินาที</span>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+                  <div id="pwRuleLen" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> ยาว 8 ตัวขึ้นไป</div>
+                  <div id="pwRuleUpper" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> มีตัวพิมพ์ใหญ่ (A-Z)</div>
+                  <div id="pwRuleNum" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> มีตัวเลข (0-9)</div>
+                  <div id="pwRuleSpecial" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> มีอักขระพิเศษ (!@#)</div>
+                </div>
+
+                <div id="gamePwVerdict" class="text-xs text-center py-2 rounded-xl font-bold bg-slate-800 text-slate-300">
+                  พิมพ์รหัสผ่านเพื่อเริ่มทดสอบความแข็งแกร่งสู้แฮกเกอร์
+                </div>
+              </div>
+            </div>
+
             <!-- Formative Quiz 1 -->
             <div class="pt-6 border-t border-slate-200 space-y-4">
               <div class="flex items-center justify-between">
@@ -338,6 +371,25 @@
               </div>
             </div>
 
+            <div class="bg-gradient-to-br from-slate-900 via-rose-950 to-slate-900 text-white rounded-3xl p-6 border border-rose-500/30 space-y-4 shadow-xl">
+              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-rose-500/20 text-rose-400">
+                    <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold text-rose-300 uppercase tracking-wider">มินิเกมฐานที่ 2</span>
+                    <h4 class="font-bold text-sm text-white font-heading">สายสืบจับโป๊ะ Phishing (Phishing Detective)</h4>
+                  </div>
+                </div>
+                <span id="gamePhishingScore" class="text-[11px] bg-rose-500/30 text-rose-200 px-3 py-1 rounded-full font-bold">ข้อที่ 1/4</span>
+              </div>
+
+              <div id="gamePhishingBox" class="space-y-3">
+                <!-- Dynamically populated by JS -->
+              </div>
+            </div>
+
             <!-- Formative Quiz 2 -->
             <div class="pt-6 border-t border-slate-200 space-y-4">
               <div class="flex items-center justify-between">
@@ -377,6 +429,28 @@
               <div class="space-y-2">
                 <h4 class="font-bold text-slate-900 text-sm font-heading">ข้อห้ามบน Wi-Fi สาธารณะ & สิทธิ์แอป</h4>
                 <p>หลีกเลี่ยงการทำธุรกรรมการเงินบน Wi-Fi ห้างที่ไม่มีรหัสผ่าน และหากแอปเครื่องคิดเลขขอสิทธิ์ <strong>กล้อง / ไมค์ / ตำแหน่ง GPS</strong> ให้ปฏิเสธทันที</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900 text-white rounded-3xl p-6 border border-amber-500/30 space-y-4 shadow-xl">
+              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-amber-500/20 text-amber-400">
+                    <i data-lucide="lock" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold text-amber-300 uppercase tracking-wider">มินิเกมฐานที่ 3</span>
+                    <h4 class="font-bold text-sm text-white font-heading">ด่านตรวจสิทธิ์แอป (App Permission Gatekeeper)</h4>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span id="permHeartsDisplay" class="text-xs tracking-wider">❤️❤️❤️</span>
+                  <span id="gamePermScore" class="text-[11px] bg-amber-500/30 text-amber-200 px-3 py-1 rounded-full font-bold">ด่านที่ 1/4</span>
+                </div>
+              </div>
+
+              <div id="gamePermBox" class="space-y-3">
+                <!-- Dynamically populated by JS -->
               </div>
             </div>
 
@@ -423,6 +497,29 @@
                 <strong class="text-emerald-900 block font-bold">4. แจ้งผู้ใหญ่ / 1441</strong>
                 <p class="text-slate-600">แจ้งครู ผู้ปกครอง หรือโทรสายด่วนตำรวจไซเบอร์ 1441</p>
               </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white rounded-3xl p-6 border border-emerald-500/30 space-y-4 shadow-xl">
+              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-2">
+                  <div class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+                    <i data-lucide="list-ordered" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] font-bold text-emerald-300 uppercase tracking-wider">มินิเกมฐานที่ 4</span>
+                    <h4 class="font-bold text-sm text-white font-heading">กู้ภัยไซเบอร์ฉุกเฉิน: เรียงลำดับ 4 ขั้นตอนสู้เหตุร้าย</h4>
+                  </div>
+                </div>
+                <button onclick="resetIncidentGame()" class="text-xs bg-emerald-500/30 hover:bg-emerald-500/50 text-emerald-200 px-3 py-1 rounded-xl transition flex items-center gap-1">
+                  <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> เริ่มใหม่
+                </button>
+              </div>
+
+              <p class="text-xs text-emerald-200">คลิกเลือกข้อความด้านล่างตามลำดับที่ควรทำก่อนเป็นอันดับ 1 ไปจนถึง 4:</p>
+              <div id="gameIncidentBox" class="space-y-2">
+                <!-- Dynamically rendered -->
+              </div>
+              <div id="gameIncidentVerdict" class="hidden p-3.5 rounded-2xl text-xs font-bold text-center"></div>
             </div>
 
             <!-- Formative Quiz 4 -->
@@ -512,7 +609,12 @@
             <h4 class="font-bold text-slate-900 flex items-center gap-2">
               <i data-lucide="layout-grid" class="w-5 h-5 text-purple-600"></i> แกลเลอรีผลงาน Canva ของชั้นเรียน
             </h4>
-            <span id="canvaGalleryCount" class="text-xs bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded-full font-bold">0 ชิ้นงาน</span>
+            <div class="flex items-center gap-2">
+              <span id="canvaTeacherBadge" class="hidden text-[11px] font-bold bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full border border-amber-300">
+                <i data-lucide="shield" class="w-3 h-3 inline"></i> โหมดครู: ลบชิ้นงานได้
+              </span>
+              <span id="canvaGalleryCount" class="text-xs bg-purple-100 text-purple-800 px-2.5 py-0.5 rounded-full font-bold">0 ชิ้นงาน</span>
+            </div>
           </div>
           <div id="canvaGalleryList" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Dynamically populated -->
@@ -715,6 +817,34 @@
         </div>
       </div>
 
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <h4 class="font-bold text-slate-900 text-sm sm:text-base font-heading flex items-center gap-2">
+              <i data-lucide="palette" class="w-5 h-5 text-purple-600"></i> จัดการและตรวจสอบชิ้นงาน Canva (ตรวจ & ลบผลงาน)
+            </h4>
+            <p class="text-xs text-slate-500">คุณครูสามารถเปิดดูผลงาน หรือลบชิ้นงานที่ไม่เหมาะสมออกจากคลาวด์ได้โดยตรง</p>
+          </div>
+          <span id="adminCanvaCountBadge" class="text-xs font-bold bg-purple-100 text-purple-800 px-3 py-1 rounded-full">0 ชิ้น</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold">
+              <tr>
+                <th class="p-3">กลุ่ม / ผู้จัดทำ</th>
+                <th class="p-3">หัวข้อที่เลือกทำ</th>
+                <th class="p-3 text-center">ลิงก์ชิ้นงาน</th>
+                <th class="p-3 text-center">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="adminCanvaTableBody" class="divide-y divide-slate-100 text-slate-600">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
   </main>
@@ -869,6 +999,26 @@
     </div>
   </div>
 
+  <div id="deleteCanvaModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl border border-slate-100">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
+        <i data-lucide="trash-2" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <h4 class="font-bold text-slate-900 font-heading text-base">ยืนยันการลบผลงาน Canva?</h4>
+        <p class="text-xs text-slate-500 mt-1" id="deleteCanvaTitleText">-</p>
+      </div>
+      <div class="flex gap-2 pt-1">
+        <button onclick="closeDeleteCanvaModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition">
+          ยกเลิก
+        </button>
+        <button onclick="confirmDeleteCanva()" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-xl transition shadow-sm">
+          ลบผลงาน
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= CUSTOM MESSAGE MODAL ================= -->
   <div id="customModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl border border-slate-100">
@@ -975,21 +1125,31 @@
       }
     };
 
+    window.deleteCanvaFromFirestore = async function(docId) {
+      try {
+        await deleteDoc(doc(db, "canva_works", docId));
+        console.log("Deleted canva work from Firestore:", docId);
+      } catch (err) {
+        console.error("Firestore canva delete error:", err);
+      }
+    };
+
     // Realtime listener for students
     onSnapshot(collection(db, "students"), (snapshot) => {
       const liveList = [];
       snapshot.forEach(docSnap => liveList.push(docSnap.data()));
       window.studentsDataset = liveList;
-      renderAdminTable();
-      refreshKPIs();
+      if (typeof window.renderAdminTable === 'function') window.renderAdminTable();
+      if (typeof window.refreshKPIs === 'function') window.refreshKPIs();
     });
 
-    // Realtime listener for Canva works
+    // Realtime listener for Canva works with Document ID preservation
     onSnapshot(collection(db, "canva_works"), (snapshot) => {
       const works = [];
-      snapshot.forEach(docSnap => works.push(docSnap.data()));
+      snapshot.forEach(docSnap => works.push({ id: docSnap.id, ...docSnap.data() }));
       window.canvaDataset = works;
-      renderCanvaGallery();
+      if (typeof window.renderCanvaGallery === 'function') window.renderCanvaGallery();
+      if (typeof window.renderAdminCanvaTable === 'function') window.renderAdminCanvaTable();
     });
   </script>
 
@@ -1051,11 +1211,161 @@
       ]
     };
 
+    const PHISHING_SCENARIOS = [
+      {
+        channel: "SMS แจ้งเตือนด่วน",
+        avatar: "📱",
+        sender: "Krung... Bank Alert",
+        time: "เมื่อสักครู่",
+        text: "บัญชีของคุณมีความพยายามเข้าสู่ระบบผิดปกติ กรุณายืนยันตัวตนด่วนที่ http://k-bank-update.xyz ภายใน 10 นาที มิฉะนั้นบัญชีจะถูกระงับ!",
+        isScam: true,
+        flags: ["มีคำเร่งเร้าให้ตกใจ (10 นาที)", "โดเมนปลอม .xyz ไม่ใช่เว็บทางการ"],
+        reason: "มิจฉาชีพสร้างความตื่นตระหนก เพื่อให้เราไม่ทันสังเกตลิงก์ปลอม .xyz"
+      },
+      {
+        channel: "SMS โปรโมชัน",
+        avatar: "🛍️",
+        sender: "Shopee Official",
+        time: "10:30 น.",
+        text: "ยินดีด้วย! คุณได้รับคูปองส่วนลด 50% ตรวจสอบสิทธิ์ได้ในแอปพลิเคชัน Shopee ของคุณที่เมนู 'โค้ดส่วนลดของฉัน'",
+        isScam: false,
+        flags: ["ไม่มีลิงก์แปลกปลอม", "แนะนำให้เปิดตรวจในแอปพลิเคชันจริง"],
+        reason: "ข้อความปลอดภัยจริง เพราะไม่ได้แนบลิงก์น่าสงสัย และให้ผู้ใช้เข้าเช็กในแอปทางการด้วยตนเอง"
+      },
+      {
+        channel: "แชต Instagram DM",
+        avatar: "💬",
+        sender: "เพื่อนสนิทร่วมห้อง",
+        time: "14:15 น.",
+        text: "แกๆ เราขอเบอร์โทรแกหน่อย พอดีโทรศัพท์มีปัญหา เดี๋ยวจะมี SMS ส่งรหัส 6 ตัวไปให้ ช่วยแคปรหัส OTP ส่งมาให้เราหน่อยนะ ด่วนเลย!",
+        isScam: true,
+        flags: ["บัญชีเพื่อนอาจโดนแฮก", "พยายามขอรหัส OTP 6 หลัก"],
+        reason: "กลโกงขโมยรหัส OTP! ห้ามบอกรหัส OTP แก่ผู้ใด แม้จะเป็นแชตของเพื่อนสนิทก็ตาม"
+      },
+      {
+        channel: "TikTok Notification",
+        avatar: "🎵",
+        sender: "TikTok Rewards ศูนย์แจกโชค",
+        time: "เมื่อ 5 นาทีที่แล้ว",
+        text: "🎉 คุณเป็นผู้โชคดีได้รับเงินรางวัล 15,000 บาทฟรี! กดรับเงินสดและกรอกเลขบัตรประชาชนที่ http://tiktok-freegift.site",
+        isScam: true,
+        flags: ["รางวัลใหญ่เกินจริง", "หลอกขอเลขประจำตัวประชาชน"],
+        reason: "ของฟรีไม่มีอยู่จริง! มิจฉาชีพใช้รางวัลล่อเพื่อขโมยข้อมูลบัตรประชาชนไปเปิดบัญชีม้า"
+      }
+    ];
+
+    const PERM_SCENARIOS = [
+      {
+        name: "แอปไฟฉายสว่างพิเศษ (Super Flashlight)",
+        icon: "flashlight",
+        category: "เครื่องมือทั่วไป",
+        rating: "4.2 ★",
+        perms: [
+          { name: "ไมโครโฟน (บันทึกเสียงตลอดเวลา)", danger: true },
+          { name: "ตำแหน่ง GPS (ติดตามตำแหน่งสด)", danger: true },
+          { name: "กล้อง (เปิดปิดไฟแฟลช)", danger: false }
+        ],
+        shouldAllow: false,
+        reason: "แอปไฟฉายต้องการแค่ควบคุมไฟแฟลช แต่กลับขอสิทธิ์ดักฟังไมค์และ GPS เสี่ยงเป็น Spyware แอบขโมยข้อมูล!"
+      },
+      {
+        name: "แอปแผนที่นำทาง (School Map GPS)",
+        icon: "map-pin",
+        category: "การเดินทางและนำทาง",
+        rating: "4.8 ★",
+        perms: [
+          { name: "ตำแหน่งที่ตั้งขณะเปิดใช้แอป (Location)", danger: false },
+          { name: "อินเทอร์เน็ตสำหรับการโหลดแผนที่", danger: false }
+        ],
+        shouldAllow: true,
+        reason: "สิทธิ์ทั้งหมดสมเหตุสมผล แอปนำทางจำเป็นต้องรู้พิกัด GPS ขณะใช้งานเพื่อบอกเส้นทาง"
+      },
+      {
+        name: "แอปเครื่องคิดเลขวิทยาศาสตร์ (Smart Calc)",
+        icon: "calculator",
+        category: "การศึกษาและการคำนวณ",
+        rating: "3.9 ★",
+        perms: [
+          { name: "อ่านข้อความ SMS และ OTP ทั้งหมด", danger: true },
+          { name: "เข้าถึงสมุดรายชื่อเบอร์โทรเพื่อน", danger: true }
+        ],
+        shouldAllow: false,
+        reason: "เครื่องคิดเลขไม่มีความจำเป็นต้องอ่าน SMS หรือเบอร์โทรเลย ส่อเจตนาดักขโมยรหัส OTP ธนาคารชัดเจน!"
+      },
+      {
+        name: "แอปแต่งรูปหน้าใส (Photo Filter Pro)",
+        icon: "camera",
+        category: "การถ่ายภาพ",
+        rating: "4.5 ★",
+        perms: [
+          { name: "เข้าถึงกล้องและอัลบั้มรูปภาพ", danger: false },
+          { name: "เข้าถึงพื้นที่จัดเก็บข้อมูลเพื่อเซฟภาพ", danger: false }
+        ],
+        shouldAllow: true,
+        reason: "แอปแต่งภาพจำเป็นต้องใช้สิทธิ์กล้องและรูปภาพเพื่อนำภาพมาแต่ง ถือเป็นสิทธิ์ที่ตรงกับหน้าที่ของแอป"
+      }
+    ];
+
+    const INCIDENT_STEPS = [
+      { id: 1, text: "1. เปลี่ยนรหัสผ่านทันที & สั่ง Log out ทุกอุปกรณ์" },
+      { id: 2, text: "2. เปิดระบบยืนยันตัวตน 2 ชั้น (2FA)" },
+      { id: 3, text: "3. แคปหลักฐานหน้าจอ ลิงก์ แชต สลิปโอนเงิน" },
+      { id: 4, text: "4. แจ้งครู ผู้ปกครอง หรือโทรสายด่วน 1441" }
+    ];
+
+    // Mini-game tracking variables
+    let phishingCurrentIdx = 0;
+    let phishingScore = 0;
+    let phishingAnswered = false;
+
+    let permCurrentIdx = 0;
+    let permScore = 0;
+    let permHearts = 3;
+    let permAnswered = false;
+
+    let incidentUserPicks = [];
+    let canvaToDeleteDocId = null;
+
+    // Web Audio Sound Generator for tactile gaming feel
+    function playBeep(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const now = ctx.currentTime;
+
+        if (type === 'correct') {
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15); // G5
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else {
+          osc.frequency.setValueAtTime(220, now); // A3
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.2);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        }
+      } catch (e) {
+        // AudioContext may be restricted by browser policy; safe ignore
+      }
+    }
+
     // Global State
     let activeStudent = JSON.parse(localStorage.getItem('activeStudent_banyod')) || null;
     window.studentsDataset = JSON.parse(localStorage.getItem('local_students_dataset')) || [];
     window.canvaDataset = JSON.parse(localStorage.getItem('local_canva_dataset')) || [];
     let studentToDeleteDocKey = null;
+
+    // Helper to check teacher mode
+    function isTeacherLoggedIn() {
+      return sessionStorage.getItem('teacherLoggedIn') === 'true';
+    }
 
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
@@ -1063,7 +1373,9 @@
       renderPretestQuestions();
       renderPosttestQuestions();
       renderAllFormativeQuizzes();
+      initMiniGames();
       renderCanvaGallery();
+      renderAdminCanvaTable();
       checkStudentState();
       renderAdminTable();
       refreshKPIs();
@@ -1379,26 +1691,136 @@
 
     function renderCanvaGallery() {
       const container = document.getElementById('canvaGalleryList');
-      const works = window.canvaDataset || [];
-      document.getElementById('canvaGalleryCount').innerText = `${works.length} ชิ้นงาน`;
+      if (!container) return;
+      const works = Array.isArray(window.canvaDataset) ? window.canvaDataset : [];
+      const countBadge = document.getElementById('canvaGalleryCount');
+      if (countBadge) countBadge.innerText = `${works.length} ชิ้นงาน`;
+
+      const teacherBadge = document.getElementById('canvaTeacherBadge');
+      if (teacherBadge) {
+        if (isTeacherLoggedIn()) {
+          teacherBadge.classList.remove('hidden');
+        } else {
+          teacherBadge.classList.add('hidden');
+        }
+      }
 
       if (works.length === 0) {
         container.innerHTML = '<p class="text-xs text-slate-400 col-span-2 text-center py-6">ยังไม่มีผลงานในระบบ</p>';
         return;
       }
 
-      container.innerHTML = works.map(w => `
-        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 card-hover space-y-2 text-xs">
-          <span class="text-[10px] font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-md">Canva Project</span>
-          <h5 class="font-bold text-slate-900 line-clamp-1">${w.topic}</h5>
-          <p class="text-slate-500">${w.group}</p>
-          <a href="${w.url}" target="_blank" class="inline-flex items-center gap-1 font-bold text-purple-600 hover:underline pt-1">
+      const teacherMode = isTeacherLoggedIn();
+
+      container.innerHTML = works.map((w, idx) => {
+        if (!w) return '';
+        const itemTopic = String(w.topic || w.title || 'ชิ้นงาน Canva');
+        const itemGroup = String(w.group || w.name || 'ไม่ระบุกลุ่ม');
+        const itemUrl = String(w.url || w.link || '#');
+        const itemId = String(w.id || idx);
+        const safeItemId = itemId.replace(/'/g, "\\'");
+
+        return `
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 card-hover space-y-2 text-xs relative">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-md">Canva Project</span>
+            ${teacherMode ? `
+              <button onclick="askDeleteCanva('${safeItemId}')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[10px] font-bold transition flex items-center gap-1 border border-rose-200">
+                <i data-lucide="trash-2" class="w-3 h-3"></i> ลบชิ้นงาน
+              </button>
+            ` : ''}
+          </div>
+          <h5 class="font-bold text-slate-900 line-clamp-1">${itemTopic}</h5>
+          <p class="text-slate-500">${itemGroup}</p>
+          <a href="${itemUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 font-bold text-purple-600 hover:underline pt-1">
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i> เปิดดูชิ้นงานออกแบบ
           </a>
         </div>
-      `).join('');
+      `;
+      }).join('');
       lucide.createIcons();
     }
+    window.renderCanvaGallery = renderCanvaGallery;
+
+    // Render Admin Canva Management Table
+    function renderAdminCanvaTable() {
+      const tbody = document.getElementById('adminCanvaTableBody');
+      if (!tbody) return;
+      const works = Array.isArray(window.canvaDataset) ? window.canvaDataset : [];
+      const badge = document.getElementById('adminCanvaCountBadge');
+      if (badge) badge.innerText = `${works.length} ชิ้น`;
+
+      if (works.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="p-5 text-center text-slate-400">ยังไม่มีชิ้นงาน Canva ในระบบ</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = works.map((w, idx) => {
+        if (!w) return '';
+        const itemTopic = String(w.topic || w.title || 'ชิ้นงาน Canva');
+        const itemGroup = String(w.group || w.name || 'ไม่ระบุกลุ่ม');
+        const itemUrl = String(w.url || w.link || '#');
+        const itemId = String(w.id || idx);
+        const safeItemId = itemId.replace(/'/g, "\\'");
+
+        return `
+        <tr class="hover:bg-slate-50 transition text-xs">
+          <td class="p-3 font-semibold text-slate-800">${itemGroup}</td>
+          <td class="p-3 text-slate-600">${itemTopic}</td>
+          <td class="p-3 text-center">
+            <a href="${itemUrl}" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline font-bold inline-flex items-center gap-1">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i> ตรวจงาน
+            </a>
+          </td>
+          <td class="p-3 text-center">
+            <button onclick="askDeleteCanva('${safeItemId}')" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-xs font-bold transition inline-flex items-center gap-1">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> ลบ
+            </button>
+          </td>
+        </tr>
+      `;
+      }).join('');
+      lucide.createIcons();
+    }
+    window.renderAdminCanvaTable = renderAdminCanvaTable;
+
+    // Ask Delete Canva Modal
+    window.askDeleteCanva = function(docId) {
+      canvaToDeleteDocId = String(docId || '');
+      const work = (window.canvaDataset || []).find((w, idx) => (String(w?.id) === String(docId) || String(idx) === String(docId)));
+      const topic = String(work?.topic || work?.title || 'ชิ้นงาน Canva');
+      const group = String(work?.group || work?.name || '');
+      
+      const titleEl = document.getElementById('deleteCanvaTitleText');
+      if (titleEl) {
+        titleEl.innerText = group ? `${topic} (${group})` : topic;
+      }
+      const modal = document.getElementById('deleteCanvaModal');
+      if (modal) modal.classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.closeDeleteCanvaModal = function() {
+      canvaToDeleteDocId = null;
+      document.getElementById('deleteCanvaModal').classList.add('hidden');
+    };
+
+    window.confirmDeleteCanva = async function() {
+      if (!canvaToDeleteDocId) return;
+
+      if (window.deleteCanvaFromFirestore) {
+        await window.deleteCanvaFromFirestore(canvaToDeleteDocId);
+      }
+
+      // Also remove from local state
+      window.canvaDataset = (window.canvaDataset || []).filter(w => w.id !== canvaToDeleteDocId);
+      localStorage.setItem('local_canva_dataset', JSON.stringify(window.canvaDataset));
+
+      renderCanvaGallery();
+      renderAdminCanvaTable();
+      closeDeleteCanvaModal();
+      showCustomModal('ลบผลงานเรียบร้อย', 'ลบชิ้นงาน Canva ออกจากแกลเลอรีและคลาวด์สำเร็จ', 'trash-2', 'emerald');
+    };
 
     // Student Login from Cloud
     window.openStudentLoginModal = function() {
@@ -1469,6 +1891,7 @@
         document.getElementById('teacherPinInput').value = '';
         navigateStep('step-admin');
         renderCanvaGallery();
+        renderAdminCanvaTable();
         showCustomModal('ยืนยันตัวตนสำเร็จ', 'เข้าสู่ระบบจัดการข้อมูล ว.PA โรงเรียนบ้านสามยอดเรียบร้อยครับ (เปิดโหมดจัดการ Canva)', 'shield-check', 'emerald');
       } else {
         showCustomModal('รหัส PIN ไม่ถูกต้อง', 'กรุณากรอกรหัส PIN ครูผู้สอนให้ถูกต้อง หรือล็อกอินด้วย Google', 'alert-circle', 'rose');
@@ -1481,6 +1904,7 @@
       }
       sessionStorage.removeItem('teacherLoggedIn');
       renderCanvaGallery();
+      renderAdminCanvaTable();
       navigateStep('step-pretest');
       showCustomModal('ออกจากระบบ', 'ออกจากระบบจัดการครูเรียบร้อยแล้ว', 'info', 'blue');
     };
@@ -1513,8 +1937,8 @@
       if (!val) {
         timeTag.innerText = '0 วินาที';
         timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-600 text-white';
-        verdict.innerText = 'พิมพ์รหัสผ่านเพื่อเริ่มทดสอบความแข็งแกร่ง';
-        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300';
+        verdict.innerText = 'พิมพ์รหัสผ่านเพื่อเริ่มทดสอบความแข็งแกร่งสู้แฮกเกอร์';
+        verdict.className = 'text-xs text-center py-2 rounded-xl font-bold bg-slate-800 text-slate-300';
         return;
       }
 
@@ -1529,17 +1953,17 @@
         timeTag.innerText = '0.001 วินาที!';
         timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-600 text-white animate-pulse';
         verdict.innerText = '⚠️ แฮกเกอร์ใช้ Brute-Force เจาะได้ทันที! ควรเพิ่มความยาวและผสมอักขระพิเศษ';
-        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-rose-950/80 text-rose-300 border border-rose-500/40';
+        verdict.className = 'text-xs text-center py-2 rounded-xl font-bold bg-rose-950/80 text-rose-300 border border-rose-500/40';
       } else if (score <= 4) {
         timeTag.innerText = 'ประมาณ 3-5 วัน';
         timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500 text-slate-900';
         verdict.innerText = '⚡ ปานกลาง: เพิ่มความยาวให้เกิน 12 ตัวอักษรและใส่อักขระพิเศษเพื่อความปลอดภัยสูงสุด';
-        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-amber-950/80 text-amber-300 border border-amber-500/40';
+        verdict.className = 'text-xs text-center py-2 rounded-xl font-bold bg-amber-950/80 text-amber-300 border border-amber-500/40';
       } else {
         timeTag.innerText = '300 ล้านปีขึ้นไป!';
         timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950';
         verdict.innerText = '🛡️ ปลอดภัยระดับสูงสุด! ซูเปอร์คอมพิวเตอร์แฮกเกอร์ใช้เวลาถอดรหัสชั่วกัปชั่วกัลป์';
-        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40';
+        verdict.className = 'text-xs text-center py-2 rounded-xl font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40';
         confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
       }
     };
@@ -1556,128 +1980,337 @@
       }
     }
 
-    // Game 2: Phishing Detective
+    /* ------------------------------------------------------------- */
+    /* REVAMPED GAME 2: PHISHING RADAR (เล่นง่าย สไตล์สมาร์ตโฟน)      */
+    /* ------------------------------------------------------------- */
     function renderPhishingGame() {
       const box = document.getElementById('gamePhishingBox');
+      if (!box) return;
+      phishingAnswered = false;
+
       const cur = PHISHING_SCENARIOS[phishingCurrentIdx];
-      document.getElementById('gamePhishingScore').innerText = `ข้อที่: ${phishingCurrentIdx + 1}/${PHISHING_SCENARIOS.length} | ถูก: ${phishingScore}`;
+      document.getElementById('gamePhishingScore').innerText = `ข้อ ${phishingCurrentIdx + 1}/${PHISHING_SCENARIOS.length} | ⭐ ${phishingScore} แต้ม`;
 
       box.innerHTML = `
-        <div class="space-y-2.5 text-xs">
-          <div class="flex items-center gap-2 text-rose-300 font-bold">
-            <i data-lucide="mail-warning" class="w-4 h-4"></i> ผู้ส่ง: <span class="text-white">${cur.sender}</span>
+        <div class="space-y-3.5">
+          <!-- Mock Phone Screen -->
+          <div class="bg-slate-900 rounded-2xl p-4 border-2 border-slate-700/80 shadow-inner space-y-3">
+            <div class="flex items-center justify-between text-[11px] text-slate-400 border-b border-slate-800 pb-2">
+              <span class="flex items-center gap-1.5 font-semibold text-slate-300">
+                <span>${cur.avatar}</span> ${cur.channel}
+              </span>
+              <span>${cur.time}</span>
+            </div>
+
+            <!-- Message Bubble -->
+            <div class="flex items-start gap-2.5">
+              <div class="w-8 h-8 rounded-full bg-rose-500/20 border border-rose-500/40 text-rose-300 flex items-center justify-center font-bold text-xs shrink-0">
+                ${cur.avatar}
+              </div>
+              <div class="space-y-1 max-w-[88%]">
+                <span class="text-[11px] font-bold text-slate-300 block">${cur.sender}</span>
+                <div class="p-3.5 rounded-2xl rounded-tl-sm bg-slate-800 text-white text-xs leading-relaxed border border-slate-700 font-sans shadow-sm">
+                  ${cur.text}
+                </div>
+              </div>
+            </div>
+
+            <!-- Red Flag Tags -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              ${cur.flags.map(f => `
+                <span class="px-2 py-0.5 rounded-md bg-rose-500/10 text-rose-300 text-[10px] border border-rose-500/20 flex items-center gap-1">
+                  <i data-lucide="alert-circle" class="w-3 h-3"></i> ${f}
+                </span>
+              `).join('')}
+            </div>
           </div>
-          <div class="p-3.5 rounded-xl bg-slate-900/90 text-slate-200 border border-white/10 leading-relaxed font-mono">
-            "${cur.text}"
-          </div>
-          <div class="flex gap-2 pt-1">
-            <button onclick="answerPhishing(false)" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
-              <i data-lucide="check" class="w-4 h-4"></i> ข้อความปลอดภัย
+
+          <!-- 2 Action Buttons -->
+          <div id="phishingActionButtons" class="grid grid-cols-2 gap-3">
+            <button onclick="answerPhishing(true)" class="py-3 px-4 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-rose-600/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+              <span class="text-base">🛑</span> มิจฉาชีพ! บล็อกเลย
             </button>
-            <button onclick="answerPhishing(true)" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
-              <i data-lucide="alert-triangle" class="w-4 h-4"></i> Phishing กลโกง!
+            <button onclick="answerPhishing(false)" class="py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+              <span class="text-base">🛡️</span> ปลอดภัย ของจริง
             </button>
           </div>
-          <div id="phishingFeedback" class="hidden p-3 rounded-xl text-xs"></div>
+
+          <!-- Feedback card -->
+          <div id="phishingFeedbackCard" class="hidden p-4 rounded-2xl space-y-2 border"></div>
         </div>
       `;
       lucide.createIcons();
     }
 
     window.answerPhishing = function(isScamChoice) {
+      if (phishingAnswered) return;
+      phishingAnswered = true;
+
       const cur = PHISHING_SCENARIOS[phishingCurrentIdx];
-      const fb = document.getElementById('phishingFeedback');
+      const isCorrect = (isScamChoice === cur.isScam);
+      const fb = document.getElementById('phishingFeedbackCard');
+      const actionBtns = document.getElementById('phishingActionButtons');
+
+      if (actionBtns) actionBtns.classList.add('opacity-50', 'pointer-events-none');
       fb.classList.remove('hidden');
 
-      if (isScamChoice === cur.isScam) {
+      if (isCorrect) {
         phishingScore++;
-        fb.className = 'p-3 rounded-xl text-xs bg-emerald-950/90 text-emerald-200 border border-emerald-500/40 font-medium';
-        fb.innerHTML = `<strong>✅ ถูกต้อง แม่นยำมาก!</strong> ${cur.reason}`;
-        confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+        playBeep('correct');
+        confetti({ particleCount: 35, spread: 60, origin: { y: 0.7 } });
+        fb.className = 'p-4 rounded-2xl bg-emerald-950/90 text-emerald-200 border border-emerald-500/50 space-y-2';
+        fb.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs sm:text-sm flex items-center gap-1.5 text-emerald-300">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i> ถูกต้องแม่นยำ! (+1 ⭐)
+            </span>
+            <span class="text-[11px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold">เก่งมาก</span>
+          </div>
+          <p class="text-xs text-emerald-100">${cur.reason}</p>
+          <button onclick="nextPhishing()" class="w-full mt-2 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+            ลุยข้อถัดไป <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        `;
       } else {
-        fb.className = 'p-3 rounded-xl text-xs bg-rose-950/90 text-rose-200 border border-rose-500/40 font-medium';
-        fb.innerHTML = `<strong>❌ ยังไม่ถูกต้อง!</strong> ${cur.reason}`;
+        playBeep('wrong');
+        fb.className = 'p-4 rounded-2xl bg-rose-950/90 text-rose-200 border border-rose-500/50 space-y-2';
+        fb.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs sm:text-sm flex items-center gap-1.5 text-rose-300">
+              <i data-lucide="x-circle" class="w-4 h-4"></i> พลาดไปนิดเดียว!
+            </span>
+            <span class="text-[11px] bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full font-bold">ฝึกสังเกต</span>
+          </div>
+          <p class="text-xs text-rose-100">${cur.reason}</p>
+          <button onclick="nextPhishing()" class="w-full mt-2 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+            ลองข้อถัดไป <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        `;
       }
 
-      setTimeout(() => {
-        phishingCurrentIdx = (phishingCurrentIdx + 1) % PHISHING_SCENARIOS.length;
-        renderPhishingGame();
-      }, 3000);
+      document.getElementById('gamePhishingScore').innerText = `ข้อ ${phishingCurrentIdx + 1}/${PHISHING_SCENARIOS.length} | ⭐ ${phishingScore} แต้ม`;
+      lucide.createIcons();
     };
 
-    // Game 3: Permission Gatekeeper
+    window.nextPhishing = function() {
+      if (phishingCurrentIdx < PHISHING_SCENARIOS.length - 1) {
+        phishingCurrentIdx++;
+        renderPhishingGame();
+      } else {
+        // Complete view
+        const box = document.getElementById('gamePhishingBox');
+        confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
+        box.innerHTML = `
+          <div class="text-center py-6 space-y-3 bg-slate-900 rounded-2xl p-4 border border-rose-500/30">
+            <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center text-xl">
+              🏆
+            </div>
+            <h5 class="font-bold text-base text-white">จบภารกิจนักสืบ Phishing!</h5>
+            <p class="text-xs text-slate-300">คุณทำคะแนนได้ <strong class="text-rose-400 text-sm">${phishingScore} / ${PHISHING_SCENARIOS.length}</strong> แต้ม</p>
+            <button onclick="restartPhishingGame()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold rounded-xl shadow-md transition inline-flex items-center gap-1.5">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> เล่นใหม่อีกครั้ง
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+    };
+
+    window.restartPhishingGame = function() {
+      phishingCurrentIdx = 0;
+      phishingScore = 0;
+      renderPhishingGame();
+    };
+
+    /* ------------------------------------------------------------- */
+    /* REVAMPED GAME 3: APP INSPECTOR (เล่นง่าย สไตล์ App Store)     */
+    /* ------------------------------------------------------------- */
     function renderPermissionGame() {
       const box = document.getElementById('gamePermBox');
+      if (!box) return;
+      permAnswered = false;
+
       const cur = PERM_SCENARIOS[permCurrentIdx];
-      document.getElementById('gamePermScore').innerText = `ด่านที่: ${permCurrentIdx + 1}/${PERM_SCENARIOS.length} | ถูก: ${permScore}`;
+      const heartsHtml = '❤️'.repeat(permHearts) + '🖤'.repeat(Math.max(0, 3 - permHearts));
+      const heartsEl = document.getElementById('permHeartsDisplay');
+      if (heartsEl) heartsEl.innerText = heartsHtml;
+      const scoreEl = document.getElementById('gamePermScore');
+      if (scoreEl) scoreEl.innerText = `ด่าน ${permCurrentIdx + 1}/${PERM_SCENARIOS.length} | 🏆 ${permScore}`;
 
       box.innerHTML = `
-        <div class="space-y-3 text-xs">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
-              <i data-lucide="${cur.icon || 'smartphone'}" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h5 class="font-bold text-white text-sm">${cur.appName}</h5>
-              <span class="text-amber-300 text-[11px]">ต้องการเข้าถึงสิทธิ์ดังต่อไปนี้:</span>
-            </div>
-          </div>
-
-          <div class="p-3 bg-slate-900/90 rounded-xl border border-white/10 space-y-1.5">
-            ${cur.perms.map(p => `
-              <div class="flex items-center gap-2 text-slate-200">
-                <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
-                <span>${p}</span>
+        <div class="space-y-3.5">
+          <!-- App Store Style Card -->
+          <div class="bg-slate-900 rounded-2xl p-4 border-2 border-slate-700/80 space-y-3 shadow-inner">
+            <!-- App Header -->
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-500 text-slate-950 flex items-center justify-center font-bold text-xl shadow-md shrink-0">
+                <i data-lucide="${cur.icon || 'box'}" class="w-6 h-6"></i>
               </div>
-            `).join('')}
+              <div class="min-w-0 flex-1">
+                <h5 class="font-bold text-sm text-white truncate">${cur.name}</h5>
+                <div class="flex items-center gap-2 text-[10px] text-amber-300/90 mt-0.5">
+                  <span>${cur.category}</span>
+                  <span>•</span>
+                  <span class="text-amber-400 font-bold">${cur.rating}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Permission Checklist -->
+            <div class="space-y-1.5">
+              <span class="text-[11px] font-semibold text-slate-400 block">สิทธิ์ที่แอปนี้ขอเข้าถึงในมือถือคุณ:</span>
+              <div class="space-y-1.5">
+                ${cur.perms.map(p => `
+                  <div class="flex items-center justify-between p-2.5 rounded-xl ${p.danger ? 'bg-rose-950/40 border border-rose-500/40 text-rose-200' : 'bg-slate-800 border border-slate-700 text-slate-200'} text-xs">
+                    <span class="flex items-center gap-2">
+                      <i data-lucide="${p.danger ? 'alert-triangle' : 'check'}" class="w-3.5 h-3.5 ${p.danger ? 'text-rose-400 shrink-0' : 'text-emerald-400 shrink-0'}"></i>
+                      <span>${p.name}</span>
+                    </span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded-md ${p.danger ? 'bg-rose-500/20 text-rose-300' : 'bg-slate-700 text-slate-300'}">
+                      ${p.danger ? 'เสี่ยงสูง' : 'ทั่วไป'}
+                    </span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
           </div>
 
-          <div class="flex gap-2">
-            <button onclick="answerPermission(true)" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5">
-              <i data-lucide="check" class="w-4 h-4"></i> อนุญาต (Allow)
+          <!-- 2 Big Buttons: Install vs Deny -->
+          <div id="permActionButtons" class="grid grid-cols-2 gap-3">
+            <button onclick="answerPermission(false)" class="py-3 px-4 bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-rose-600/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+              <span class="text-base">💣</span> อันตราย ลบทิ้ง!
             </button>
-            <button onclick="answerPermission(false)" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5">
-              <i data-lucide="x" class="w-4 h-4"></i> บล็อกปฏิเสธ (Deny)
+            <button onclick="answerPermission(true)" class="py-3 px-4 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md shadow-emerald-600/30 transition transform active:scale-95 flex items-center justify-center gap-2">
+              <span class="text-base">📥</span> ปลอดภัย ติดตั้งเลย
             </button>
           </div>
-          <div id="permFeedback" class="hidden p-3 rounded-xl text-xs"></div>
+
+          <!-- Feedback card -->
+          <div id="permFeedbackCard" class="hidden p-4 rounded-2xl space-y-2 border"></div>
         </div>
       `;
       lucide.createIcons();
     }
 
     window.answerPermission = function(allowedChoice) {
+      if (permAnswered) return;
+      permAnswered = true;
+
       const cur = PERM_SCENARIOS[permCurrentIdx];
-      const fb = document.getElementById('permFeedback');
+      const isCorrect = (allowedChoice === cur.shouldAllow);
+      const fb = document.getElementById('permFeedbackCard');
+      const actionBtns = document.getElementById('permActionButtons');
+
+      if (actionBtns) actionBtns.classList.add('opacity-50', 'pointer-events-none');
       fb.classList.remove('hidden');
 
-      if (allowedChoice === cur.shouldAllow) {
+      if (isCorrect) {
         permScore++;
-        fb.className = 'p-3 rounded-xl text-xs bg-emerald-950/90 text-emerald-200 border border-emerald-500/40 font-medium';
-        fb.innerHTML = `<strong>✅ ตัดสินใจได้ยอดเยี่ยม!</strong> ${cur.reason}`;
+        playBeep('correct');
         confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+        fb.className = 'p-4 rounded-2xl bg-emerald-950/90 text-emerald-200 border border-emerald-500/50 space-y-2';
+        fb.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs sm:text-sm flex items-center gap-1.5 text-emerald-300">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i> ตัดสินใจได้ยอดเยี่ยม! (+1 🏆)
+            </span>
+            <span class="text-[11px] bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-full font-bold">ปลอดภัย</span>
+          </div>
+          <p class="text-xs text-emerald-100">${cur.reason}</p>
+          <button onclick="nextPermission()" class="w-full mt-2 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+            ด่านถัดไป <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        `;
       } else {
-        fb.className = 'p-3 rounded-xl text-xs bg-rose-950/90 text-rose-200 border border-rose-500/40 font-medium';
-        fb.innerHTML = `<strong>❌ เสี่ยงภัยไซเบอร์!</strong> ${cur.reason}`;
+        permHearts = Math.max(0, permHearts - 1);
+        playBeep('wrong');
+        fb.className = 'p-4 rounded-2xl bg-rose-950/90 text-rose-200 border border-rose-500/50 space-y-2';
+        fb.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs sm:text-sm flex items-center gap-1.5 text-rose-300">
+              <i data-lucide="alert-triangle" class="w-4 h-4"></i> โดนแฮกเกอร์หลอกแล้ว! (เสีย 1 ❤️)
+            </span>
+            <span class="text-[11px] bg-rose-500/20 text-rose-300 px-2.5 py-0.5 rounded-full font-bold">อันตราย</span>
+          </div>
+          <p class="text-xs text-rose-100">${cur.reason}</p>
+          <button onclick="nextPermission()" class="w-full mt-2 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+            ${permHearts > 0 ? 'ลุยด่านถัดไป' : 'ดูผลสรุป'} <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        `;
       }
 
-      setTimeout(() => {
-        permCurrentIdx = (permCurrentIdx + 1) % PERM_SCENARIOS.length;
+      const heartsHtml = '❤️'.repeat(permHearts) + '🖤'.repeat(Math.max(0, 3 - permHearts));
+      const heartsEl = document.getElementById('permHeartsDisplay');
+      if (heartsEl) heartsEl.innerText = heartsHtml;
+      const scoreEl = document.getElementById('gamePermScore');
+      if (scoreEl) scoreEl.innerText = `ด่าน ${permCurrentIdx + 1}/${PERM_SCENARIOS.length} | 🏆 ${permScore}`;
+      lucide.createIcons();
+    };
+
+    window.nextPermission = function() {
+      if (permHearts <= 0) {
+        // Game Over View
+        const box = document.getElementById('gamePermBox');
+        box.innerHTML = `
+          <div class="text-center py-6 space-y-3 bg-slate-900 rounded-2xl p-4 border border-rose-500/30">
+            <div class="w-12 h-12 rounded-full bg-rose-500/20 text-rose-400 mx-auto flex items-center justify-center text-xl">
+              💔
+            </div>
+            <h5 class="font-bold text-base text-white">พลังชีวิตหมดลงแล้ว!</h5>
+            <p class="text-xs text-slate-300">ระวังสิทธิ์แอปเครื่องคิดเลขหรือไฟฉายที่ขอสิทธิ์ไมค์หรือ SMS นะครับ</p>
+            <button onclick="restartPermGame()" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-xl shadow-md transition inline-flex items-center gap-1.5">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> ท้าทายใหม่อีกรอบ
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      if (permCurrentIdx < PERM_SCENARIOS.length - 1) {
+        permCurrentIdx++;
         renderPermissionGame();
-      }, 3200);
+      } else {
+        // Win view
+        const box = document.getElementById('gamePermBox');
+        confetti({ particleCount: 80, spread: 90, origin: { y: 0.6 } });
+        box.innerHTML = `
+          <div class="text-center py-6 space-y-3 bg-slate-900 rounded-2xl p-4 border border-amber-500/30">
+            <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center text-xl">
+              🛡️
+            </div>
+            <h5 class="font-bold text-base text-white">ผ่านการคัดกรองสิทธิ์แอปครบถ้วน!</h5>
+            <p class="text-xs text-slate-300">ได้คะแนน <strong class="text-amber-400 text-sm">${permScore} / ${PERM_SCENARIOS.length}</strong> แต้ม (เหลือหัวใจ ${permHearts} ดวง)</p>
+            <button onclick="restartPermGame()" class="px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded-xl shadow-md transition inline-flex items-center gap-1.5">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> เล่นใหม่อีกครั้ง
+            </button>
+          </div>
+        `;
+        lucide.createIcons();
+      }
+    };
+
+    window.restartPermGame = function() {
+      permCurrentIdx = 0;
+      permScore = 0;
+      permHearts = 3;
+      renderPermissionGame();
     };
 
     // Game 4: Incident Response Sequencer
     function renderIncidentGame() {
       const box = document.getElementById('gameIncidentBox');
+      if (!box) return;
       const shuffled = [...INCIDENT_STEPS].sort((a, b) => (a.id * 37 % 5) - (b.id * 37 % 5));
 
       box.innerHTML = shuffled.map(step => {
+        if (!step) return '';
         const pickedIdx = incidentUserPicks.indexOf(step.id);
         const isPicked = pickedIdx !== -1;
+        const stepText = String(step.text || '').replace(/^[0-9]\.\s*/, '');
         return `
           <button onclick="pickIncidentStep(${step.id})" ${isPicked ? 'disabled' : ''} class="w-full text-left p-3 rounded-xl border transition flex items-center justify-between text-xs ${isPicked ? 'bg-emerald-950/70 border-emerald-500/40 text-emerald-200 opacity-80' : 'bg-slate-900/90 border-white/15 text-slate-200 hover:bg-slate-800'}">
-            <span>${step.text.replace(/^[0-9]\.\s*/, '')}</span>
+            <span>${stepText}</span>
             <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isPicked ? 'bg-emerald-500 text-slate-950' : 'bg-white/20 text-white'}">
               ${isPicked ? (pickedIdx + 1) : '+'}
             </span>
@@ -1711,16 +2344,8 @@
     window.resetIncidentGame = function() {
       incidentUserPicks = [];
       const verdict = document.getElementById('gameIncidentVerdict');
-      verdict.classList.add('hidden');
+      if (verdict) verdict.classList.add('hidden');
       renderIncidentGame();
-    };
-
-    window.logoutTeacher = async function() {
-      if (window.logoutTeacherFirebase) {
-        await window.logoutTeacherFirebase();
-      }
-      navigateStep('step-pretest');
-      showCustomModal('ออกจากระบบ', 'ออกจากระบบจัดการครูเรียบร้อยแล้ว', 'info', 'blue');
     };
 
     // Admin Table Render
@@ -1730,8 +2355,8 @@
 
       const list = [...(window.studentsDataset || [])];
       list.sort((a, b) => {
-        if (a.room !== b.room) return a.room.localeCompare(b.room);
-        return a.no - b.no;
+        if (a.room !== b.room) return String(a.room || '').localeCompare(String(b.room || ''));
+        return (a.no || 0) - (b.no || 0);
       });
 
       if (list.length === 0) {
@@ -1740,30 +2365,31 @@
       }
 
       tbody.innerHTML = list.map(s => {
-        const diff = (s.postScore !== null && s.preScore !== null) ? (s.postScore - s.preScore) : '-';
-        const isPass = (s.postScore !== null && s.postScore >= 16);
-        const docKey = `${s.room}_${s.no}`.replace(/[\/\s]/g, '_');
+        if (!s) return '';
+        const diff = (s.postScore !== null && s.postScore !== undefined && s.preScore !== null && s.preScore !== undefined) ? (s.postScore - s.preScore) : '-';
+        const isPass = (s.postScore !== null && s.postScore !== undefined && s.postScore >= 16);
+        const docKey = String(`${s.room || ''}_${s.no || ''}`).replace(/[\/\s]/g, '_');
 
         return `
           <tr class="hover:bg-slate-50 transition">
-            <td class="p-3.5 font-medium">${s.room}</td>
-            <td class="p-3.5 font-bold">${s.no}</td>
+            <td class="p-3.5 font-medium">${s.room || '-'}</td>
+            <td class="p-3.5 font-bold">${s.no || '-'}</td>
             <td class="p-3.5 font-semibold text-slate-900">${s.name || '-'}</td>
-            <td class="p-3.5 text-center">${s.preScore !== null ? s.preScore : '<span class="text-slate-300">-</span>'}</td>
-            <td class="p-3.5 text-center font-bold text-blue-600">${s.postScore !== null ? s.postScore : '<span class="text-slate-300">-</span>'}</td>
+            <td class="p-3.5 text-center">${s.preScore !== null && s.preScore !== undefined ? s.preScore : '<span class="text-slate-300">-</span>'}</td>
+            <td class="p-3.5 text-center font-bold text-blue-600">${s.postScore !== null && s.postScore !== undefined ? s.postScore : '<span class="text-slate-300">-</span>'}</td>
             <td class="p-3.5 text-center font-semibold ${diff > 0 ? 'text-emerald-600' : 'text-slate-500'}">${diff > 0 ? '+' + diff : diff}</td>
             <td class="p-3.5 text-center">
-              ${s.postScore !== null ? (isPass ? '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">ผ่าน (≥80%)</span>' : '<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold">ซ่อมเสริม</span>') : '<span class="text-slate-300 text-[10px]">ยังไม่ทดสอบ</span>'}
+              ${s.postScore !== null && s.postScore !== undefined ? (isPass ? '<span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">ผ่าน (≥80%)</span>' : '<span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold">ซ่อมเสริม</span>') : '<span class="text-slate-300 text-[10px]">ยังไม่ทดสอบ</span>'}
             </td>
             <td class="p-3.5 text-center">
-              ${s.canvaLink ? `<a href="${s.canvaLink}" target="_blank" class="text-purple-600 hover:underline font-bold text-[11px]">เปิดดูงาน</a>` : '<span class="text-slate-300 text-[11px]">ยังไม่ส่ง</span>'}
+              ${s.canvaLink ? `<a href="${s.canvaLink}" target="_blank" rel="noopener noreferrer" class="text-purple-600 hover:underline font-bold text-[11px]">เปิดดูงาน</a>` : '<span class="text-slate-300 text-[11px]">ยังไม่ส่ง</span>'}
             </td>
             <td class="p-3.5 text-center">
               <div class="flex items-center justify-center gap-1.5">
                 <button onclick="openEditStudentModal('${docKey}')" class="px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-[11px] font-bold transition">
                   แก้
                 </button>
-                <button onclick="askDeleteStudent('${docKey}', '${s.name || ''}', '${s.room}', ${s.no})" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[11px] font-bold transition flex items-center gap-1">
+                <button onclick="askDeleteStudent('${docKey}')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[11px] font-bold transition flex items-center gap-1">
                   <i data-lucide="trash-2" class="w-3 h-3"></i> ลบ
                 </button>
               </div>
@@ -1773,8 +2399,7 @@
       }).join('');
       lucide.createIcons();
     }
-
-    // Refresh KPI Statistics
+    window.renderAdminTable = renderAdminTable;
     function refreshKPIs() {
       const list = window.studentsDataset || [];
       let preSum = 0, preCount = 0;
@@ -1863,9 +2488,14 @@
     };
 
     // Delete Student Flow
-    window.askDeleteStudent = function(docKey, name, room, no) {
+    window.askDeleteStudent = function(docKey) {
       studentToDeleteDocKey = docKey;
-      document.getElementById('deleteStudentNameText').innerText = `${name || 'นักเรียน'} (${room} เลขที่ ${no})`;
+      const s = (window.studentsDataset || []).find(x => `${x.room}_${x.no}`.replace(/[\/\s]/g, '_') === docKey);
+      const name = s && s.name ? s.name : 'นักเรียน';
+      const room = s && s.room ? s.room : '';
+      const no = s && s.no ? s.no : '';
+      
+      document.getElementById('deleteStudentNameText').innerText = `${name} (${room} เลขที่ ${no})`;
       document.getElementById('deleteConfirmModal').classList.remove('hidden');
       lucide.createIcons();
     };
