@@ -1,0 +1,2231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberSafety DQ Hub - ระบบ e-Learning ว.PA (ม.2) โรงเรียนบ้านสามยอด</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Google Fonts: Prompt & Sarabun -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Prompt', 'Sarabun', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    .gradient-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 6px;
+    }
+    .card-hover {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Global Navigation Header -->
+  <header class="gradient-header text-white sticky top-0 z-40 shadow-lg border-b border-indigo-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo & Branding -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateStep('step-pretest')">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 ring-2 ring-white/20">
+            <i data-lucide="shield-check" class="w-6 h-6 text-white"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="text-[10px] sm:text-xs font-semibold uppercase px-2 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 border border-cyan-400/30">
+                ระบบ e-Learning ว.PA (ม.2)
+              </span>
+              <span class="text-xs text-indigo-200 hidden md:inline">โรงเรียนบ้านสามยอด</span>
+            </div>
+            <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
+              CyberSafety DQ Hub
+              <span class="text-xs font-normal text-slate-300 hidden sm:inline">| ความฉลาดทางดิจิทัล</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- Student Identification & Teacher Mode Switch -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <div id="navUserBadge" class="flex items-center space-x-2 bg-white/10 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/15 text-xs">
+            <i data-lucide="user-check" class="w-3.5 h-3.5 text-cyan-300"></i>
+            <span id="navUserName" class="font-medium text-slate-100 max-w-[150px] truncate">ยังไม่ลงทะเบียน</span>
+          </div>
+
+          <button onclick="openStudentModal()" title="แก้ไขข้อมูลนักเรียน" class="p-2 sm:px-3 sm:py-1.5 rounded-xl text-xs font-medium bg-indigo-600/70 hover:bg-indigo-600 text-white transition border border-indigo-400/30 flex items-center gap-1.5">
+            <i data-lucide="user-pen" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">ข้อมูลนักเรียน</span>
+          </button>
+
+          <button onclick="toggleTeacherMode()" class="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-600 text-white shadow transition flex items-center gap-1.5">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+            <span>ครูผู้สอน / Q-Info</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Linear Step Progress Bar -->
+      <div class="border-t border-indigo-800/60 py-2.5 overflow-x-auto custom-scrollbar">
+        <div class="flex items-center min-w-max space-x-2 sm:space-x-4 text-xs font-medium">
+          <!-- Step 1: Pre-test -->
+          <button onclick="navigateStep('step-pretest')" id="pill-pretest" class="step-pill px-3 py-1.5 rounded-xl flex items-center gap-2 bg-amber-500 text-white font-semibold shadow">
+            <span class="w-5 h-5 rounded-full bg-white/30 flex items-center justify-center text-[10px] font-bold">1</span>
+            <span>1. แบบทดสอบก่อนเรียน (Pre-test)</span>
+            <span id="badge-pretest-status" class="text-[10px] bg-white/20 px-1.5 py-0.5 rounded">จำเป็น</span>
+          </button>
+
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400/60"></i>
+
+          <!-- Step 2: Content Modules -->
+          <button onclick="navigateStep('step-modules')" id="pill-modules" class="step-pill px-3 py-1.5 rounded-xl flex items-center gap-2 text-indigo-300 hover:text-white hover:bg-white/10 transition">
+            <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">2</span>
+            <span>2. บทเรียน 4 แกน + แบบฝึกหัด</span>
+            <i id="lock-icon-modules" data-lucide="lock" class="w-3 h-3 text-amber-300"></i>
+          </button>
+
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400/60"></i>
+
+          <!-- Step 3: Canva Project -->
+          <button onclick="navigateStep('step-canva')" id="pill-canva" class="step-pill px-3 py-1.5 rounded-xl flex items-center gap-2 text-indigo-300 hover:text-white hover:bg-white/10 transition">
+            <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">3</span>
+            <span>3. ภารกิจ Canva Active Learning</span>
+            <i id="lock-icon-canva" data-lucide="lock" class="w-3 h-3 text-amber-300"></i>
+          </button>
+
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400/60"></i>
+
+          <!-- Step 4: Post-test -->
+          <button onclick="navigateStep('step-posttest')" id="pill-posttest" class="step-pill px-3 py-1.5 rounded-xl flex items-center gap-2 text-indigo-300 hover:text-white hover:bg-white/10 transition">
+            <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">4</span>
+            <span>4. แบบทดสอบหลังเรียน (Post-test)</span>
+            <i id="lock-icon-posttest" data-lucide="lock" class="w-3 h-3 text-amber-300"></i>
+          </button>
+
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-indigo-400/60"></i>
+
+          <!-- Step 5: Summary -->
+          <button onclick="navigateStep('step-summary')" id="pill-summary" class="step-pill px-3 py-1.5 rounded-xl flex items-center gap-2 text-indigo-300 hover:text-white hover:bg-white/10 transition">
+            <span class="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold">5</span>
+            <span>5. สรุปผลสัมฤทธิ์ & เกียรติบัตร</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+  <!-- Custom Alert/Confirmation Modal (Replaces browser alert/confirm) -->
+  <div id="customModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 text-center">
+      <div id="modalIconContainer" class="w-14 h-14 mx-auto rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-2xl mb-3">
+        <i id="modalIcon" data-lucide="info" class="w-7 h-7"></i>
+      </div>
+      <h3 id="modalTitle" class="text-base sm:text-lg font-bold text-slate-800 mb-1">แจ้งเตือนระบบ</h3>
+      <p id="modalMessage" class="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">รายละเอียด</p>
+      <div class="flex items-center justify-center gap-3">
+        <button onclick="closeCustomModal()" class="px-6 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition">
+          ตกลง
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Identification Modal -->
+  <div id="studentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100">
+      <div class="flex items-center space-x-3 mb-4">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+          <i data-lucide="user-pen" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-800">ข้อมูลนักเรียน (โรงเรียนบ้านสามยอด)</h3>
+          <p class="text-xs text-slate-500">ข้อมูลจะใช้ผูกกับผลการทดสอบและส่งขึ้นระบบ Q-Info</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">เลขประจำตัวนักเรียน *</label>
+          <input type="text" id="inputStudentId" placeholder="เช่น 10201" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">เลขที่นักเรียน *</label>
+          <input type="number" id="inputStudentNo" min="1" max="50" placeholder="เช่น 1" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">ชื่อ - นามสกุล *</label>
+          <input type="text" id="inputStudentName" placeholder="เช่น ด.ช. ภูมิภัทร ศรีสวัสดิ์" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">ระดับชั้น / ห้องเรียน *</label>
+          <select id="inputStudentClass" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white">
+            <option value="ม.2/1">มัธยมศึกษาปีที่ 2/1</option>
+            <option value="ม.2/2">มัธยมศึกษาปีที่ 2/2</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button onclick="closeStudentModal()" class="w-1/2 py-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100 transition">ยกเลิก</button>
+        <button onclick="saveStudentProfile()" class="w-1/2 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow transition">บันทึกข้อมูล</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher Security Modal (Google Sign-In & PIN) -->
+  <div id="teacherAuthModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+        <i data-lucide="lock" class="w-7 h-7"></i>
+      </div>
+      <h3 class="text-base font-bold text-slate-800">เข้าสู่ระบบจัดการครูผู้สอน</h3>
+      <p class="text-xs text-slate-500 mb-4">สำหรับประเมินผล ว.PA และเชื่อมโยงฐานข้อมูล Q-Info โรงเรียนบ้านสามยอด</p>
+
+      <!-- Google Sign In Button -->
+      <button onclick="loginTeacherWithGoogle()" class="w-full py-2.5 px-4 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl text-xs flex items-center justify-center gap-2 shadow-xs transition mb-3">
+        <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/><path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9z"/><path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2.4-6.4-5.2L1.9 16.5C3.7 20.9 7.5 23.5 12 23.5z"/></svg>
+        <span>เข้าสู่ระบบด้วย Google (fg6464@gmail.com)</span>
+      </button>
+
+      <div class="relative flex py-2 items-center">
+        <div class="flex-grow border-t border-slate-200"></div>
+        <span class="flex-shrink mx-2 text-[10px] text-slate-400">หรือใช้รหัสผ่านสำรอง</span>
+        <div class="flex-grow border-t border-slate-200"></div>
+      </div>
+
+      <div class="space-y-3 my-3">
+        <input type="password" id="inputTeacherPin" placeholder="รหัส PIN ครู (ค่าเริ่มต้น: 2569)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center text-sm font-bold tracking-widest focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+      </div>
+
+      <div class="flex gap-2">
+        <button onclick="closeTeacherModal()" class="w-1/2 py-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100 transition">ยกเลิก</button>
+        <button onclick="verifyTeacherPin()" class="w-1/2 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow transition">ยืนยัน PIN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Layout Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- LMS Linear Progress Overview Header -->
+    <div class="bg-white rounded-2xl p-4 mb-6 border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-sm">
+          <i data-lucide="workflow" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider">เส้นทางการเรียนรู้ e-Learning (Sequential Learning Pathway)</h2>
+          <p id="learningStatusDesc" class="text-xs text-slate-500">ขั้นตอนปัจจุบัน: กำลังทำแบบทดสอบก่อนเรียน (Pre-test)</p>
+        </div>
+      </div>
+      <!-- Overall Percentage Progress Bar -->
+      <div class="w-full sm:w-64">
+        <div class="flex justify-between text-[11px] font-semibold mb-1">
+          <span class="text-slate-500">ความก้าวหน้าตลอดหลักสูตร</span>
+          <span id="overallProgressText" class="text-indigo-600">0%</span>
+        </div>
+        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden">
+          <div id="overallProgressBar" class="h-full bg-gradient-to-r from-cyan-400 to-indigo-600 transition-all duration-500 w-0"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- STEP 1: PRE-TEST (แบบทดสอบก่อนเรียน 20 ข้อ - ประเมินผลก่อนปลดล็อกเนื้อหา) -->
+    <!-- ========================================================================= -->
+    <div id="view-step-pretest" class="step-view space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-100 gap-4">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="px-3 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                ขั้นตอนที่ 1 : ด่านประเมินก่อนเรียน (Pre-test)
+              </span>
+              <span class="text-xs text-slate-400">20 ข้อ ข้อละ 1 คะแนน (เต็ม 20)</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-800">
+              แบบทดสอบก่อนเรียน: ความฉลาดทางดิจิทัลด้านการรักษาความปลอดภัยทางไซเบอร์ ม.2
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">
+              * คำชี้แจง: นักเรียนต้องทำแบบทดสอบก่อนเรียนนี้ให้ครบทุกข้อ ระบบจึงจะปลดล็อกบทเรียนทั้ง 4 แกนเพื่อเข้าเรียน
+            </p>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 px-4 py-2 rounded-2xl text-right">
+            <span class="text-[11px] text-amber-700 block font-medium">ตอบแล้ว</span>
+            <span class="text-xl font-extrabold text-amber-700"><span id="pretestAnsweredCount">0</span> / 20</span>
+          </div>
+        </div>
+
+        <!-- Student Registration Fields in Pre-test -->
+        <div class="my-6 p-4 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">เลขประจำตัวนักเรียน *</label>
+            <input type="text" id="pretestStudentId" placeholder="เช่น 10201" class="w-full px-3 py-2 bg-white rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">เลขที่ *</label>
+            <input type="number" id="pretestStudentNo" min="1" max="50" placeholder="เช่น 1" class="w-full px-3 py-2 bg-white rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อ - นามสกุล *</label>
+            <input type="text" id="pretestStudentName" placeholder="เช่น ด.ช. ภูมิภัทร ศรีสวัสดิ์" class="w-full px-3 py-2 bg-white rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Pre-test Question List -->
+        <form id="pretestForm" onsubmit="submitPretest(event)" class="space-y-6">
+          <div id="pretestQuestionsContainer" class="space-y-5">
+            <!-- Populated dynamically by JS -->
+          </div>
+
+          <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-slate-500 flex items-center gap-1.5">
+              <i data-lucide="alert-circle" class="w-4 h-4 text-amber-500"></i>
+              <span>ตรวจทานคำตอบให้ครบ 20 ข้อ เพื่อปลดล็อกเข้าสู่บทเรียน 4 แกนหลัก</span>
+            </p>
+            <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-2xl font-bold shadow-md shadow-amber-600/20 text-xs sm:text-sm transition flex items-center justify-center gap-2">
+              <i data-lucide="key" class="w-4 h-4"></i>
+              <span>ส่งแบบทดสอบก่อนเรียน & ปลดล็อกบทเรียน</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Pre-test Result Card -->
+        <div id="pretestResultCard" class="hidden mt-8 p-6 sm:p-8 bg-gradient-to-br from-amber-50 to-indigo-50 rounded-3xl border border-amber-200 text-center">
+          <div class="w-16 h-16 rounded-3xl bg-amber-500 text-white flex items-center justify-center text-3xl mx-auto mb-3 shadow-lg shadow-amber-500/30">
+            <i data-lucide="unlock" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-800">ส่งผลแบบทดสอบก่อนเรียนเรียบร้อยแล้ว!</h3>
+          <p class="text-xs text-slate-600 max-w-lg mx-auto mt-1 mb-4">
+            บันทึกคะแนนฐานตั้งต้น (Pre-test Baseline) เข้าสู่ฐานข้อมูลคลาวด์เรียบร้อยแล้ว ขณะนี้ระบบได้ <strong>ปลดล็อกบทเรียนทั้ง 4 แกน</strong> ให้ท่านเริ่มเข้าเรียนได้ทันที
+          </p>
+
+          <div class="inline-block bg-white px-6 py-3 rounded-2xl border border-slate-200 shadow-xs mb-6">
+            <span class="text-xs text-slate-500 block">คะแนนก่อนเรียนของท่าน</span>
+            <span id="pretestScoreDisplay" class="text-3xl font-extrabold text-amber-600">0 / 20</span>
+          </div>
+
+          <div>
+            <button onclick="navigateStep('step-modules')" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-lg shadow-indigo-600/20 transition inline-flex items-center gap-2">
+              <span>เข้าสู่บทเรียน 4 แกนหลัก (Active Learning)</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- STEP 2: CONTENT MODULES (4 แกนหลัก + แบบฝึกหัดท้ายบท 5 ข้อต่อแกน)        -->
+    <!-- ========================================================================= -->
+    <div id="view-step-modules" class="step-view hidden space-y-6">
+
+      <!-- Locked Banner if pre-test not completed -->
+      <div id="modulesLockedAlert" class="bg-rose-50 border border-rose-200 rounded-3xl p-6 text-center text-rose-800">
+        <i data-lucide="lock" class="w-10 h-10 text-rose-500 mx-auto mb-2"></i>
+        <h3 class="text-base font-bold">บทเรียนถูกล็อกอยู่!</h3>
+        <p class="text-xs mt-1 mb-4">ท่านต้องทำแบบทดสอบก่อนเรียน (Pre-test 20 ข้อ) ให้เสร็จสิ้นก่อน จึงจะสามารถเข้าสู่เนื้อหาบทเรียนได้</p>
+        <button onclick="navigateStep('step-pretest')" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl shadow">
+          ไปทำแบบทดสอบก่อนเรียนทันที
+        </button>
+      </div>
+
+      <!-- Module Content Wrapper -->
+      <div id="modulesContentWrapper" class="hidden space-y-6">
+        
+        <!-- Module Tabs Selector -->
+        <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
+          <div>
+            <span class="text-[11px] font-bold text-indigo-600 uppercase tracking-wider">บทเรียนเชิงลึก Active Learning 4 แกน</span>
+            <h2 class="text-base sm:text-lg font-bold text-slate-800">เลือกศึกษาเนื้อหาและทำแบบฝึกหัดท้ายบท</h2>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 w-full md:w-auto">
+            <button onclick="selectModule(1)" id="modBtn-1" class="mod-btn flex-1 md:flex-none px-3.5 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow transition">
+              แกน 1: ข้อมูล & รหัสผ่าน
+            </button>
+            <button onclick="selectModule(2)" id="modBtn-2" class="mod-btn flex-1 md:flex-none px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+              แกน 2: รู้ทัน Phishing
+            </button>
+            <button onclick="selectModule(3)" id="modBtn-3" class="mod-btn flex-1 md:flex-none px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+              แกน 3: มัลแวร์ & Wi-Fi
+            </button>
+            <button onclick="selectModule(4)" id="modBtn-4" class="mod-btn flex-1 md:flex-none px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition">
+              แกน 4: รับมือฉุกเฉิน
+            </button>
+          </div>
+        </div>
+
+        <!-- MODULE 1 VIEW -->
+        <div id="moduleView-1" class="module-view space-y-6">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+            <div class="flex items-center space-x-3 pb-4 border-b border-slate-100">
+              <span class="w-10 h-10 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-extrabold text-base">1</span>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-slate-800">แกนที่ 1 : การปกป้องข้อมูลส่วนบุคคลและการตั้งรหัสผ่านปลอดภัย (Account Security & 2FA)</h3>
+                <p class="text-xs text-slate-500">สาระการเรียนรู้: ข้อมูลส่วนบุคคลตาม PDPA, ศาสตร์การตั้งรหัสผ่าน, และระบบยืนยันตัวตน 2 ขั้นตอน (2FA)</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div class="space-y-4">
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <h4 class="font-bold text-indigo-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                    <i data-lucide="id-card" class="w-4 h-4"></i> 1.1 ข้อมูลส่วนบุคคล (Personal Data) ที่ห้ามเผยแพร่
+                  </h4>
+                  <p class="text-xs text-slate-600 mb-2">
+                    ข้อมูลส่วนบุคคล คือ ข้อมูลที่ระบุตัวตนของนักเรียนได้ทั้งตรงและอ้อม การโพสต์ข้อมูลบางอย่างอาจเปิดทางให้มิจฉาชีพนำไปสวมรอยหรือเปิดบัญชีม้า:
+                  </p>
+                  <ul class="space-y-1 text-xs list-disc list-inside text-slate-700">
+                    <li><strong class="text-rose-600">ห้ามโพสต์เด็ดขาด:</strong> เลขบัตรประชาชน 13 หลัก, วันเดือนปีเกิด, ภาพบัตรนักเรียนที่เห็นชื่อ-เลขชัดเจน, เบอร์โทรศัพท์, ที่อยู่บ้าน</li>
+                    <li><strong class="text-emerald-600">โพสต์ได้ทั่วไป:</strong> วิชาที่ชอบ, สีที่ชอบ, อาหารกลางวัน, งานอดิเรก</li>
+                  </ul>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                  <h4 class="font-bold text-indigo-700 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                    <i data-lucide="smartphone" class="w-4 h-4"></i> 1.2 Two-Factor Authentication (2FA) คืออะไร?
+                  </h4>
+                  <p class="text-xs text-slate-600">
+                    การยืนยันตัวตนแบบ 2 ขั้นตอน ช่วยเพิ่มปราการป้องกันด่านที่ 2 โดยใช้ "สิ่งที่คุณรู้ (รหัสผ่าน)" คู่กับ "สิ่งที่คุณมี (OTP ในโทรศัพท์ / แอป Authenticator)" แม้รหัสผ่านรั่วไหล มิจฉาชีพก็เข้าสู่ระบบไม่ได้หากไม่มีโทรศัพท์ของเรา
+                  </p>
+                </div>
+              </div>
+
+              <!-- Interactive Password Sandbox -->
+              <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-900 to-slate-900 text-white space-y-3">
+                <div class="flex items-center justify-between">
+                  <h4 class="font-bold text-xs sm:text-sm text-cyan-300 flex items-center gap-1.5">
+                    <i data-lucide="gamepad-2" class="w-4 h-4"></i> ห้องทดลอง: วิเคราะห์ความแข็งแรงของรหัสผ่าน
+                  </h4>
+                  <span class="text-[10px] bg-white/10 px-2 py-0.5 rounded text-slate-300">จำลองการถอดรหัส</span>
+                </div>
+                <p class="text-xs text-slate-300">
+                  สูตรรหัสผ่านที่ปลอดภัย: ยาว 8-12 ตัวขึ้นไป + ผสมพิมพ์ใหญ่ พิมพ์เล็ก ตัวเลข และอักขระพิเศษ
+                </p>
+
+                <div class="space-y-2">
+                  <input type="text" id="interactivePwdInput" oninput="evalInteractivePwd()" placeholder="พิมพ์ตัวอย่างรหัสผ่าน..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-white text-xs sm:text-sm focus:outline-none focus:border-cyan-400 font-mono">
+                  
+                  <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="interactivePwdBar" class="h-full bg-rose-500 transition-all duration-300 w-0"></div>
+                  </div>
+
+                  <div class="flex justify-between text-[11px]">
+                    <span id="interactivePwdLabel" class="text-rose-400 font-bold">ยังไม่ปลอดภัย (Weak)</span>
+                    <span id="interactivePwdTime" class="text-slate-400">เวลาที่แฮกเกอร์ใช้: ไม่กี่วินาที</span>
+                  </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-800 text-[11px] text-slate-300">
+                  คลิกเพื่อทดสอบเคสข้อสอบจริง:
+                  <div class="flex flex-wrap gap-1.5 mt-1.5">
+                    <button onclick="setPwdTest('12345678')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">12345678</button>
+                    <button onclick="setPwdTest('somchai123')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">somchai123</button>
+                    <button onclick="setPwdTest('T!ger29#Moon')" class="px-2 py-1 rounded bg-emerald-700 hover:bg-emerald-600 text-white font-bold">T!ger29#Moon (ปลอดภัย)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formative Quiz 1 (5 Questions) -->
+            <div class="mt-6 pt-6 border-t border-slate-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded-lg bg-indigo-100 text-indigo-700 font-bold text-xs">แบบฝึกหัดท้ายบทที่ 1</span>
+                  <h4 class="text-xs sm:text-sm font-bold text-slate-800">ทดสอบความเข้าใจ 5 ข้อ (ประเมินระหว่างเรียน E1)</h4>
+                </div>
+                <span id="formativeScore-1" class="text-xs font-bold text-indigo-600">คะแนน: ยังไม่ทำ</span>
+              </div>
+              <div id="formativeContainer-1" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 2 VIEW -->
+        <div id="moduleView-2" class="module-view hidden space-y-6">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+            <div class="flex items-center space-x-3 pb-4 border-b border-slate-100">
+              <span class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-extrabold text-base">2</span>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-slate-800">แกนที่ 2 : รู้ทัน Phishing และการหลอกลวงออนไลน์ (Cyber Detective)</h3>
+                <p class="text-xs text-slate-500">สาระการเรียนรู้: นิยาม Phishing, 3 สัญญาณจับโป๊ะลิงก์ปลอม, และกลโกงแอบอ้างขอยืมเงิน</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-700 leading-relaxed">
+              <div class="space-y-4">
+                <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200">
+                  <h4 class="font-bold text-amber-900 mb-1 flex items-center gap-1.5 text-xs sm:text-sm">
+                    <i data-lucide="fish-symbol" class="w-4 h-4"></i> 2.1 Phishing คืออะไร?
+                  </h4>
+                  <p class="text-xs text-slate-700">
+                    Phishing คือ การหลอกให้ผู้ใช้งานกรอกชื่อผู้ใช้ รหัสผ่าน หรือข้อมูลสำคัญผ่านเว็บไซต์ปลอมที่ทำหน้าตาเหมือนต้นฉบับ เพื่อ "ตกเหยื่อ" นำข้อมูลไปใช้ในทางมิชอบ
+                  </p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                  <h4 class="font-bold text-slate-800 text-xs sm:text-sm">3 สัญญาณเตือนภัยจับโป๊ะ (Red Flags):</h4>
+                  <ol class="list-decimal list-inside space-y-1 text-xs text-slate-600">
+                    <li><strong>เร่งเร้าให้ตื่นตระหนก:</strong> มีข้อความกดดัน เช่น "กรอกภายใน 5 นาที มิฉะนั้นบัญชีจะถูกลบ"</li>
+                    <li><strong>แจกรางวัลเกินจริง:</strong> "คุณได้รับ iPhone ฟรี" หรือ "รับเงินฟรี 5,000 บาท" ทั้งที่ไม่เคยร่วมสนุก</li>
+                    <li><strong>ลิงก์แปลกปลอม (Suspicious URL):</strong> สะกดเพี้ยน เช่น <code>bank-update-free.xyz</code></li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Phishing Simulator -->
+              <div class="p-5 rounded-2xl bg-slate-800 text-white space-y-3">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="text-amber-300 font-bold flex items-center gap-1"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i> สถานการณ์จำลอง: แชตยืมเงิน</span>
+                  <span class="text-slate-400 text-[10px]">13:40 น.</span>
+                </div>
+                <div class="bg-slate-900 p-3.5 rounded-xl border border-slate-700 text-xs space-y-1.5">
+                  <p class="font-bold text-cyan-300">เพื่อนสนิท (ทักแชตมา):</p>
+                  <p class="text-slate-200">"แก ตอนนี้เรามีเรื่องด่วนมาก ขอยืมเงิน 500 บาทก่อนได้ไหม เดี๋ยวเย็นนี้โอนคืน โอนเข้าบัญชี 123-456-xxxx เลยนะ"</p>
+                </div>
+                <p class="text-xs text-slate-300 font-medium">ถ้าเป็นนักเรียน ม.2 คุณควรตัดสินใจอย่างไร?</p>
+                <div class="grid grid-cols-2 gap-2 text-xs">
+                  <button onclick="checkPhishingSim(false)" class="p-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-left transition">
+                    ก. รีบโอนทันทีเพราะเป็นเพื่อนสนิท
+                  </button>
+                  <button onclick="checkPhishingSim(true)" class="p-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-left transition font-semibold text-white">
+                    ข. โทรสายตรง/วิดีโอคอลเพื่อยืนยันตัวตนจริงก่อน
+                  </button>
+                </div>
+                <div id="phishingSimFeedback" class="hidden text-xs p-2.5 rounded-lg"></div>
+              </div>
+            </div>
+
+            <!-- Formative Quiz 2 (5 Questions) -->
+            <div class="mt-6 pt-6 border-t border-slate-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-800 font-bold text-xs">แบบฝึกหัดท้ายบทที่ 2</span>
+                  <h4 class="text-xs sm:text-sm font-bold text-slate-800">ทดสอบความเข้าใจ 5 ข้อ (ประเมินระหว่างเรียน E1)</h4>
+                </div>
+                <span id="formativeScore-2" class="text-xs font-bold text-amber-600">คะแนน: ยังไม่ทำ</span>
+              </div>
+              <div id="formativeContainer-2" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 3 VIEW -->
+        <div id="moduleView-3" class="module-view hidden space-y-6">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+            <div class="flex items-center space-x-3 pb-4 border-b border-slate-100">
+              <span class="w-10 h-10 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center font-extrabold text-base">3</span>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-slate-800">แกนที่ 3 : ภัยคุกคามจากมัลแวร์ สิทธิ์แอปพลิเคชัน และ Public Wi-Fi</h3>
+                <p class="text-xs text-slate-500">สาระการเรียนรู้: Malware, การขอสิทธิ์เกินจำเป็นของแอปพลิเคชัน, และความเสี่ยง Wi-Fi สาธารณะ</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs sm:text-sm text-slate-700">
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <h4 class="font-bold text-rose-600 flex items-center gap-1 text-xs sm:text-sm">
+                  <i data-lucide="bug" class="w-4 h-4"></i> มัลแวร์ (Malware)
+                </h4>
+                <p class="text-xs text-slate-600">
+                  โปรแกรมหรือไฟล์ที่ถูกสร้างขึ้นเพื่อทำลาย ขโมยข้อมูล หรือรบกวนระบบคอมพิวเตอร์ มักแฝงมากับไฟล์โหลดเกมเถื่อน หรือไฟล์แนบจากคนแปลกหน้า
+                </p>
+                <div class="bg-white p-2 rounded-xl text-[11px] border border-slate-200 text-slate-500">
+                  * วิธีป้องกันที่ดีที่สุด: หมั่นอัปเดตระบบปฏิบัติการและโปรแกรมให้เป็นเวอร์ชันล่าสุดเสมอ
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <h4 class="font-bold text-amber-600 flex items-center gap-1 text-xs sm:text-sm">
+                  <i data-lucide="wifi" class="w-4 h-4"></i> Wi-Fi สาธารณะ (Free Wi-Fi)
+                </h4>
+                <p class="text-xs text-slate-600">
+                  Wi-Fi ฟรีตามห้างสรรพสินค้าหรือร้านกาแฟไม่มีการเข้ารหัสข้อมูลที่ปลอดภัย อาจถูกดักจับข้อมูลได้ง่าย
+                </p>
+                <div class="bg-amber-50 p-2 rounded-xl text-[11px] border border-amber-200 text-amber-800 font-medium">
+                  * ข้อห้าม: หลีกเลี่ยงการทำธุรกรรมการเงินหรือกรอกรหัสผ่านสำคัญผ่าน Wi-Fi สาธารณะ
+                </div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                <h4 class="font-bold text-indigo-600 flex items-center gap-1 text-xs sm:text-sm">
+                  <i data-lucide="sliders" class="w-4 h-4"></i> การขอสิทธิ์ของแอป (Permissions)
+                </h4>
+                <p class="text-xs text-slate-600">
+                  หากแอปทั่วไป เช่น "แอปไฟฉาย" หรือ "แอปเครื่องคิดเลข" ขอสิทธิ์เข้าถึงกล้อง ไมโครโฟน และตำแหน่งที่ตั้ง
+                </p>
+                <div class="bg-indigo-50 p-2 rounded-xl text-[11px] border border-indigo-200 text-indigo-800 font-medium">
+                  * วิธีปฏิบัติ: ปฏิเสธสิทธิ์ที่ไม่จำเป็นต่อการทำงานของแอปทันที
+                </div>
+              </div>
+            </div>
+
+            <!-- Formative Quiz 3 (5 Questions) -->
+            <div class="mt-6 pt-6 border-t border-slate-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded-lg bg-rose-100 text-rose-800 font-bold text-xs">แบบฝึกหัดท้ายบทที่ 3</span>
+                  <h4 class="text-xs sm:text-sm font-bold text-slate-800">ทดสอบความเข้าใจ 5 ข้อ (ประเมินระหว่างเรียน E1)</h4>
+                </div>
+                <span id="formativeScore-3" class="text-xs font-bold text-rose-600">คะแนน: ยังไม่ทำ</span>
+              </div>
+              <div id="formativeContainer-3" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MODULE 4 VIEW -->
+        <div id="moduleView-4" class="module-view hidden space-y-6">
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+            <div class="flex items-center space-x-3 pb-4 border-b border-slate-100">
+              <span class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-extrabold text-base">4</span>
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-slate-800">แกนที่ 4 : แผนปฏิบัติการรับมือเมื่อเกิดเหตุฉุกเฉินทางไซเบอร์ (Incident Response)</h3>
+                <p class="text-xs text-slate-500">สาระการเรียนรู้: 4 ขั้นตอนเมื่อบัญชีถูกแฮ็กหรือถูกกลั่นแกล้งออนไลน์ (Cyberbullying)</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1.5">
+                <span class="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">1</span>
+                <h4 class="font-bold text-xs sm:text-sm">เปลี่ยนรหัสผ่านทันที</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  เข้าตั้งค่าเปลี่ยนรหัสผ่านใหม่ที่ปลอดภัย และเลือกคำสั่ง "ออกจากระบบทุกอุปกรณ์ (Log out from all sessions)"
+                </p>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1.5">
+                <span class="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">2</span>
+                <h4 class="font-bold text-xs sm:text-sm">เปิดใช้งาน 2FA</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  ผูกเบอร์โทรหรือแอปยืนยันตัวตน เพื่อป้องกันไม่ให้ผู้ไม่หวังดีแอบกลับเข้ามาล็อกอินซ้ำได้อีก
+                </p>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1.5">
+                <span class="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">3</span>
+                <h4 class="font-bold text-xs sm:text-sm">แคปหน้าจอเก็บหลักฐาน</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  ถ่ายภาพหน้าจอแชต ลิงก์ปลอม หรือข้อความกลั่นแกล้งไว้เป็นพยานหลักฐาน ห้ามรีบลบทิ้งเด็ดขาด
+                </p>
+              </div>
+              <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1.5">
+                <span class="w-7 h-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs">4</span>
+                <h4 class="font-bold text-xs sm:text-sm">แจ้งครู/ผู้ใหญ่ที่ไว้ใจ</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">
+                  แจ้งครูโรงเรียนบ้านสามยอดหรือผู้ปกครองทันที หรือโทรสายด่วนตำรวจไซเบอร์ 1441 เพื่อขอความช่วยเหลือ
+                </p>
+              </div>
+            </div>
+
+            <!-- Formative Quiz 4 (5 Questions) -->
+            <div class="mt-6 pt-6 border-t border-slate-200">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                  <span class="px-2.5 py-1 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs">แบบฝึกหัดท้ายบทที่ 4</span>
+                  <h4 class="text-xs sm:text-sm font-bold text-slate-800">ทดสอบความเข้าใจ 5 ข้อ (ประเมินระหว่างเรียน E1)</h4>
+                </div>
+                <span id="formativeScore-4" class="text-xs font-bold text-emerald-600">คะแนน: ยังไม่ทำ</span>
+              </div>
+              <div id="formativeContainer-4" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Step Callout Button -->
+        <div class="bg-gradient-to-r from-indigo-900 to-slate-900 p-6 rounded-3xl text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 class="font-bold text-sm sm:text-base">ศึกษาเนื้อหาและทำแบบฝึกหัดครบแล้วหรือยัง?</h4>
+            <p class="text-xs text-indigo-200 mt-0.5">ก้าวต่อไปคือการสร้างสรรค์สื่อโปสเตอร์/อินโฟกราฟิกเตือนภัยด้วยโปรแกรม Canva</p>
+          </div>
+          <button onclick="navigateStep('step-canva')" class="px-6 py-3 bg-pink-500 hover:bg-pink-600 text-white rounded-2xl text-xs sm:text-sm font-bold shadow-lg shadow-pink-500/30 transition flex items-center gap-2 whitespace-nowrap">
+            <span>ไปทำภารกิจ Canva</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- STEP 3: CANVA MISSION (ภารกิจสร้างสรรค์ชิ้นงานด้วย Canva & รูบริกส์)      -->
+    <!-- ========================================================================= -->
+    <div id="view-step-canva" class="step-view hidden space-y-6">
+
+      <div class="bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-700 rounded-3xl p-6 sm:p-8 text-white shadow-lg">
+        <div class="max-w-2xl">
+          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-white/20 text-white border border-white/20 mb-2">
+            ภารกิจสร้างสรรค์สื่อดิจิทัล Active Learning
+          </span>
+          <h2 class="text-xl sm:text-2xl font-extrabold mb-1">Canva Cyber Creator Studio</h2>
+          <p class="text-pink-100 text-xs sm:text-sm leading-relaxed mb-4">
+            นำความรู้ทั้ง 4 แกน มาผลิตเป็นสื่ออินโฟกราฟิก หรือโปสเตอร์เตือนภัยไซเบอร์ 1 ชิ้นงานในโปรแกรม Canva เพื่อเผยแพร่ให้เพื่อน ๆ ในโรงเรียนบ้านสามยอด
+          </p>
+          <a href="https://www.canva.com" target="_blank" class="px-4 py-2 rounded-xl bg-white text-purple-700 hover:bg-slate-100 text-xs font-bold transition inline-flex items-center gap-1.5 shadow">
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+            <span>เปิดโปรแกรม Canva.com</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Suggested Topics -->
+        <div class="bg-white p-5 rounded-3xl shadow-xs border border-slate-200">
+          <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+            <i data-lucide="list-checks" class="w-4 h-4 text-indigo-600"></i> เลือก 1 หัวข้อในการสร้างสื่อ
+          </h3>
+          <ul class="space-y-2 text-xs text-slate-700">
+            <li class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+              <span><strong>หัวข้อ 1:</strong> 5 วิธีสังเกตลิงก์ปลอมและ Phishing</span>
+            </li>
+            <li class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+              <span><strong>หัวข้อ 2:</strong> รหัสผ่านปลอดภัย ตั้งอย่างไรให้แฮกเกอร์ปวดหัว</span>
+            </li>
+            <li class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+              <span><strong>หัวข้อ 3:</strong> บัญชีถูกแฮ็กต้องทำอย่างไร 4 สเต็ปฉุกเฉิน</span>
+            </li>
+            <li class="p-2.5 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 mt-0.5 shrink-0"></i>
+              <span><strong>หัวข้อ 4:</strong> ภัยเงียบจาก Public Wi-Fi และสิทธิ์แอปมือถือ</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Rubric Information -->
+        <div class="bg-white p-5 rounded-3xl shadow-xs border border-slate-200">
+          <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+            <i data-lucide="award" class="w-4 h-4 text-amber-500"></i> เกณฑ์ประเมินรูบริกส์ (เต็ม 12)
+          </h3>
+          <div class="space-y-2.5 text-xs text-slate-600">
+            <div class="flex justify-between pb-1.5 border-b">
+              <span>1. ความถูกต้องของเนื้อหา</span>
+              <span class="font-bold text-indigo-600">4 คะแนน</span>
+            </div>
+            <div class="flex justify-between pb-1.5 border-b">
+              <span>2. ความคิดสร้างสรรค์ & จัดวาง</span>
+              <span class="font-bold text-indigo-600">4 คะแนน</span>
+            </div>
+            <div class="flex justify-between pb-1.5 border-b">
+              <span>3. การสื่อสาร & ภาษาเข้าใจง่าย</span>
+              <span class="font-bold text-indigo-600">4 คะแนน</span>
+            </div>
+            <div class="pt-1 text-[11px] text-slate-500">
+              * เกณฑ์ผ่านข้อตกลง ว.PA คือ 7 คะแนนขึ้นไป (ระดับดีขึ้นไป)
+            </div>
+          </div>
+        </div>
+
+        <!-- Submission Form -->
+        <div class="bg-white p-5 rounded-3xl shadow-xs border border-slate-200">
+          <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+            <i data-lucide="upload-cloud" class="w-4 h-4 text-pink-500"></i> ฟอร์มส่งลิงก์ชิ้นงาน Canva
+          </h3>
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">หัวข้อผลงานที่เลือก</label>
+              <select id="canvaInputTopic" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                <option value="5 วิธีสังเกตลิงก์ปลอมและ Phishing">5 วิธีสังเกตลิงก์ปลอมและ Phishing</option>
+                <option value="รหัสผ่านปลอดภัย ตั้งอย่างไรให้แฮกเกอร์ปวดหัว">รหัสผ่านปลอดภัย ตั้งอย่างไรให้แฮกเกอร์ปวดหัว</option>
+                <option value="บัญชีถูกแฮ็กต้องทำอย่างไร 4 สเต็ปฉุกเฉิน">บัญชีถูกแฮ็กต้องทำอย่างไร 4 สเต็ปฉุกเฉิน</option>
+                <option value="ภัยเงียบจาก Public Wi-Fi และสิทธิ์แอปมือถือ">ภัยเงียบจาก Public Wi-Fi และสิทธิ์แอปมือถือ</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">ลิงก์ผลงาน Canva (แชร์แบบดูได้) *</label>
+              <input type="url" id="canvaInputLink" placeholder="https://www.canva.com/design/..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block font-semibold text-slate-700 mb-1">แนวคิดสั้น ๆ ของผลงาน</label>
+              <textarea id="canvaInputDesc" rows="2" placeholder="อธิบายจุดเด่นของชิ้นงาน..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-pink-500 focus:outline-none"></textarea>
+            </div>
+
+            <button onclick="saveStudentCanvaWork()" class="w-full py-2.5 bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white rounded-xl font-bold shadow transition flex items-center justify-center gap-1.5">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>ส่งชิ้นงานเข้าสู่แกลเลอรี</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Student Gallery Showcase -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="layout-grid" class="w-5 h-5 text-purple-600"></i> แกลเลอรีนิทรรศการผลงาน Canva ม.2
+            </h3>
+            <p class="text-xs text-slate-500">รวมชิ้นงานที่นักเรียนส่งเข้ามาเพื่อใช้ประกอบรายงาน ว.PA</p>
+          </div>
+          <button onclick="navigateStep('step-posttest')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
+            <span>ไปทำแบบทดสอบหลังเรียน</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="canvaGalleryContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- STEP 4: POST-TEST (แบบทดสอบหลังเรียน 20 ข้อ - วัดผลสำเร็จ E2 & PA 80%)    -->
+    <!-- ========================================================================= -->
+    <div id="view-step-posttest" class="step-view hidden space-y-6">
+
+      <!-- Locked Banner if pre-test not completed -->
+      <div id="posttestLockedAlert" class="bg-rose-50 border border-rose-200 rounded-3xl p-6 text-center text-rose-800 hidden">
+        <i data-lucide="lock" class="w-10 h-10 text-rose-500 mx-auto mb-2"></i>
+        <h3 class="text-base font-bold">แบบทดสอบหลังเรียนยังไม่เปิดให้ทำ</h3>
+        <p class="text-xs mt-1 mb-4">นักเรียนต้องผ่านการทำแบบทดสอบก่อนเรียนและศึกษาบทเรียนให้เรียบร้อยก่อน จึงจะสามารถทำแบบทดสอบหลังเรียนได้</p>
+        <button onclick="navigateStep('step-modules')" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-xl shadow">
+          กลับไปศึกษาบทเรียน
+        </button>
+      </div>
+
+      <div id="posttestContentWrapper" class="space-y-6">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-xs border border-slate-200">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-slate-100 gap-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="px-3 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  ขั้นตอนที่ 4 : ด่านประเมินหลังเรียน (Post-test E2)
+                </span>
+                <span class="text-xs text-slate-400">20 ข้อ ข้อละ 1 คะแนน (เป้าหมาย PA ≥ 16 คะแนน)</span>
+              </div>
+              <h2 class="text-lg sm:text-xl font-bold text-slate-800">
+                แบบทดสอบหลังเรียน: ความฉลาดทางดิจิทัลด้านการรักษาความปลอดภัยทางไซเบอร์ ม.2
+              </h2>
+              <p class="text-xs text-slate-500 mt-0.5">
+                วัดผลสัมฤทธิ์ทางการเรียนเพื่อสรุปผลการพัฒนานวัตกรรม Active Learning โรงเรียนบ้านสามยอด
+              </p>
+            </div>
+
+            <div class="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-2xl text-right">
+              <span class="text-[11px] text-emerald-700 block font-medium">ตอบแล้ว</span>
+              <span class="text-xl font-extrabold text-emerald-700"><span id="posttestAnsweredCount">0</span> / 20</span>
+            </div>
+          </div>
+
+          <!-- Post-test Form -->
+          <form id="posttestForm" onsubmit="submitPosttest(event)" class="mt-6 space-y-6">
+            <div id="posttestQuestionsContainer" class="space-y-5">
+              <!-- Populated dynamically by JS -->
+            </div>
+
+            <div class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p class="text-xs text-slate-500">กรุณาตรวจสอบความถูกต้องให้ครบ 20 ข้อก่อนส่งผลการทดสอบ</p>
+              <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl font-bold shadow-md shadow-emerald-600/20 text-xs sm:text-sm transition flex items-center justify-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>ส่งแบบทดสอบหลังเรียน & ประมวลผลคะแนน</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- STEP 5: SUMMARY & CERTIFICATE (สรุปผลสัมฤทธิ์รายบุคคล & เกียรติบัตร)      -->
+    <!-- ========================================================================= -->
+    <div id="view-step-summary" class="step-view hidden space-y-6">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs max-w-3xl mx-auto">
+        
+        <div class="text-center space-y-2 mb-6 pb-6 border-b border-slate-100">
+          <div id="summaryBadgeIcon" class="w-16 h-16 mx-auto rounded-3xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-2">
+            <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+          </div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800">รายงานผลสัมฤทธิ์การเรียนรู้รายบุคคล</h2>
+          <p class="text-xs text-slate-500">
+            นักเรียน: <span id="summaryStudentName" class="font-bold text-indigo-600">-</span> | โรงเรียนบ้านสามยอด
+          </p>
+        </div>
+
+        <!-- KPI Score Comparison Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-center">
+            <span class="text-xs text-amber-700 block font-medium">ก่อนเรียน (Pre-test)</span>
+            <span id="summaryPreScore" class="text-2xl font-extrabold text-amber-700">- / 20</span>
+            <span class="text-[10px] text-slate-500 block mt-1">คะแนนฐานตั้งต้น</span>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
+            <span class="text-xs text-emerald-700 block font-medium">หลังเรียน (Post-test)</span>
+            <span id="summaryPostScore" class="text-2xl font-extrabold text-emerald-700">- / 20</span>
+            <span id="summaryPostPercent" class="text-[10px] text-emerald-600 font-bold block mt-1">เกณฑ์ PA: 80% (16 คะแนน)</span>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-indigo-50 border border-indigo-200 text-center">
+            <span class="text-xs text-indigo-700 block font-medium">พัฒนาการ (+/-)</span>
+            <span id="summaryDeltaScore" class="text-2xl font-extrabold text-indigo-700">-</span>
+            <span class="text-[10px] text-slate-500 block mt-1">ความก้าวหน้าทางการเรียน</span>
+          </div>
+        </div>
+
+        <!-- Formative Practice Summary -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-6 text-xs space-y-2">
+          <h4 class="font-bold text-slate-800 flex items-center gap-2">
+            <i data-lucide="check-square" class="w-4 h-4 text-indigo-600"></i> สรุปผลแบบฝึกหัดระหว่างเรียน 4 แกน (Formative Assessment E1)
+          </h4>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-center">
+              <span class="text-[10px] text-slate-500 block">แกน 1 (รหัสผ่าน)</span>
+              <span id="summaryF1" class="font-bold text-slate-700">- / 5</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-center">
+              <span class="text-[10px] text-slate-500 block">แกน 2 (Phishing)</span>
+              <span id="summaryF2" class="font-bold text-slate-700">- / 5</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-center">
+              <span class="text-[10px] text-slate-500 block">แกน 3 (มัลแวร์)</span>
+              <span id="summaryF3" class="font-bold text-slate-700">- / 5</span>
+            </div>
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-center">
+              <span class="text-[10px] text-slate-500 block">แกน 4 (รับมือ)</span>
+              <span id="summaryF4" class="font-bold text-slate-700">- / 5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Final Status Banner -->
+        <div id="summaryPASuccessBox" class="p-4 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-medium text-center space-y-1">
+          <p class="font-bold text-sm flex items-center justify-center gap-1.5"><i data-lucide="award" class="w-4 h-4 text-emerald-700"></i> ผ่านเกณฑ์การประเมินตามข้อตกลง ว.PA!</p>
+          <p>ท่านมีผลสัมฤทธิ์ความฉลาดทางดิจิทัลด้านความปลอดภัยไซเบอร์ผ่านเกณฑ์เป้าหมายร้อยละ 80 (E2)</p>
+        </div>
+
+        <div class="mt-6 flex justify-center gap-3">
+          <button onclick="navigateStep('step-modules')" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition">
+            กลับไปทบทวนบทเรียน
+          </button>
+          <button onclick="toggleTeacherMode()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow transition">
+            ดูตารางคะแนนรวมทั้งห้อง (Q-Info)
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TEACHER DASHBOARD: แดชบอร์ดรวบรวมข้อมูลและจัดการข้อมูล ว.PA & Q-Info       -->
+    <!-- ========================================================================= -->
+    <div id="view-teacher-dashboard" class="step-view hidden space-y-6">
+      
+      <!-- Top Overview Bar -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-xs border border-slate-200">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">ระบบหลังบ้านครู (Cloud)</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-800">ศูนย์วิเคราะห์ผลสัมฤทธิ์ ว.PA & ระบบข้อมูลสารสนเทศ Q-Info</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-1">
+            โรงเรียนบ้านสามยอด | มัธยมศึกษาปีที่ 2 ภาคเรียนที่ 2 ปีการศึกษา 2569 | ผู้ดูแล: <span id="teacherEmailDisplay" class="font-bold text-indigo-600">fg6464@gmail.com</span>
+          </p>
+        </div>
+
+        <!-- Action Export Buttons -->
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="exportToCSV()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 flex items-center gap-1.5 transition">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>ดาวน์โหลดไฟล์ Q-Info (CSV)</span>
+          </button>
+          <button onclick="seedDemoStudents()" class="px-3.5 py-2 rounded-xl text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 transition" title="สุ่มข้อมูลจำลอง ม.2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            <span>จำลองข้อมูล ม.2</span>
+          </button>
+          <button onclick="navigateStep('step-pretest')" class="px-3.5 py-2 rounded-xl text-xs font-medium bg-slate-800 hover:bg-slate-900 text-white transition flex items-center gap-1">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>หน้านักเรียน</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PA KPI Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1: Total Students -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-xs font-medium text-slate-500">นักเรียนทั้งหมดในระบบ</p>
+              <h3 id="statTotalStudents" class="text-2xl font-extrabold text-slate-800 mt-1">0 คน</h3>
+            </div>
+            <span class="w-10 h-10 rounded-xl bg-slate-100 text-slate-600 flex items-center justify-center">
+              <i data-lucide="users" class="w-5 h-5"></i>
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-2">ระดับชั้น ม.2/1 และ ม.2/2</p>
+        </div>
+
+        <!-- Card 2: Pre-test Avg (E1 Baseline) -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-xs font-medium text-slate-500">คะแนนเฉลี่ยก่อนเรียน (Pre)</p>
+              <h3 id="statPreAvg" class="text-2xl font-extrabold text-amber-600 mt-1">0.0 / 20</h3>
+            </div>
+            <span class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <i data-lucide="trending-down" class="w-5 h-5"></i>
+            </span>
+          </div>
+          <p id="statPrePercent" class="text-[11px] text-slate-400 mt-2">คิดเป็น 0.0% (ฐานตั้งต้น)</p>
+        </div>
+
+        <!-- Card 3: Post-test Avg (E2 Target) -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-xs font-medium text-slate-500">คะแนนเฉลี่ยหลังเรียน (Post)</p>
+              <h3 id="statPostAvg" class="text-2xl font-extrabold text-emerald-600 mt-1">0.0 / 20</h3>
+            </div>
+            <span class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <i data-lucide="trending-up" class="w-5 h-5"></i>
+            </span>
+          </div>
+          <p id="statPostPercent" class="text-[11px] text-emerald-600 font-semibold mt-2">เป้าหมาย PA: 80% (16 คะแนน)</p>
+        </div>
+
+        <!-- Card 4: PA Pass Rate -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-xs font-medium text-slate-500">ร้อยละที่ผ่านเกณฑ์ข้อตกลง PA</p>
+              <h3 id="statPassRate" class="text-2xl font-extrabold text-indigo-600 mt-1">0%</h3>
+            </div>
+            <span class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+              <i data-lucide="target" class="w-5 h-5"></i>
+            </span>
+          </div>
+          <p id="statPassDesc" class="text-[11px] text-indigo-600 font-medium mt-2">เป้าหมายเชิงปริมาณ: 80%</p>
+        </div>
+      </div>
+
+      <!-- Students Full Management Table -->
+      <div class="bg-white rounded-3xl shadow-xs border border-slate-200 overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+              <i data-lucide="table" class="w-4 h-4 text-indigo-600"></i> ทะเบียนข้อมูลนักเรียนและการประเมินผล ว.PA (Cloud Synced)
+            </h3>
+            <p class="text-xs text-slate-500">แสดงผลคะแนนก่อนเรียน หลังเรียน แบบฝึกหัด และชิ้นงาน Canva</p>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <input type="text" id="teacherSearchInput" oninput="renderTeacherTable()" placeholder="ค้นหาชื่อหรือเลขที่..." class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <select id="teacherRoomFilter" onchange="renderTeacherTable()" class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs bg-white">
+              <option value="all">ทุกห้องเรียน</option>
+              <option value="ม.2/1">ม.2/1</option>
+              <option value="ม.2/2">ม.2/2</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-50 text-slate-600 uppercase border-b border-slate-200 font-semibold">
+              <tr>
+                <th class="px-4 py-3">เลขที่</th>
+                <th class="px-4 py-3">ห้อง</th>
+                <th class="px-4 py-3">รหัสนักเรียน</th>
+                <th class="px-4 py-3">ชื่อ - นามสกุล</th>
+                <th class="px-4 py-3 text-center">ก่อนเรียน (20)</th>
+                <th class="px-4 py-3 text-center">แบบฝึกหัด (20)</th>
+                <th class="px-4 py-3 text-center">หลังเรียน (20)</th>
+                <th class="px-4 py-3 text-center">พัฒนาการ</th>
+                <th class="px-4 py-3 text-center">ชิ้นงาน Canva</th>
+                <th class="px-4 py-3 text-center">สถานะ PA</th>
+                <th class="px-4 py-3 text-center">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="teacherTableBody" class="divide-y divide-slate-100 text-slate-700">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Rubric Grading Modal for Canva -->
+  <div id="rubricModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
+      <div class="flex items-center justify-between mb-4 pb-3 border-b">
+        <div>
+          <h3 class="text-base font-bold text-slate-800">ประเมินชิ้นงาน Canva ด้วยเกณฑ์รูบริกส์</h3>
+          <p id="rubricStudentTitle" class="text-xs text-indigo-600 font-medium"></p>
+        </div>
+        <button onclick="closeRubricModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">1. ความถูกต้องของเนื้อหา (4 คะแนน)</label>
+          <select id="rubricScore1" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+            <option value="4">4 - ดีมาก (ถูกต้อง ครบถ้วน นำไปใช้ได้จริง)</option>
+            <option value="3">3 - ดี (ถูกต้องเป็นส่วนใหญ่)</option>
+            <option value="2">2 - พอใช้ (ข้อมูลบางส่วนยังไม่ชัดเจน)</option>
+            <option value="1">1 - ปรับปรุง (ข้อมูลคลาดเคลื่อน)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">2. ความคิดสร้างสรรค์และการออกแบบ (4 คะแนน)</label>
+          <select id="rubricScore2" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+            <option value="4">4 - ดีมาก (จัดวางสวยงาม สื่อความหมายชัดเจน)</option>
+            <option value="3">3 - ดี (เป็นระเบียบ อ่านง่าย)</option>
+            <option value="2">2 - พอใช้ (ตัวหนังสืออ่านยากบางจุด)</option>
+            <option value="1">1 - ปรับปรุง (การจัดวางไม่เหมาะสม)</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">3. การสื่อสารและการนำเสนอ (4 คะแนน)</label>
+          <select id="rubricScore3" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+            <option value="4">4 - ดีมาก (สรุปสาระสำคัญได้ดีเยี่ยม)</option>
+            <option value="3">3 - ดี (สื่อสารได้ชัดเจน)</option>
+            <option value="2">2 - พอใช้ (อธิบายได้ปานกลาง)</option>
+            <option value="1">1 - ปรับปรุง (ไม่สามารถสรุปสาระได้)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button onclick="closeRubricModal()" class="w-1/2 py-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100">ยกเลิก</button>
+        <button onclick="saveRubricGrading()" class="w-1/2 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow">บันทึกผลการประเมิน</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 20 Exact Pre-test & Post-test Questions
+    const EXAM_QUESTIONS = [
+      { id: 1, q: "1. ข้อใดเป็นข้อมูลส่วนบุคคลที่ไม่ควรเผยแพร่ต่อสาธารณะมากที่สุด", options: ["วิชาที่ชอบ", "สีที่ชอบ", "เลขประจำตัวประชาชน", "งานอดิเรก"], ans: 2, pillar: "ข้อมูลส่วนบุคคล" },
+      { id: 2, q: "2. รหัสผ่านข้อใดมีความปลอดภัยมากที่สุด", options: ["12345678", "somchai123", "password", "T!ger29#Moon"], ans: 3, pillar: "รหัสผ่าน" },
+      { id: 3, q: "3. ข้อใดเป็นวิธีปฏิบัติที่เหมาะสมเกี่ยวกับรหัสผ่าน", options: ["ใช้รหัสผ่านเดียวกันทุกบัญชี", "บอกรหัสผ่านให้เพื่อนสนิททราบ", "ใช้รหัสผ่านที่แตกต่างกันในบัญชีสำคัญ", "เขียนรหัสผ่านไว้บริเวณหน้าจอคอมพิวเตอร์"], ans: 2, pillar: "รหัสผ่าน" },
+      { id: 4, q: "4. หากมีข้อความแจ้งว่า “คุณได้รับรางวัลโทรศัพท์มือถือ ให้คลิกลิงก์และกรอกข้อมูลภายใน 5 นาที” นักเรียนควรทำอย่างไร", options: ["รีบคลิกลิงก์ทันที", "ส่งต่อให้เพื่อนทดลองก่อน", "กรอกเฉพาะชื่อและเบอร์โทรศัพท์", "ไม่คลิกลิงก์และตรวจสอบแหล่งที่มาของข้อความ"], ans: 3, pillar: "Phishing" },
+      { id: 5, q: "5. การหลอกให้ผู้ใช้งานกรอกชื่อผู้ใช้ รหัสผ่าน หรือข้อมูลสำคัญผ่านเว็บไซต์ปลอม เรียกว่าอะไร", options: ["Phishing", "Download", "Streaming", "Blogging"], ans: 0, pillar: "Phishing" },
+      { id: 6, q: "6. ข้อใดเป็นสัญญาณที่อาจบ่งบอกว่าเว็บไซต์ไม่น่าเชื่อถือ", options: ["มีชื่อเว็บไซต์ตรงกับหน่วยงาน", "มีข้อความเร่งให้กรอกข้อมูลส่วนตัวทันที", "มีข้อมูลสำหรับติดต่อหน่วยงาน", "มีรายละเอียดเกี่ยวกับบริการอย่างชัดเจน"], ans: 1, pillar: "Phishing" },
+      { id: 7, q: "7. หากได้รับไฟล์จากบุคคลที่ไม่รู้จักทางแชต นักเรียนควรทำอย่างไร", options: ["เปิดไฟล์ทันที", "ดาวน์โหลดเก็บไว้ก่อน", "ไม่เปิดไฟล์และตรวจสอบผู้ส่ง", "ส่งไฟล์ต่อให้เพื่อนตรวจสอบ"], ans: 2, pillar: "มัลแวร์" },
+      { id: 8, q: "8. โปรแกรมหรือไฟล์ที่ถูกสร้างขึ้นเพื่อทำลาย ขโมยข้อมูล หรือรบกวนระบบคอมพิวเตอร์ เรียกว่าอะไร", options: ["Browser", "Malware", "Search Engine", "Cloud Storage"], ans: 1, pillar: "มัลแวร์" },
+      { id: 9, q: "9. นักเรียนใช้ Wi-Fi สาธารณะในห้างสรรพสินค้า สิ่งใดควรหลีกเลี่ยงมากที่สุด", options: ["อ่านข่าวทั่วไป", "ดูวิดีโอ", "ค้นหาข้อมูลทำรายงาน", "ทำธุรกรรมทางการเงินหรือกรอกรหัสผ่านสำคัญ"], ans: 3, pillar: "เครือข่าย" },
+      { id: 10, q: "10. การยืนยันตัวตนแบบสองขั้นตอน (Two-Factor Authentication: 2FA) มีประโยชน์อย่างไร", options: ["ทำให้อินเทอร์เน็ตเร็วขึ้น", "เพิ่มความปลอดภัยในการเข้าสู่ระบบ", "ทำให้จำรหัสผ่านได้ง่ายขึ้น", "ทำให้สามารถใช้บัญชีโดยไม่ต้องมีรหัสผ่าน"], ans: 1, pillar: "2FA" },
+      { id: 11, q: "11. หากพบว่ามีบุคคลอื่นเข้าสู่บัญชีโซเชียลมีเดียของตนเองโดยไม่ได้รับอนุญาต สิ่งแรกที่ควรทำคือข้อใด", options: ["ปล่อยไว้ก่อน", "ลบบัญชีทันที", "เปลี่ยนรหัสผ่านและออกจากระบบทุกอุปกรณ์", "โพสต์ถามว่าใครเข้าใช้บัญชี"], ans: 2, pillar: "การรับมือ" },
+      { id: 12, q: "12. ก่อนโพสต์ภาพเพื่อนลงในสื่อสังคมออนไลน์ ควรทำอย่างไร", options: ["โพสต์ได้ทันทีเพราะเป็นเพื่อนกัน", "ขออนุญาตเจ้าของภาพก่อน", "ใส่ชื่อเพื่อนทุกครั้ง", "แต่งภาพก่อนโพสต์"], ans: 1, pillar: "ข้อมูลส่วนบุคคล" },
+      { id: 13, q: "13. ข้อใดเป็นตัวอย่างของการเปิดเผยข้อมูลส่วนบุคคลที่มีความเสี่ยง", options: ["โพสต์ภาพอาหารกลางวัน", "โพสต์เพลงที่ชอบ", "โพสต์ภาพบัตรนักเรียนที่เห็นชื่อและเลขประจำตัวชัดเจน", "โพสต์ภาพต้นไม้ในโรงเรียน"], ans: 2, pillar: "ข้อมูลส่วนบุคคล" },
+      { id: 14, q: "14. หากเพื่อนถูกล้อเลียนและเผยแพร่ข้อความเสียหายบนสื่อสังคมออนไลน์ นักเรียนควรทำอย่างไร", options: ["แชร์ต่อเพื่อให้เพื่อนคนอื่นทราบ", "แสดงความคิดเห็นร่วมล้อเลียน", "เก็บหลักฐานและแจ้งครู ผู้ปกครอง หรือผู้ใหญ่ที่ไว้ใจได้", "สร้างบัญชีใหม่เพื่อตอบโต้ผู้กระทำ"], ans: 2, pillar: "การรับมือ" },
+      { id: 15, q: "15. ข้อใดเป็นวิธีลดความเสี่ยงจากภัยคุกคามทางไซเบอร์ได้เหมาะสมที่สุด", options: ["ไม่อัปเดตโปรแกรมเพราะเสียเวลา", "ดาวน์โหลดโปรแกรมจากทุกเว็บไซต์ที่ค้นพบ", "อัปเดตระบบและโปรแกรมให้เป็นเวอร์ชันล่าสุด", "ปิดโปรแกรมป้องกันไวรัสเพื่อให้เครื่องเร็วขึ้น"], ans: 2, pillar: "มัลแวร์" },
+      { id: 16, q: "16. นักเรียนได้รับข้อความจากบัญชีของเพื่อนว่า “ขอยืมเงินด่วน โอนเข้าบัญชีนี้เลย” สิ่งที่ควรทำคืออะไร", options: ["โอนเงินทันทีเพราะเป็นเพื่อน", "แชร์ข้อความให้คนอื่น", "ติดต่อเพื่อนผ่านช่องทางอื่นเพื่อยืนยันตัวตนก่อน", "ส่งเลขบัญชีของตนเองกลับไป"], ans: 2, pillar: "Phishing" },
+      { id: 17, q: "17. ข้อใดเป็นพฤติกรรมที่เหมาะสมที่สุดในการใช้งานสื่อสังคมออนไลน์", options: ["รับเพื่อนทุกคนเพื่อเพิ่มจำนวนผู้ติดตาม", "ตั้งค่าความเป็นส่วนตัวและตรวจสอบผู้ที่ขอเป็นเพื่อน", "โพสต์ตำแหน่งที่อยู่ของตนเองตลอดเวลา", "ใช้รหัสผ่านเดียวกับเพื่อนเพื่อป้องกันการลืม"], ans: 1, pillar: "ข้อมูลส่วนบุคคล" },
+      { id: 18, q: "18. หากเว็บไซต์ขออนุญาตเข้าถึงกล้อง ไมโครโฟน และตำแหน่งที่ตั้ง ทั้งที่ไม่จำเป็นต่อการใช้งาน นักเรียนควรทำอย่างไร", options: ["อนุญาตทุกอย่าง", "ปฏิเสธสิทธิ์ที่ไม่จำเป็น", "ปิดโทรศัพท์ทันที", "ส่งลิงก์เว็บไซต์ให้เพื่อน"], ans: 1, pillar: "สิทธิ์ของแอป" },
+      { id: 19, q: "19. ข้อใดแสดงถึงการมีความฉลาดทางดิจิทัลด้านความปลอดภัยทางไซเบอร์", options: ["คลิกลิงก์ทุกลิงก์ที่ได้รับจากเพื่อน", "โพสต์ข้อมูลส่วนตัวเพื่อให้คนรู้จักมากขึ้น", "ตรวจสอบความน่าเชื่อถือก่อนคลิกลิงก์หรือให้ข้อมูล", "ดาวน์โหลดโปรแกรมฟรีจากเว็บไซต์ที่ไม่รู้จัก"], ans: 2, pillar: "ความฉลาดทางดิจิทัล" },
+      { id: 20, q: "20. หากนักเรียนสงสัยว่าตนเองถูกหลอกให้กรอกรหัสผ่านในเว็บไซต์ปลอม ควรปฏิบัติอย่างไร", options: ["ไม่ต้องทำอะไรถ้าบัญชียังใช้งานได้", "เปลี่ยนรหัสผ่านทันที เปิดใช้ 2FA และแจ้งผู้ใหญ่ที่ไว้ใจได้", "กรอกรหัสผ่านอีกครั้งเพื่อยืนยัน", "ส่งเว็บไซต์ให้เพื่อนลองใช้งาน"], ans: 1, pillar: "การรับมือ" }
+    ];
+
+    // Formative Quizzes (5 per module)
+    const FORMATIVE_QUIZZES = {
+      1: [
+        { id: 'f1_1', q: "1. ข้อมูลใดต่อไปนี้จัดเป็นข้อมูลส่วนบุคคลที่มีความเสี่ยงสูงสุดหากโพสต์สาธารณะ?", options: ["สัตว์เลี้ยงที่ชอบ", "เลขบัตรประชาชน 13 หลัก", "ศิลปินคนโปรด", "สีของกระเป๋านักเรียน"], ans: 1, reason: "เลขบัตรประชาชนเป็นข้อมูลประจำตัวขั้นสูงที่มิจฉาชีพนำไปสวมรอยทำธุรกรรมได้" },
+        { id: 'f1_2', q: "2. การตั้งรหัสผ่านที่ดี ควรมีความยาวอย่างน้อยกี่ตัวอักษรขึ้นไป?", options: ["4 ตัวอักษร", "6 ตัวอักษร", "8-12 ตัวอักษรขึ้นไป", "กี่ตัวก็ได้ที่เป็นตัวเลขล้วน"], ans: 2, reason: "รหัสผ่านที่ยาว 8-12 ตัวขึ้นไปช่วยลดความเสี่ยงจากการถูก Brute-Force ได้อย่างมหาศาล" },
+        { id: 'f1_3', q: "3. รหัสผ่านใดจัดว่าอ่อนแอและคาดเดาได้ง่ายที่สุด?", options: ["K@ntana#2026", "somchai_M2_39", "12345678", "Sun$hine#99"], ans: 2, reason: "ตัวเลขเรียงกันเป็นรหัสผ่านที่แฮกเกอร์ใช้โปรแกรมสุ่มถอดได้ในเสี้ยววินาที" },
+        { id: 'f1_4', q: "4. ประโยชน์สูงสุดของระบบ 2FA คือข้อใด?", options: ["ช่วยให้เน็ตเร็วขึ้น", "ช่วยป้องกันการแฮ็กแม้รหัสผ่านจะรั่วไหล", "ช่วยให้ไม่ต้องจำรหัสผ่าน", "ช่วยกู้คืนไฟล์รูปภาพ"], ans: 1, reason: "แฮกเกอร์จะไม่สามารถเข้าบัญชีได้หากไม่มีรหัส OTP หรือเครื่องโทรศัพท์ของผู้ใช้" },
+        { id: 'f1_5', q: "5. พฤติกรรมใดเกี่ยวกับรหัสผ่านที่ปลอดภัยที่สุด?", options: ["จดรหัสผ่านใส่กระดาษแปะหน้าจอ", "บอกรหัสผ่านให้เพื่อนสนิทช่วยจำ", "ใช้รหัสผ่านแตกต่างกันในแต่ละบัญชีสำคัญ", "ใช้เบอร์โทรศัพท์ตัวเองเป็นรหัสผ่าน"], ans: 2, reason: "การแยกใช้รหัสผ่านต่างกันทำให้เมื่อบัญชีหนึ่งรั่วไหล บัญชีอื่น ๆ จะยังคงปลอดภัย" }
+      ],
+      2: [
+        { id: 'f2_1', q: "1. การได้รับ SMS ว่า 'คุณได้รับรางวัลใหญ่ คลิกยืนยันใน 5 นาที' จัดเป็นภัยคุกคามประเภทใด?", options: ["E-Commerce", "Phishing", "Cloud Backup", "Streaming"], ans: 1, reason: "เป็นการจำลองสถานการณ์เร่งเร้าเพื่อหลอกล่อให้เหยื่อคลิกลิงก์ขโมยข้อมูล" },
+        { id: 'f2_2', q: "2. ข้อใดเป็นจุดสังเกตสำคัญของลิงก์ Phishing?", options: ["มีชื่อโดเมนสะกดผิดเพี้ยนจากทางการ", "มีระบบ 2FA รองรับ", "มีข้อมูลติดต่อหน่วยงานชัดเจน", "โหลดหน้าเว็บได้รวดเร็ว"], ans: 0, reason: "มักใช้ตัวสะกดใกล้เคียงเพื่อตบตา เช่น สลับตัวอักษร หรือใช้โดเมนฟรี .xyz" },
+        { id: 'f2_3', q: "3. เมื่อเพื่อนสนิททักแชตมายืมเงินอย่างเร่งด่วน สิ่งแรกที่ควรทำคือ?", options: ["รีบโอนทันที", "ส่งสลิปปลอมไปให้", "โทรสายตรงหรือวิดีโอคอลเพื่อยืนยันตัวจริง", "โพสต์ประจานลงสตอรี่"], ans: 2, reason: "บัญชีของเพื่อนอาจถูกแฮ็ก การโทรยืนยันตัวตนจะช่วยตรวจสอบความจริงได้ชัดเจนที่สุด" },
+        { id: 'f2_4', q: "4. คำว่า 'Social Engineering' มีความหมายตรงกับข้อใด?", options: ["การเขียนโค้ดคอมพิวเตอร์", "การหลอกลวงโดยใช้จิตวิทยาและการสร้างความตื่นตระหนก", "การซ่อมบำรุงสายเคเบิล", "การตกแต่งภาพในโปรแกรม"], ans: 1, reason: "เป็นการเล่นกับอารมณ์ความโลภ ความกลัว หรือความไว้ใจของมนุษย์เพื่อล้วงข้อมูล" },
+        { id: 'f2_5', q: "5. หากเผลอกรอกรหัสผ่านในเว็บปลอมไปแล้ว สิ่งที่ต้องทำทันทีคือ?", options: ["ปิดเครื่องแล้วนอนหลับ", "เปลี่ยนรหัสผ่านของบัญชีนั้นทันที และกดออกจากระบบทุกอุปกรณ์", "แชร์เว็บปลอมให้เพื่อนช่วยดู", "รอดูว่าเงินจะหายไหม"], ans: 1, reason: "การเปลี่ยนรหัสผ่านและกด Log out all devices ทันที จะช่วยตัดการเชื่อมต่อของมิจฉาชีพได้" }
+      ],
+      3: [
+        { id: 'f3_1', q: "1. มัลแวร์ที่ทำการล็อกไฟล์ทั้งหมดแล้วขู่ให้โอนเงินคือชนิดใด?", options: ["Adware", "Ransomware (มัลแวร์เรียกค่าไถ่)", "Browser", "Word Processor"], ans: 1, reason: "Ransomware เข้ารหัสไฟล์ข้อมูลและบังคับให้จ่ายเงินเพื่อแลกกับคีย์ถอดรหัส" },
+        { id: 'f3_2', q: "2. การเชื่อมต่อ Wi-Fi สาธารณะโดยไม่มีรหัสผ่านมีความเสี่ยงต่อสิ่งใดมากที่สุด?", options: ["หน้าจอมือถือแตก", "การถูกดักจับข้อมูลรหัสผ่านและข้อมูลการเงิน", "แบตเตอรี่เสื่อมสภาพทันที", "สัญญาณอินเทอร์เน็ตแรงเกินไป"], ans: 1, reason: "เครือข่ายเปิดที่ไม่มีการเข้ารหัสเปิดโอกาสให้แฮกเกอร์ทำ Man-in-the-middle attack ได้" },
+        { id: 'f3_3', q: "3. หากแอปเครื่องคิดเลขขอสิทธิ์เข้าถึง 'ตำแหน่ง GPS และไมโครโฟน' นักเรียนควรทำอย่างไร?", options: ["อนุญาตทั้งหมด", "ปฏิเสธสิทธิ์ที่ไม่จำเป็น", "ลบเบอร์โทรในเครื่องออก", "ส่งต่อแอปให้เพื่อน"], ans: 1, reason: "เครื่องคิดเลขไม่มีความจำเป็นต้องใช้ไมค์หรือพิกัด จึงควรปฏิเสธสิทธิ์เพื่อความปลอดภัย" },
+        { id: 'f3_4', q: "4. การอัปเดตระบบปฏิบัติการ (OS) ให้เป็นรุ่นล่าสุดเสมอมีประโยชน์อย่างไร?", options: ["ทำให้อุปกรณ์ดูใหม่ขึ้น", "อุดช่องโหว่ความปลอดภัยที่แฮกเกอร์ใช้โจมตี", "ทำให้ไม่ต้องเปิดแอนติไวรัส", "เพิ่มความจำเครื่องเป็นสองเท่า"], ans: 1, reason: "ผู้พัฒนามักปล่อย Security Patch มาอุดรูรั่วของระบบที่ถูกค้นพบใหม่" },
+        { id: 'f3_5', q: "5. หากมีบุคคลแปลกหน้าส่งไฟล์นามสกุล .exe หรือ .apk มาในแชต ควรปฏิบัติอย่างไร?", options: ["รีบคลิกเปิดทันที", "ห้ามเปิดไฟล์ และตรวจสอบหรือบล็อกผู้ส่ง", "ส่งต่อไปยังกลุ่มครอบครัว", "บันทึกเก็บไว้ในไดรฟ์"], ans: 1, reason: "ไฟล์ติดตั้งโปรแกรมจากคนแปลกหน้ามีความเสี่ยงสูงที่จะเป็นโทรจันหรือสปายแวร์" }
+      ],
+      4: [
+        { id: 'f4_1', q: "1. ขั้นตอนแรกสุดเมื่อสงสัยว่าบัญชีโซเชียลของตนเองถูกแฮ็กคือ?", options: ["โพสต์ระบายความรู้สึก", "เปลี่ยนรหัสผ่านทันทีและเลือกออกจากระบบทุกอุปกรณ์", "ลบบัญชีทิ้งทันที", "รอให้แฮกเกอร์ส่งข้อความมา"], ans: 1, reason: "การเปลี่ยนรหัสและตัดอุปกรณ์ที่เชื่อมต่อจะช่วยชิงสิทธิ์ความเป็นเจ้าของบัญชีกลับมา" },
+        { id: 'f4_2', q: "2. การบันทึกภาพหน้าจอ (Capture) แชตหรือข้อความหลอกลวงมีประโยชน์เพื่อสิ่งใด?", options: ["เพื่อนำไปประจาน", "เพื่อเก็บเป็นพยานหลักฐานในการแจ้งครูหรือเจ้าหน้าที่", "เพื่อความสวยงาม", "เพื่อส่งต่อเป็นไวรัล"], ans: 1, reason: "ภาพถ่ายหน้าจอที่เห็นวันเวลาและชื่อบัญชีคู่กรณีเป็นหลักฐานสำคัญในการดำเนินคดี" },
+        { id: 'f4_3', q: "3. หากพบเห็นการกลั่นแกล้งบนโลกออนไลน์ (Cyberbullying) เพื่อนในห้อง สิ่งที่ควรทำคือ?", options: ["ร่วมแสดงความคิดเห็นล้อเลียน", "แชร์โพสต์ต่อ", "เก็บหลักฐานและแจ้งครูหรือผู้ปกครองเพื่อให้การช่วยเหลือ", "สร้างแอคหลุมไปด่าตอบ"], ans: 2, reason: "การแจ้งผู้ใหญ่และไม่ร่วมกระจายความเสียหายช่วยหยุดยั้งการกลั่นแกล้งได้อย่างถูกต้อง" },
+        { id: 'f4_4', q: "4. หมายเลขสายด่วนตำรวจไซเบอร์ที่ประชาชนสามารถปรึกษาหรือแจ้งเหตุด่วนคือเบอร์ใด?", options: ["191", "1441", "1111", "1669"], ans: 1, reason: "สายด่วน 1441 เป็นศูนย์ปราบปรามอาชญากรรมทางเทคโนโลยีสารสนเทศ" },
+        { id: 'f4_5', q: "5. เมื่อตกเป็นเหยื่อมิจฉาชีพทางไซเบอร์ สิ่งใดที่ 'ไม่ควรทำ' มากที่สุด?", options: ["แจ้งครูประจำชั้น", "เก็บเรื่องไว้คนเดียวเพราะความอายหรือกลัวโดนดุ", "ปรึกษาผู้ปกครอง", "รวบรวมสลิปและแชต"], ans: 1, reason: "การเก็บไว้คนเดียวอาจทำให้ความเสียหายบานปลาย ควรรีบปรึกษาผู้ใหญ่ที่ไว้ใจได้ทันที" }
+      ]
+    };
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+      getFirestore, collection, doc, setDoc, onSnapshot 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { 
+      getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqzQrfrYJnneLCJc7NGD7ECvnIm1hs6y8",
+      authDomain: "cybersafety-banyod.firebaseapp.com",
+      projectId: "cybersafety-banyod",
+      storageBucket: "cybersafety-banyod.firebasestorage.app",
+      messagingSenderId: "889540778184",
+      appId: "1:889540778184:web:210ffa4a2377de65c16dfd",
+      measurementId: "G-3W1SHHH667"
+    };
+
+    const ALLOWED_ADMIN = "fg6464@gmail.com";
+
+    // Initialize Firebase
+    let db = null;
+    let auth = null;
+    let provider = null;
+
+    try {
+      const app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      auth = getAuth(app);
+      provider = new GoogleAuthProvider();
+      console.log("Firebase initialized successfully!");
+    } catch (err) {
+      console.warn("Firebase Init Fallback:", err);
+    }
+
+    // Google Sign-In Function for Teacher
+    window.loginTeacherWithGoogle = async function() {
+      if (!auth || !provider) {
+        showToast('ระบบคลาวด์ Firebase ยังไม่พร้อมใช้งาน', 'error');
+        return;
+      }
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        if (user.email === ALLOWED_ADMIN) {
+          closeTeacherModal();
+          document.getElementById('teacherEmailDisplay').innerText = `${user.displayName} (${user.email})`;
+          navigateStep('teacher-dashboard');
+          showToast(`ยินดีต้อนรับ ${user.displayName}`, 'success');
+        } else {
+          showCustomModal('ไม่มีสิทธิ์เข้าถึง', `ขออภัย: อีเมล ${user.email} ไม่มีสิทธิ์เข้าถึงระบบผู้ดูแล (สงวนสิทธิ์เฉพาะ ${ALLOWED_ADMIN})`, 'lock', false);
+          await signOut(auth);
+        }
+      } catch (err) {
+        console.error("Auth error:", err);
+        if (err.code === 'auth/unauthorized-domain') {
+          const currentDomain = window.location.hostname || 'โดเมนปัจจุบัน';
+          showCustomModal(
+            'โดเมนยังไม่ได้รับอนุญาตใน Firebase',
+            `ระบบ Google Sign-In ปฏิเสธการเข้าถึงเนื่องจากโดเมน <code class="bg-slate-100 text-rose-600 px-1.5 py-0.5 rounded font-mono font-bold">${currentDomain}</code> ยังไม่ได้เพิ่มใน <strong>Authorized domains</strong> ของ Firebase Console<br><br><span class="text-emerald-700 font-semibold">👉 คุณครูสามารถใช้รหัส PIN สำรอง: <strong>2569</strong> ในช่องด้านล่างเพื่อเข้าสู่แดชบอร์ดได้ทันทีครับ</span>`,
+            'alert-circle',
+            false
+          );
+          const pinInput = document.getElementById('inputTeacherPin');
+          if (pinInput) {
+            pinInput.value = '2569';
+            pinInput.focus();
+          }
+        } else {
+          showToast("การเข้าสู่ระบบขัดข้อง: " + err.message, "error");
+        }
+      }
+    };
+
+    if (auth) {
+      onAuthStateChanged(auth, (user) => {
+        if (user && user.email === ALLOWED_ADMIN) {
+          document.getElementById('teacherEmailDisplay').innerText = `${user.displayName} (${user.email})`;
+        }
+      });
+    }
+
+    // Cloud Sync: Save Student to Firestore
+    window.syncStudentToFirestore = async function(studentData) {
+      if (!db) return;
+      try {
+        await setDoc(doc(db, "students", studentData.id), studentData, { merge: true });
+        console.log("Student synced to Firestore successfully!");
+      } catch (err) {
+        console.error("Firestore Save Error:", err);
+      }
+    };
+
+    // Cloud Sync: Save Canva Work to Firestore
+    window.syncCanvaToFirestore = async function(workData) {
+      if (!db) return;
+      try {
+        const workDoc = doc(collection(db, "canva_works"));
+        await setDoc(workDoc, { ...workData, createdAt: new Date().toISOString() });
+        console.log("Canva work synced to Firestore!");
+      } catch (err) {
+        console.error("Firestore Canva Save Error:", err);
+      }
+    };
+
+    // Real-time Firestore Listeners
+    if (db) {
+      onSnapshot(collection(db, "students"), (snapshot) => {
+        const list = [];
+        snapshot.forEach(d => list.push(d.data()));
+        if (list.length > 0) {
+          window.allStudents = list;
+          renderTeacherTable();
+          updateDashboardKPIs();
+        }
+      }, (err) => console.log("Realtime Student listener offline:", err));
+
+      onSnapshot(collection(db, "canva_works"), (snapshot) => {
+        const list = [];
+        snapshot.forEach(d => list.push(d.data()));
+        if (list.length > 0) {
+          renderCloudCanvaGallery(list);
+        }
+      }, (err) => console.log("Realtime Canva listener offline:", err));
+    }
+  </script>
+
+  <script>
+    // Current Active Student Profile
+    let activeStudent = JSON.parse(localStorage.getItem('banyod_active_student')) || {
+      id: 'std_m2_10201',
+      no: 1,
+      name: 'ด.ช. ภูมิภัทร ศรีสวัสดิ์',
+      room: 'ม.2/1',
+      preDone: false,
+      preScore: null,
+      formativeDone: { 1: false, 2: false, 3: false, 4: false },
+      formativeScores: { 1: 0, 2: 0, 3: 0, 4: 0 },
+      canvaLink: '',
+      canvaTopic: '',
+      canvaScore: null,
+      postDone: false,
+      postScore: null
+    };
+
+    // Global Dataset for Q-Info Dashboard
+    window.allStudents = JSON.parse(localStorage.getItem('banyod_all_students')) || [
+      { id: 'std_m2_10201', no: 1, room: 'ม.2/1', name: 'ด.ช. ภูมิภัทร ศรีสวัสดิ์', preScore: null, formTotal: 0, postScore: null, canvaLink: '', canvaTopic: '', canvaScore: null },
+      { id: 'std_m2_10202', no: 2, room: 'ม.2/1', name: 'ด.ช. ธนกฤต มั่งมี', preScore: 8, formTotal: 17, postScore: 17, canvaLink: 'https://canva.com/design/sample2', canvaTopic: 'รหัสผ่านปลอดภัย ตั้งอย่างไรให้แฮกเกอร์ปวดหัว', canvaScore: 11 },
+      { id: 'std_m2_10203', no: 3, room: 'ม.2/1', name: 'ด.ญ. กานต์พิชชา วงศ์ษา', preScore: 10, formTotal: 19, postScore: 19, canvaLink: 'https://canva.com/design/sample3', canvaTopic: 'บัญชีถูกแฮ็กต้องทำอย่างไร 4 สเต็ปฉุกเฉิน', canvaScore: 12 },
+      { id: 'std_m2_10204', no: 4, room: 'ม.2/1', name: 'ด.ญ. นภัสสร แก้วมณี', preScore: 7, formTotal: 15, postScore: 16, canvaLink: 'https://canva.com/design/sample4', canvaTopic: 'ภัยเงียบจาก Public Wi-Fi', canvaScore: 10 },
+      { id: 'std_m2_10205', no: 5, room: 'ม.2/1', name: 'ด.ช. วรัญญู สุขเกษม', preScore: 9, formTotal: 16, postScore: 18, canvaLink: '', canvaTopic: '5 วิธีสังเกตลิงก์ปลอม', canvaScore: null }
+    ];
+
+    let currentStep = 'step-pretest';
+    let selectedStudentRubricId = null;
+
+    // Toast Notification System
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let bg = 'bg-slate-800 text-white';
+      let icon = 'info';
+      if (type === 'success') { bg = 'bg-emerald-600 text-white'; icon = 'check-circle'; }
+      if (type === 'warning') { bg = 'bg-amber-500 text-white'; icon = 'alert-triangle'; }
+      if (type === 'error') { bg = 'bg-rose-600 text-white'; icon = 'alert-circle'; }
+
+      toast.className = `${bg} px-4 py-3 rounded-2xl shadow-xl flex items-center space-x-2 text-xs font-medium transform transition-all duration-300 translate-y-2 opacity-0 pointer-events-auto`;
+      toast.innerHTML = `<i data-lucide="${icon}" class="w-4 h-4"></i><span>${message}</span>`;
+      
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 50);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-full');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    // Custom Modal System (Safe alternative to alert/confirm)
+    function showCustomModal(title, message, iconName = 'info', isSuccess = false) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalMessage').innerHTML = message;
+      const iconEl = document.getElementById('modalIcon');
+      iconEl.setAttribute('data-lucide', iconName);
+      const iconContainer = document.getElementById('modalIconContainer');
+      iconContainer.className = isSuccess 
+        ? 'w-14 h-14 mx-auto rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3'
+        : 'w-14 h-14 mx-auto rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3';
+      document.getElementById('customModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeCustomModal() {
+      document.getElementById('customModal').classList.add('hidden');
+    }
+  </script>
+
+  <script>
+    // Navigation & Step Logic
+    function navigateStep(stepId) {
+      // Step Gating: Must complete Pre-test to access Step 2, 3, 4, 5
+      if (!activeStudent.preDone && (stepId === 'step-modules' || stepId === 'step-canva' || stepId === 'step-posttest' || stepId === 'step-summary')) {
+        showCustomModal(
+          'ขั้นตอนถูกล็อก (Pre-test Required)',
+          'ตามกระบวนการ e-Learning Active Learning นักเรียนต้อง <strong>ทำแบบทดสอบก่อนเรียน (Pre-test 20 ข้อ)</strong> ให้เสร็จสิ้นก่อน เพื่อบันทึกคะแนนฐานตั้งต้น จึงจะสามารถเข้าสู่บทเรียนได้',
+          'lock',
+          false
+        );
+        return;
+      }
+
+      // Hide all step views
+      document.querySelectorAll('.step-view').forEach(el => el.classList.add('hidden'));
+
+      // Reset step pills
+      document.querySelectorAll('.step-pill').forEach(btn => {
+        btn.classList.remove('bg-indigo-600', 'bg-amber-500', 'bg-emerald-600', 'text-white', 'shadow');
+        btn.classList.add('text-indigo-200');
+      });
+
+      // Show requested view
+      const targetView = document.getElementById(`view-${stepId}`);
+      if (targetView) targetView.classList.remove('hidden');
+
+      // Update Navigation Styling
+      if (stepId === 'step-pretest') {
+        const p = document.getElementById('pill-pretest');
+        if (p) { p.classList.add('bg-amber-500', 'text-white', 'shadow'); p.classList.remove('text-indigo-200'); }
+        document.getElementById('learningStatusDesc').innerText = 'ขั้นตอนปัจจุบัน: กำลังทำแบบทดสอบก่อนเรียน (Pre-test)';
+      } else if (stepId === 'step-modules') {
+        const p = document.getElementById('pill-modules');
+        if (p) { p.classList.add('bg-indigo-600', 'text-white', 'shadow'); p.classList.remove('text-indigo-200'); }
+        document.getElementById('learningStatusDesc').innerText = 'ขั้นตอนปัจจุบัน: กำลังศึกษาบทเรียน 4 แกน และทำแบบฝึกหัดท้ายบท';
+      } else if (stepId === 'step-canva') {
+        const p = document.getElementById('pill-canva');
+        if (p) { p.classList.add('bg-indigo-600', 'text-white', 'shadow'); p.classList.remove('text-indigo-200'); }
+        document.getElementById('learningStatusDesc').innerText = 'ขั้นตอนปัจจุบัน: ภารกิจสร้างสื่อ Infographic/Poster ด้วย Canva';
+      } else if (stepId === 'step-posttest') {
+        const p = document.getElementById('pill-posttest');
+        if (p) { p.classList.add('bg-emerald-600', 'text-white', 'shadow'); p.classList.remove('text-indigo-200'); }
+        document.getElementById('learningStatusDesc').innerText = 'ขั้นตอนปัจจุบัน: กำลังทำแบบทดสอบหลังเรียน (Post-test E2)';
+      } else if (stepId === 'step-summary') {
+        const p = document.getElementById('pill-summary');
+        if (p) { p.classList.add('bg-indigo-600', 'text-white', 'shadow'); p.classList.remove('text-indigo-200'); }
+        document.getElementById('learningStatusDesc').innerText = 'ขั้นตอนปัจจุบัน: สรุปผลสัมฤทธิ์ทางการเรียน ว.PA';
+        updateSummaryView();
+      } else if (stepId === 'teacher-dashboard') {
+        renderTeacherTable();
+        updateDashboardKPIs();
+      }
+
+      currentStep = stepId;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      updateLMSProgress();
+      lucide.createIcons();
+    }
+
+    function updateLMSProgress() {
+      let completedSteps = 0;
+      if (activeStudent.preDone) completedSteps++;
+      
+      const fDoneCount = Object.values(activeStudent.formativeDone).filter(Boolean).length;
+      if (fDoneCount === 4) completedSteps++;
+      
+      if (activeStudent.canvaLink) completedSteps++;
+      if (activeStudent.postDone) completedSteps++;
+
+      const percentage = Math.round((completedSteps / 4) * 100);
+      document.getElementById('overallProgressText').innerText = `${percentage}%`;
+      document.getElementById('overallProgressBar').style.width = `${percentage}%`;
+
+      // Update Lock icons & content wrappers
+      if (activeStudent.preDone) {
+        const iconModules = document.getElementById('lock-icon-modules');
+        const iconCanva = document.getElementById('lock-icon-canva');
+        const iconPosttest = document.getElementById('lock-icon-posttest');
+        if (iconModules) iconModules.setAttribute('data-lucide', 'unlock');
+        if (iconCanva) iconCanva.setAttribute('data-lucide', 'unlock');
+        if (iconPosttest) iconPosttest.setAttribute('data-lucide', 'unlock');
+        
+        document.getElementById('modulesLockedAlert').classList.add('hidden');
+        document.getElementById('modulesContentWrapper').classList.remove('hidden');
+        document.getElementById('posttestLockedAlert').classList.add('hidden');
+        document.getElementById('posttestContentWrapper').classList.remove('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    function selectModule(modNum) {
+      document.querySelectorAll('.module-view').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`moduleView-${modNum}`).classList.remove('hidden');
+
+      document.querySelectorAll('.mod-btn').forEach(btn => {
+        btn.className = 'mod-btn flex-1 md:flex-none px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition';
+      });
+      document.getElementById(`modBtn-${modNum}`).className = 'mod-btn flex-1 md:flex-none px-3.5 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white shadow transition';
+      lucide.createIcons();
+    }
+  </script>
+
+  <script>
+    // Render Pre-test Questions
+    function renderPretest() {
+      const container = document.getElementById('pretestQuestionsContainer');
+      container.innerHTML = EXAM_QUESTIONS.map((item, idx) => `
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-indigo-300 transition">
+          <div class="flex items-start space-x-3 mb-3">
+            <span class="w-6 h-6 rounded-lg bg-amber-100 text-amber-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+              ${idx + 1}
+            </span>
+            <div>
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-amber-700 block mb-0.5">${item.pillar}</span>
+              <p class="text-xs sm:text-sm font-semibold text-slate-800">${item.q}</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-9">
+            ${item.options.map((opt, optIdx) => `
+              <label class="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-amber-50/50 cursor-pointer transition text-xs text-slate-700">
+                <input type="radio" name="pre_q_${item.id}" value="${optIdx}" onchange="updatePretestAnsweredCount()" class="w-4 h-4 text-amber-600 focus:ring-amber-500">
+                <span>${['ก', 'ข', 'ค', 'ง'][optIdx]}. ${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updatePretestAnsweredCount() {
+      let count = 0;
+      EXAM_QUESTIONS.forEach(item => {
+        if (document.querySelector(`input[name="pre_q_${item.id}"]:checked`)) count++;
+      });
+      document.getElementById('pretestAnsweredCount').innerText = count;
+    }
+
+    async function submitPretest(e) {
+      e.preventDefault();
+      
+      const stdId = document.getElementById('pretestStudentId').value.trim();
+      const stdNo = document.getElementById('pretestStudentNo').value.trim();
+      const stdName = document.getElementById('pretestStudentName').value.trim();
+
+      if (!stdId || !stdNo || !stdName) {
+        showCustomModal('ข้อมูลไม่ครบถ้วน', 'กรุณากรอกเลขประจำตัว เลขที่ และชื่อ-สกุล ก่อนส่งแบบทดสอบ', 'alert-circle', false);
+        return;
+      }
+
+      let score = 0;
+      let unanswered = 0;
+
+      EXAM_QUESTIONS.forEach(item => {
+        const sel = document.querySelector(`input[name="pre_q_${item.id}"]:checked`);
+        if (sel) {
+          if (parseInt(sel.value) === item.ans) score++;
+        } else {
+          unanswered++;
+        }
+      });
+
+      if (unanswered > 0) {
+        showCustomModal(
+          'ตอบคำถามยังไม่ครบ',
+          `ท่านยังตอบคำถามไม่ครบอีก <span class="font-bold text-amber-600">${unanswered} ข้อ</span> กรุณาตอบให้ครบทั้ง 20 ข้อเพื่อบันทึกผลอย่างแม่นยำ`,
+          'alert-circle',
+          false
+        );
+        return;
+      }
+
+      // Record Student Profile
+      activeStudent.id = stdId;
+      activeStudent.no = parseInt(stdNo);
+      activeStudent.name = stdName;
+      activeStudent.preDone = true;
+      activeStudent.preScore = score;
+
+      localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+
+      // Update Database
+      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      if (idx >= 0) {
+        window.allStudents[idx] = { ...window.allStudents[idx], ...activeStudent };
+      } else {
+        window.allStudents.push({ ...activeStudent });
+      }
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+
+      // Sync with Firestore Cloud
+      if (window.syncStudentToFirestore) {
+        await window.syncStudentToFirestore(activeStudent);
+      }
+
+      // Update UI
+      document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room})`;
+      document.getElementById('pretestForm').classList.add('hidden');
+      const resCard = document.getElementById('pretestResultCard');
+      resCard.classList.remove('hidden');
+      document.getElementById('pretestScoreDisplay').innerText = `${score} / 20`;
+      
+      confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
+      showToast('ปลดล็อกบทเรียนทั้ง 4 แกนเรียบร้อยแล้ว!', 'success');
+      updateLMSProgress();
+    }
+
+    // Render Post-test Questions
+    function renderPosttest() {
+      const container = document.getElementById('posttestQuestionsContainer');
+      container.innerHTML = EXAM_QUESTIONS.map((item, idx) => `
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-300 transition">
+          <div class="flex items-start space-x-3 mb-3">
+            <span class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+              ${idx + 1}
+            </span>
+            <div>
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-700 block mb-0.5">${item.pillar}</span>
+              <p class="text-xs sm:text-sm font-semibold text-slate-800">${item.q}</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pl-9">
+            ${item.options.map((opt, optIdx) => `
+              <label class="flex items-center space-x-3 p-3 rounded-xl border border-slate-200 bg-white hover:bg-emerald-50/50 cursor-pointer transition text-xs text-slate-700">
+                <input type="radio" name="post_q_${item.id}" value="${optIdx}" onchange="updatePosttestAnsweredCount()" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                <span>${['ก', 'ข', 'ค', 'ง'][optIdx]}. ${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updatePosttestAnsweredCount() {
+      let count = 0;
+      EXAM_QUESTIONS.forEach(item => {
+        if (document.querySelector(`input[name="post_q_${item.id}"]:checked`)) count++;
+      });
+      document.getElementById('posttestAnsweredCount').innerText = count;
+    }
+
+    async function submitPosttest(e) {
+      e.preventDefault();
+      let score = 0;
+      let unanswered = 0;
+
+      EXAM_QUESTIONS.forEach(item => {
+        const sel = document.querySelector(`input[name="post_q_${item.id}"]:checked`);
+        if (sel) {
+          if (parseInt(sel.value) === item.ans) score++;
+        } else {
+          unanswered++;
+        }
+      });
+
+      if (unanswered > 0) {
+        showCustomModal(
+          'ตอบคำถามยังไม่ครบ',
+          `ท่านยังตอบคำถามหลังเรียนไม่ครบอีก <span class="font-bold text-rose-600">${unanswered} ข้อ</span> กรุณาตอบให้ครบทั้ง 20 ข้อก่อนส่ง`,
+          'alert-circle',
+          false
+        );
+        return;
+      }
+
+      activeStudent.postDone = true;
+      activeStudent.postScore = score;
+      localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+
+      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      if (idx >= 0) {
+        window.allStudents[idx].postScore = score;
+      }
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+
+      if (window.syncStudentToFirestore) {
+        await window.syncStudentToFirestore(activeStudent);
+      }
+
+      confetti({ particleCount: 100, spread: 90, origin: { y: 0.5 } });
+      showToast('ประมวลผลคะแนนแบบทดสอบหลังเรียนเรียบร้อย', 'success');
+      navigateStep('step-summary');
+    }
+  </script>
+
+  <script>
+    // Render Formative Quizzes for Modules 1 to 4
+    function renderAllFormativeQuizzes() {
+      for (let mod = 1; mod <= 4; mod++) {
+        const container = document.getElementById(`formativeContainer-${mod}`);
+        const questions = FORMATIVE_QUIZZES[mod];
+
+        container.innerHTML = questions.map((qItem) => `
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-semibold text-xs text-slate-800 mb-2">${qItem.q}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mb-2">
+              ${qItem.options.map((opt, oIdx) => `
+                <button onclick="checkFormativeAnswer(${mod}, '${qItem.id}', ${oIdx}, ${qItem.ans})" 
+                        id="btn_${qItem.id}_${oIdx}" 
+                        class="p-2 text-left rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs text-slate-700 transition">
+                  ${['ก', 'ข', 'ค', 'ง'][oIdx]}. ${opt}
+                </button>
+              `).join('')}
+            </div>
+            <div id="fb_${qItem.id}" class="hidden text-[11px] p-2 rounded-lg mt-1 font-medium"></div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function checkFormativeAnswer(mod, qId, selectedIdx, correctIdx) {
+      const fbEl = document.getElementById(`fb_${qId}`);
+      fbEl.classList.remove('hidden');
+
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`btn_${qId}_${i}`);
+        if (btn) btn.disabled = true;
+      }
+
+      const qObj = FORMATIVE_QUIZZES[mod].find(q => q.id === qId);
+
+      if (selectedIdx === correctIdx) {
+        document.getElementById(`btn_${qId}_${selectedIdx}`).classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800', 'font-bold');
+        fbEl.className = 'text-[11px] p-2 rounded-lg mt-1 font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1';
+        fbEl.innerHTML = `<strong>ถูกต้อง!</strong> ${qObj.reason}`;
+        activeStudent.formativeScores[mod] = (activeStudent.formativeScores[mod] || 0) + 1;
+      } else {
+        document.getElementById(`btn_${qId}_${selectedIdx}`).classList.add('bg-rose-100', 'border-rose-400', 'text-rose-800');
+        document.getElementById(`btn_${qId}_${correctIdx}`).classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-800', 'font-bold');
+        fbEl.className = 'text-[11px] p-2 rounded-lg mt-1 font-medium bg-rose-50 text-rose-800 border border-rose-200';
+        fbEl.innerHTML = `<strong>ยังไม่ถูกต้อง:</strong> คำตอบที่ถูกคือข้อ ${['ก', 'ข', 'ค', 'ง'][correctIdx]} (${qObj.reason})`;
+      }
+
+      activeStudent.formativeDone[mod] = true;
+      document.getElementById(`formativeScore-${mod}`).innerText = `คะแนนสะสม: ${activeStudent.formativeScores[mod]} / 5`;
+      
+      const sumFormative = Object.values(activeStudent.formativeScores).reduce((a, b) => a + b, 0);
+      const sIdx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      if (sIdx >= 0) {
+        window.allStudents[sIdx].formTotal = sumFormative;
+      }
+
+      localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+      updateLMSProgress();
+    }
+
+    // Password Tester Sandbox
+    function setPwdTest(val) {
+      const el = document.getElementById('interactivePwdInput');
+      el.value = val;
+      evalInteractivePwd();
+    }
+
+    function evalInteractivePwd() {
+      const pwd = document.getElementById('interactivePwdInput').value;
+      const bar = document.getElementById('interactivePwdBar');
+      const label = document.getElementById('interactivePwdLabel');
+      const time = document.getElementById('interactivePwdTime');
+
+      let score = 0;
+      if (pwd.length >= 8) score += 25;
+      if (/[A-Z]/.test(pwd)) score += 25;
+      if (/[0-9]/.test(pwd)) score += 25;
+      if (/[!@#$%^&*(),.?":{}|<>]/.test(pwd)) score += 25;
+
+      bar.style.width = score + '%';
+
+      if (score <= 25) {
+        bar.className = 'h-full bg-rose-500 transition-all duration-300';
+        label.innerText = 'อ่อนแอมาก (Very Weak)';
+        label.className = 'text-rose-400 font-bold';
+        time.innerText = 'เวลาที่แฮกเกอร์ใช้: ไม่กี่วินาที';
+      } else if (score <= 50) {
+        bar.className = 'h-full bg-amber-500 transition-all duration-300';
+        label.innerText = 'ปานกลาง (Medium)';
+        label.className = 'text-amber-400 font-bold';
+        time.innerText = 'เวลาที่แฮกเกอร์ใช้: 15 นาที - 2 ชั่วโมง';
+      } else if (score <= 75) {
+        bar.className = 'h-full bg-indigo-500 transition-all duration-300';
+        label.innerText = 'ปลอดภัยดี (Strong)';
+        label.className = 'text-indigo-400 font-bold';
+        time.innerText = 'เวลาที่แฮกเกอร์ใช้: 3 - 5 ปี';
+      } else {
+        bar.className = 'h-full bg-emerald-500 transition-all duration-300';
+        label.innerText = 'ปลอดภัยสูงสุด (Very Strong!)';
+        label.className = 'text-emerald-400 font-bold';
+        time.innerText = 'เวลาที่แฮกเกอร์ใช้: หลายล้านปี';
+      }
+    }
+
+    function checkPhishingSim(isCorrect) {
+      const fb = document.getElementById('phishingSimFeedback');
+      fb.classList.remove('hidden');
+      if (isCorrect) {
+        fb.className = 'text-xs p-2.5 rounded-lg bg-emerald-100 text-emerald-800 font-medium';
+        fb.innerHTML = '<strong>ยอดเยี่ยม!</strong> เมื่อเพื่อนขอยืมเงินด่วน ต้องโทรยืนยันตัวตนเสมอ เพราะบัญชีเพื่อนอาจถูกแฮ็กมาสวมรอย';
+      } else {
+        fb.className = 'text-xs p-2.5 rounded-lg bg-rose-100 text-rose-800 font-medium';
+        fb.innerHTML = '<strong>ตกเป็นเหยื่อ!</strong> หากโอนทันที เงินจะเข้าบัญชีม้าของมิจฉาชีพทันที';
+      }
+    }
+  </script>
+
+  <script>
+    async function saveStudentCanvaWork() {
+      const topic = document.getElementById('canvaInputTopic').value;
+      const link = document.getElementById('canvaInputLink').value.trim();
+      const desc = document.getElementById('canvaInputDesc').value.trim();
+
+      if (!link) {
+        showToast('กรุณาระบุลิงก์ผลงาน Canva', 'warning');
+        return;
+      }
+
+      activeStudent.canvaTopic = topic;
+      activeStudent.canvaLink = link;
+
+      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      if (idx >= 0) {
+        window.allStudents[idx].canvaTopic = topic;
+        window.allStudents[idx].canvaLink = link;
+      }
+
+      localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+
+      if (window.syncCanvaToFirestore) {
+        await window.syncCanvaToFirestore({
+          studentId: activeStudent.id,
+          studentName: activeStudent.name,
+          room: activeStudent.room,
+          no: activeStudent.no,
+          topic: topic,
+          url: link,
+          desc: desc
+        });
+      }
+
+      renderCanvaGallery();
+      showToast('ส่งผลงาน Canva เรียบร้อยแล้ว!', 'success');
+      document.getElementById('canvaInputLink').value = '';
+      document.getElementById('canvaInputDesc').value = '';
+      updateLMSProgress();
+    }
+
+    function renderCanvaGallery() {
+      const container = document.getElementById('canvaGalleryContainer');
+      const works = window.allStudents.filter(s => s.canvaLink);
+
+      if (works.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full text-center py-8 text-slate-400 text-xs">
+            <i data-lucide="folder-open" class="w-8 h-8 mx-auto mb-2 text-slate-300"></i>
+            ยังไม่มีชิ้นงานในระบบ เป็นคนแรกที่ส่งผลงานเลย!
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      container.innerHTML = works.map(w => `
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 card-hover">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 mb-2">
+            <span>${w.room} เลขที่ ${w.no}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${w.canvaScore ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">
+              ${w.canvaScore ? `คะแนน ${w.canvaScore}/12` : 'รอครูประเมิน'}
+            </span>
+          </div>
+          <h4 class="text-xs font-bold text-slate-800 mb-1 line-clamp-1">${w.canvaTopic || 'ชิ้นงานความปลอดภัยไซเบอร์'}</h4>
+          <p class="text-xs text-indigo-600 font-medium mb-3">${w.name}</p>
+          <a href="${w.canvaLink}" target="_blank" class="block text-center py-2 rounded-xl bg-white border border-slate-300 hover:bg-indigo-50 text-indigo-600 text-xs font-semibold transition">
+            เปิดดูผลงานบน Canva
+          </a>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function renderCloudCanvaGallery(list) {
+      const container = document.getElementById('canvaGalleryContainer');
+      if (!list || list.length === 0) return;
+      container.innerHTML = list.map(w => `
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 card-hover">
+          <div class="flex items-center justify-between text-[11px] text-slate-400 mb-2">
+            <span>${w.room || 'ม.2'} เลขที่ ${w.no || '-'}</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700">Canva Cloud</span>
+          </div>
+          <h4 class="text-xs font-bold text-slate-800 mb-1 line-clamp-1">${w.topic}</h4>
+          <p class="text-xs text-indigo-600 font-medium mb-3">${w.studentName || 'นักเรียน ม.2'}</p>
+          <a href="${w.url}" target="_blank" class="block text-center py-2 rounded-xl bg-white border border-slate-300 hover:bg-indigo-50 text-indigo-600 text-xs font-semibold transition">
+            เปิดดูผลงานบน Canva
+          </a>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+  </script>
+
+  <script>
+    // Teacher Mode Controller
+    function toggleTeacherMode() {
+      document.getElementById('teacherAuthModal').classList.remove('hidden');
+      document.getElementById('inputTeacherPin').value = '';
+      lucide.createIcons();
+    }
+
+    function closeTeacherModal() {
+      document.getElementById('teacherAuthModal').classList.add('hidden');
+    }
+
+    function verifyTeacherPin() {
+      const pin = document.getElementById('inputTeacherPin').value;
+      if (pin === '2569' || pin === 'admin') {
+        closeTeacherModal();
+        navigateStep('teacher-dashboard');
+        showToast('เข้าสู่ระบบจัดการหลังบ้านเรียบร้อย', 'success');
+      } else {
+        showToast('รหัสผ่านไม่ถูกต้อง (ลอง 2569 หรือล็อกอินด้วย Google)', 'error');
+      }
+    }
+
+    // Teacher Table Rendering & Analytics KPIs
+    function renderTeacherTable() {
+      const tbody = document.getElementById('teacherTableBody');
+      const search = document.getElementById('teacherSearchInput').value.toLowerCase();
+      const roomFilter = document.getElementById('teacherRoomFilter').value;
+
+      let filtered = window.allStudents.filter(s => {
+        const matchesRoom = (roomFilter === 'all') || (s.room === roomFilter);
+        const matchesSearch = (s.name && s.name.toLowerCase().includes(search)) || (s.no && s.no.toString().includes(search)) || (s.id && s.id.includes(search));
+        return matchesRoom && matchesSearch;
+      });
+
+      filtered.sort((a, b) => (a.room === b.room ? a.no - b.no : a.room.localeCompare(b.room)));
+
+      tbody.innerHTML = filtered.map(s => {
+        const pre = s.preScore !== null && s.preScore !== undefined ? s.preScore : '-';
+        const post = s.postScore !== null && s.postScore !== undefined ? s.postScore : '-';
+        const form = s.formTotal !== undefined ? s.formTotal : 0;
+        
+        let delta = '-';
+        if (s.preScore !== null && s.postScore !== null && s.preScore !== undefined && s.postScore !== undefined) {
+          const diff = s.postScore - s.preScore;
+          delta = diff >= 0 ? `+${diff}` : `${diff}`;
+        }
+
+        const isPassedPA = s.postScore !== null && s.postScore >= 16;
+        const statusBadge = (s.postScore === null || s.postScore === undefined)
+          ? '<span class="text-slate-400">ยังไม่สอบหลัง</span>'
+          : (isPassedPA 
+              ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">ผ่านเกณฑ์ PA (≥80%)</span>'
+              : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">กลุ่มซ่อมเสริม</span>');
+
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="px-4 py-3 font-medium">${s.no || '-'}</td>
+            <td class="px-4 py-3">${s.room || 'ม.2/1'}</td>
+            <td class="px-4 py-3 text-slate-500 font-mono text-[11px]">${s.id || '-'}</td>
+            <td class="px-4 py-3 font-semibold text-slate-800">${s.name}</td>
+            <td class="px-4 py-3 text-center text-amber-600 font-bold">${pre}</td>
+            <td class="px-4 py-3 text-center text-indigo-600 font-bold">${form}/20</td>
+            <td class="px-4 py-3 text-center text-emerald-600 font-bold">${post}</td>
+            <td class="px-4 py-3 text-center font-bold ${delta.toString().startsWith('+') ? 'text-emerald-600' : 'text-slate-500'}">${delta}</td>
+            <td class="px-4 py-3 text-center">
+              ${s.canvaLink 
+                ? `<button onclick="openRubricModal('${s.id}')" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-semibold text-[11px] border border-indigo-200">
+                    ${s.canvaScore ? `${s.canvaScore}/12` : 'ตรวจให้คะแนน'}
+                   </button>`
+                : '<span class="text-slate-400">ยังไม่ส่ง</span>'}
+            </td>
+            <td class="px-4 py-3 text-center">${statusBadge}</td>
+            <td class="px-4 py-3 text-center">
+              <button onclick="editStudentRecord('${s.id}')" class="text-slate-400 hover:text-indigo-600 p-1" title="แก้ไขคะแนน">
+                <i data-lucide="edit" class="w-4 h-4"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function updateDashboardKPIs() {
+      const list = window.allStudents;
+      const total = list.length;
+      document.getElementById('statTotalStudents').innerText = `${total} คน`;
+
+      // Pre-test Average
+      const preList = list.filter(s => s.preScore !== null && s.preScore !== undefined);
+      const preAvg = preList.length > 0 ? (preList.reduce((a, c) => a + c.preScore, 0) / preList.length) : 0;
+      document.getElementById('statPreAvg').innerText = `${preAvg.toFixed(1)} / 20`;
+      document.getElementById('statPrePercent').innerText = `คิดเป็น ${((preAvg/20)*100).toFixed(1)}% (E1 Baseline)`;
+
+      // Post-test Average
+      const postList = list.filter(s => s.postScore !== null && s.postScore !== undefined);
+      const postAvg = postList.length > 0 ? (postList.reduce((a, c) => a + c.postScore, 0) / postList.length) : 0;
+      document.getElementById('statPostAvg').innerText = `${postAvg.toFixed(1)} / 20`;
+
+      // PA Pass Rate (Goal >= 16 points or 80%)
+      const passedCount = postList.filter(s => s.postScore >= 16).length;
+      const passRate = postList.length > 0 ? (passedCount / postList.length) * 100 : 0;
+      document.getElementById('statPassRate').innerText = `${passRate.toFixed(1)}%`;
+      document.getElementById('statPassDesc').innerText = `ผ่าน ${passedCount} จาก ${postList.length} คนที่สอบครบ`;
+    }
+
+    // Export to Q-Info CSV File
+    function exportToCSV() {
+      let csvContent = "\uFEFFเลขที่,ห้อง,รหัสนักเรียน,ชื่อ-นามสกุล,คะแนนก่อนเรียน (Pre-test 20),คะแนนแบบฝึกหัด (Formative 20),คะแนนหลังเรียน (Post-test 20),พัฒนาการ (+/-),คะแนนชิ้นงาน Canva (12),ผลการประเมิน PA (80%)\n";
+      
+      window.allStudents.forEach(s => {
+        const pre = s.preScore !== null && s.preScore !== undefined ? s.preScore : '';
+        const form = s.formTotal !== undefined ? s.formTotal : 0;
+        const post = s.postScore !== null && s.postScore !== undefined ? s.postScore : '';
+        const diff = (s.preScore !== null && s.postScore !== null && s.preScore !== undefined && s.postScore !== undefined) ? (s.postScore - s.preScore) : '';
+        const canva = s.canvaScore !== null && s.canvaScore !== undefined ? s.canvaScore : '';
+        const status = s.postScore >= 16 ? 'ผ่านเกณฑ์ PA' : (s.postScore !== null ? 'กลุ่มซ่อมเสริม' : 'ยังไม่สอบหลัง');
+
+        csvContent += `"${s.no || ''}","${s.room || 'ม.2/1'}","${s.id || ''}","${s.name}","${pre}","${form}","${post}","${diff}","${canva}","${status}"\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `QInfo_CyberSafety_M2_BanSamYeod_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('ดาวน์โหลดไฟล์ข้อมูลนำเข้า Q-Info สำเร็จ', 'success');
+    }
+
+    // Rubric Grading Modal Handlers
+    function openRubricModal(studentId) {
+      selectedStudentRubricId = studentId;
+      const std = window.allStudents.find(s => s.id === studentId);
+      if (!std) return;
+
+      document.getElementById('rubricStudentTitle').innerText = `นักเรียน: ${std.name} (${std.room || 'ม.2/1'} เลขที่ ${std.no || '-'})`;
+      document.getElementById('rubricModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeRubricModal() {
+      document.getElementById('rubricModal').classList.add('hidden');
+      selectedStudentRubricId = null;
+    }
+
+    async function saveRubricGrading() {
+      if (!selectedStudentRubricId) return;
+      const s1 = parseInt(document.getElementById('rubricScore1').value);
+      const s2 = parseInt(document.getElementById('rubricScore2').value);
+      const s3 = parseInt(document.getElementById('rubricScore3').value);
+      const total = s1 + s2 + s3;
+
+      const std = window.allStudents.find(s => s.id === selectedStudentRubricId);
+      if (std) {
+        std.canvaScore = total;
+        if (std.id === activeStudent.id) activeStudent.canvaScore = total;
+        localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+        localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+
+        if (window.syncStudentToFirestore) {
+          await window.syncStudentToFirestore(std);
+        }
+      }
+
+      closeRubricModal();
+      renderTeacherTable();
+      renderCanvaGallery();
+      showToast(`บันทึกคะแนนรูบริกส์ ${std.name} สำเร็จ: ${total}/12 คะแนน`, 'success');
+    }
+
+    function editStudentRecord(studentId) {
+      const std = window.allStudents.find(s => s.id === studentId);
+      if (!std) return;
+
+      const newPre = prompt(`แก้ไขคะแนนก่อนเรียนของ ${std.name} (0-20):`, std.preScore !== null ? std.preScore : 0);
+      if (newPre === null) return;
+      const newPost = prompt(`แก้ไขคะแนนหลังเรียนของ ${std.name} (0-20):`, std.postScore !== null ? std.postScore : 0);
+      if (newPost === null) return;
+
+      std.preScore = parseInt(newPre);
+      std.postScore = parseInt(newPost);
+
+      if (std.id === activeStudent.id) {
+        activeStudent.preScore = std.preScore;
+        activeStudent.postScore = std.postScore;
+        localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+      }
+
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+      if (window.syncStudentToFirestore) {
+        window.syncStudentToFirestore(std);
+      }
+
+      renderTeacherTable();
+      updateDashboardKPIs();
+      showToast('อัปเดตข้อมูลคะแนนเรียบร้อย', 'success');
+    }
+
+    function seedDemoStudents() {
+      const names = [
+        'ด.ช. ธีรภัทร บุญมี', 'ด.ญ. ปนัดดา รักดี', 'ด.ช. พงศกร มะลิวัลย์',
+        'ด.ญ. สุพรรษา เกิดแก้ว', 'ด.ช. อานนท์ คำสะอาด', 'ด.ญ. อัจฉรา ศรีสุข'
+      ];
+      names.forEach((name, i) => {
+        const no = window.allStudents.length + 1;
+        const pre = Math.floor(Math.random() * 5) + 7;
+        const form = Math.floor(Math.random() * 4) + 16;
+        const post = Math.floor(Math.random() * 5) + 16;
+        window.allStudents.push({
+          id: `std_demo_${10200 + no}`,
+          no: no,
+          room: 'ม.2/1',
+          name: name,
+          preScore: pre,
+          formTotal: form,
+          postScore: post,
+          canvaLink: `https://canva.com/design/demo_${no}`,
+          canvaTopic: '5 วิธีสังเกตลิงก์ปลอมและ Phishing',
+          canvaScore: Math.floor(Math.random() * 3) + 10
+        });
+      });
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+      renderTeacherTable();
+      updateDashboardKPIs();
+      renderCanvaGallery();
+      showToast('จำลองข้อมูลนักเรียน ม.2 เข้าสู่ระบบเรียบร้อย', 'success');
+    }
+
+    // Student Profile Management
+    function openStudentModal() {
+      document.getElementById('studentModal').classList.remove('hidden');
+      document.getElementById('inputStudentId').value = activeStudent.id;
+      document.getElementById('inputStudentNo').value = activeStudent.no;
+      document.getElementById('inputStudentName').value = activeStudent.name;
+      document.getElementById('inputStudentClass').value = activeStudent.room;
+      lucide.createIcons();
+    }
+
+    function closeStudentModal() {
+      document.getElementById('studentModal').classList.add('hidden');
+    }
+
+    function saveStudentProfile() {
+      const id = document.getElementById('inputStudentId').value.trim();
+      const no = document.getElementById('inputStudentNo').value.trim();
+      const name = document.getElementById('inputStudentName').value.trim();
+      const room = document.getElementById('inputStudentClass').value;
+
+      if (!id || !no || !name) {
+        showToast('กรุณากรอกเลขประจำตัว เลขที่ และชื่อให้ครบถ้วน', 'warning');
+        return;
+      }
+
+      activeStudent.id = id;
+      activeStudent.no = parseInt(no);
+      activeStudent.name = name;
+      activeStudent.room = room;
+
+      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      if (idx >= 0) {
+        window.allStudents[idx] = { ...window.allStudents[idx], ...activeStudent };
+      } else {
+        window.allStudents.push({ ...activeStudent });
+      }
+
+      localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+
+      if (window.syncStudentToFirestore) {
+        window.syncStudentToFirestore(activeStudent);
+      }
+
+      document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room})`;
+      closeStudentModal();
+      showToast(`บันทึกข้อมูล ${name} เรียบร้อย`, 'success');
+    }
+
+    // Update Summary Step View
+    function updateSummaryView() {
+      document.getElementById('summaryStudentName').innerText = `${activeStudent.name} (${activeStudent.room} เลขที่ ${activeStudent.no})`;
+      
+      const pre = activeStudent.preScore !== null ? activeStudent.preScore : 0;
+      const post = activeStudent.postScore !== null ? activeStudent.postScore : 0;
+      const diff = post - pre;
+
+      document.getElementById('summaryPreScore').innerText = `${pre} / 20`;
+      document.getElementById('summaryPostScore').innerText = `${post} / 20`;
+      document.getElementById('summaryDeltaScore').innerText = diff >= 0 ? `+${diff}` : `${diff}`;
+
+      document.getElementById('summaryF1').innerText = `${activeStudent.formativeScores[1] || 0} / 5`;
+      document.getElementById('summaryF2').innerText = `${activeStudent.formativeScores[2] || 0} / 5`;
+      document.getElementById('summaryF3').innerText = `${activeStudent.formativeScores[3] || 0} / 5`;
+      document.getElementById('summaryF4').innerText = `${activeStudent.formativeScores[4] || 0} / 5`;
+
+      const box = document.getElementById('summaryPASuccessBox');
+      if (post >= 16) {
+        box.className = 'p-4 rounded-2xl bg-emerald-100 border border-emerald-300 text-emerald-900 text-xs font-medium text-center space-y-1';
+        box.innerHTML = `
+          <p class="font-bold text-sm"><i data-lucide="check-circle" class="inline w-4 h-4 text-emerald-600 mr-1"></i> ผ่านเกณฑ์การประเมินตามข้อตกลง ว.PA!</p>
+          <p>คะแนนหลังเรียน ${post}/20 (${((post/20)*100).toFixed(0)}%) ผ่านเกณฑ์เป้าหมายมาตรฐาน 80% ของโรงเรียนบ้านสามยอด</p>
+        `;
+      } else {
+        box.className = 'p-4 rounded-2xl bg-amber-100 border border-amber-300 text-amber-900 text-xs font-medium text-center space-y-1';
+        box.innerHTML = `
+          <p class="font-bold text-sm"><i data-lucide="clock" class="inline w-4 h-4 text-amber-600 mr-1"></i> อยู่ในกลุ่มพัฒนาซ่อมเสริม (Peer Tutoring)</p>
+          <p>คะแนนหลังเรียน ${post}/20 ยังไม่ถึงเกณฑ์เป้าหมาย 80% สามารถทบทวนเนื้อหาและเข้ารับการทดสอบซ่อมเสริมได้</p>
+        `;
+      }
+      lucide.createIcons();
+    }
+  </script>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderPretest();
+      renderPosttest();
+      renderAllFormativeQuizzes();
+      renderCanvaGallery();
+      updateLMSProgress();
+
+      if (activeStudent && activeStudent.name) {
+        document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room})`;
+        const preNameEl = document.getElementById('pretestStudentName');
+        const preIdEl = document.getElementById('pretestStudentId');
+        const preNoEl = document.getElementById('pretestStudentNo');
+        if (preNameEl) preNameEl.value = activeStudent.name;
+        if (preIdEl) preIdEl.value = activeStudent.id;
+        if (preNoEl) preNoEl.value = activeStudent.no;
+      }
+    });
+  </script>
+
+</body>
+</html>
