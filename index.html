@@ -1468,10 +1468,251 @@
         document.getElementById('teacherAuthDisplay').innerText = 'ครูผู้สอน (ยืนยันด้วยรหัส PIN)';
         document.getElementById('teacherPinInput').value = '';
         navigateStep('step-admin');
-        showCustomModal('ยืนยันตัวตนสำเร็จ', 'เข้าสู่ระบบจัดการข้อมูล ว.PA โรงเรียนบ้านสามยอดเรียบร้อยครับ', 'shield-check', 'emerald');
+        renderCanvaGallery();
+        showCustomModal('ยืนยันตัวตนสำเร็จ', 'เข้าสู่ระบบจัดการข้อมูล ว.PA โรงเรียนบ้านสามยอดเรียบร้อยครับ (เปิดโหมดจัดการ Canva)', 'shield-check', 'emerald');
       } else {
         showCustomModal('รหัส PIN ไม่ถูกต้อง', 'กรุณากรอกรหัส PIN ครูผู้สอนให้ถูกต้อง หรือล็อกอินด้วย Google', 'alert-circle', 'rose');
       }
+    };
+
+    window.logoutTeacher = async function() {
+      if (window.logoutTeacherFirebase) {
+        await window.logoutTeacherFirebase();
+      }
+      sessionStorage.removeItem('teacherLoggedIn');
+      renderCanvaGallery();
+      navigateStep('step-pretest');
+      showCustomModal('ออกจากระบบ', 'ออกจากระบบจัดการครูเรียบร้อยแล้ว', 'info', 'blue');
+    };
+
+    /* ========================================================================= */
+    /* MINI-GAMES LOGIC (มินิเกม 4 ฐานการเรียนรู้)                                 */
+    /* ========================================================================= */
+    function initMiniGames() {
+      renderPhishingGame();
+      renderPermissionGame();
+      renderIncidentGame();
+    }
+
+    // Game 1: Password Cracker Simulator
+    window.runPasswordGame = function() {
+      const val = document.getElementById('gamePwInput').value;
+      const timeTag = document.getElementById('gamePwTimeText');
+      const verdict = document.getElementById('gamePwVerdict');
+
+      const lenOk = val.length >= 8;
+      const upperOk = /[A-Z]/.test(val);
+      const numOk = /[0-9]/.test(val);
+      const specialOk = /[^A-Za-z0-9]/.test(val);
+
+      toggleRuleStyle('pwRuleLen', lenOk);
+      toggleRuleStyle('pwRuleUpper', upperOk);
+      toggleRuleStyle('pwRuleNum', numOk);
+      toggleRuleStyle('pwRuleSpecial', specialOk);
+
+      if (!val) {
+        timeTag.innerText = '0 วินาที';
+        timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-600 text-white';
+        verdict.innerText = 'พิมพ์รหัสผ่านเพื่อเริ่มทดสอบความแข็งแกร่ง';
+        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-slate-800 text-slate-300';
+        return;
+      }
+
+      let score = 0;
+      if (lenOk) score += 2;
+      if (val.length >= 12) score += 1;
+      if (upperOk) score += 1;
+      if (numOk) score += 1;
+      if (specialOk) score += 1;
+
+      if (score <= 2) {
+        timeTag.innerText = '0.001 วินาที!';
+        timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-rose-600 text-white animate-pulse';
+        verdict.innerText = '⚠️ แฮกเกอร์ใช้ Brute-Force เจาะได้ทันที! ควรเพิ่มความยาวและผสมอักขระพิเศษ';
+        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-rose-950/80 text-rose-300 border border-rose-500/40';
+      } else if (score <= 4) {
+        timeTag.innerText = 'ประมาณ 3-5 วัน';
+        timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500 text-slate-900';
+        verdict.innerText = '⚡ ปานกลาง: เพิ่มความยาวให้เกิน 12 ตัวอักษรและใส่อักขระพิเศษเพื่อความปลอดภัยสูงสุด';
+        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-amber-950/80 text-amber-300 border border-amber-500/40';
+      } else {
+        timeTag.innerText = '300 ล้านปีขึ้นไป!';
+        timeTag.className = 'absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-emerald-500 text-slate-950';
+        verdict.innerText = '🛡️ ปลอดภัยระดับสูงสุด! ซูเปอร์คอมพิวเตอร์แฮกเกอร์ใช้เวลาถอดรหัสชั่วกัปชั่วกัลป์';
+        verdict.className = 'text-xs text-center py-1.5 rounded-xl font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40';
+        confetti({ particleCount: 25, spread: 50, origin: { y: 0.7 } });
+      }
+    };
+
+    function toggleRuleStyle(id, active) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (active) {
+        el.className = 'p-2 rounded-xl bg-emerald-900/60 text-emerald-300 flex items-center gap-1.5 transition border border-emerald-500/30';
+        el.querySelector('span').className = 'w-2 h-2 rounded-full bg-emerald-400';
+      } else {
+        el.className = 'p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition';
+        el.querySelector('span').className = 'w-2 h-2 rounded-full bg-slate-600';
+      }
+    }
+
+    // Game 2: Phishing Detective
+    function renderPhishingGame() {
+      const box = document.getElementById('gamePhishingBox');
+      const cur = PHISHING_SCENARIOS[phishingCurrentIdx];
+      document.getElementById('gamePhishingScore').innerText = `ข้อที่: ${phishingCurrentIdx + 1}/${PHISHING_SCENARIOS.length} | ถูก: ${phishingScore}`;
+
+      box.innerHTML = `
+        <div class="space-y-2.5 text-xs">
+          <div class="flex items-center gap-2 text-rose-300 font-bold">
+            <i data-lucide="mail-warning" class="w-4 h-4"></i> ผู้ส่ง: <span class="text-white">${cur.sender}</span>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-900/90 text-slate-200 border border-white/10 leading-relaxed font-mono">
+            "${cur.text}"
+          </div>
+          <div class="flex gap-2 pt-1">
+            <button onclick="answerPhishing(false)" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+              <i data-lucide="check" class="w-4 h-4"></i> ข้อความปลอดภัย
+            </button>
+            <button onclick="answerPhishing(true)" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5 shadow-sm">
+              <i data-lucide="alert-triangle" class="w-4 h-4"></i> Phishing กลโกง!
+            </button>
+          </div>
+          <div id="phishingFeedback" class="hidden p-3 rounded-xl text-xs"></div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    window.answerPhishing = function(isScamChoice) {
+      const cur = PHISHING_SCENARIOS[phishingCurrentIdx];
+      const fb = document.getElementById('phishingFeedback');
+      fb.classList.remove('hidden');
+
+      if (isScamChoice === cur.isScam) {
+        phishingScore++;
+        fb.className = 'p-3 rounded-xl text-xs bg-emerald-950/90 text-emerald-200 border border-emerald-500/40 font-medium';
+        fb.innerHTML = `<strong>✅ ถูกต้อง แม่นยำมาก!</strong> ${cur.reason}`;
+        confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+      } else {
+        fb.className = 'p-3 rounded-xl text-xs bg-rose-950/90 text-rose-200 border border-rose-500/40 font-medium';
+        fb.innerHTML = `<strong>❌ ยังไม่ถูกต้อง!</strong> ${cur.reason}`;
+      }
+
+      setTimeout(() => {
+        phishingCurrentIdx = (phishingCurrentIdx + 1) % PHISHING_SCENARIOS.length;
+        renderPhishingGame();
+      }, 3000);
+    };
+
+    // Game 3: Permission Gatekeeper
+    function renderPermissionGame() {
+      const box = document.getElementById('gamePermBox');
+      const cur = PERM_SCENARIOS[permCurrentIdx];
+      document.getElementById('gamePermScore').innerText = `ด่านที่: ${permCurrentIdx + 1}/${PERM_SCENARIOS.length} | ถูก: ${permScore}`;
+
+      box.innerHTML = `
+        <div class="space-y-3 text-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+              <i data-lucide="${cur.icon || 'smartphone'}" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h5 class="font-bold text-white text-sm">${cur.appName}</h5>
+              <span class="text-amber-300 text-[11px]">ต้องการเข้าถึงสิทธิ์ดังต่อไปนี้:</span>
+            </div>
+          </div>
+
+          <div class="p-3 bg-slate-900/90 rounded-xl border border-white/10 space-y-1.5">
+            ${cur.perms.map(p => `
+              <div class="flex items-center gap-2 text-slate-200">
+                <i data-lucide="alert-circle" class="w-3.5 h-3.5 text-amber-400 shrink-0"></i>
+                <span>${p}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="flex gap-2">
+            <button onclick="answerPermission(true)" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5">
+              <i data-lucide="check" class="w-4 h-4"></i> อนุญาต (Allow)
+            </button>
+            <button onclick="answerPermission(false)" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl font-bold transition flex items-center justify-center gap-1.5">
+              <i data-lucide="x" class="w-4 h-4"></i> บล็อกปฏิเสธ (Deny)
+            </button>
+          </div>
+          <div id="permFeedback" class="hidden p-3 rounded-xl text-xs"></div>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    window.answerPermission = function(allowedChoice) {
+      const cur = PERM_SCENARIOS[permCurrentIdx];
+      const fb = document.getElementById('permFeedback');
+      fb.classList.remove('hidden');
+
+      if (allowedChoice === cur.shouldAllow) {
+        permScore++;
+        fb.className = 'p-3 rounded-xl text-xs bg-emerald-950/90 text-emerald-200 border border-emerald-500/40 font-medium';
+        fb.innerHTML = `<strong>✅ ตัดสินใจได้ยอดเยี่ยม!</strong> ${cur.reason}`;
+        confetti({ particleCount: 30, spread: 60, origin: { y: 0.7 } });
+      } else {
+        fb.className = 'p-3 rounded-xl text-xs bg-rose-950/90 text-rose-200 border border-rose-500/40 font-medium';
+        fb.innerHTML = `<strong>❌ เสี่ยงภัยไซเบอร์!</strong> ${cur.reason}`;
+      }
+
+      setTimeout(() => {
+        permCurrentIdx = (permCurrentIdx + 1) % PERM_SCENARIOS.length;
+        renderPermissionGame();
+      }, 3200);
+    };
+
+    // Game 4: Incident Response Sequencer
+    function renderIncidentGame() {
+      const box = document.getElementById('gameIncidentBox');
+      const shuffled = [...INCIDENT_STEPS].sort((a, b) => (a.id * 37 % 5) - (b.id * 37 % 5));
+
+      box.innerHTML = shuffled.map(step => {
+        const pickedIdx = incidentUserPicks.indexOf(step.id);
+        const isPicked = pickedIdx !== -1;
+        return `
+          <button onclick="pickIncidentStep(${step.id})" ${isPicked ? 'disabled' : ''} class="w-full text-left p-3 rounded-xl border transition flex items-center justify-between text-xs ${isPicked ? 'bg-emerald-950/70 border-emerald-500/40 text-emerald-200 opacity-80' : 'bg-slate-900/90 border-white/15 text-slate-200 hover:bg-slate-800'}">
+            <span>${step.text.replace(/^[0-9]\.\s*/, '')}</span>
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${isPicked ? 'bg-emerald-500 text-slate-950' : 'bg-white/20 text-white'}">
+              ${isPicked ? (pickedIdx + 1) : '+'}
+            </span>
+          </button>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    window.pickIncidentStep = function(stepId) {
+      if (incidentUserPicks.includes(stepId)) return;
+      incidentUserPicks.push(stepId);
+      renderIncidentGame();
+
+      if (incidentUserPicks.length === 4) {
+        const isCorrect = incidentUserPicks.every((val, i) => val === (i + 1));
+        const verdict = document.getElementById('gameIncidentVerdict');
+        verdict.classList.remove('hidden');
+
+        if (isCorrect) {
+          verdict.className = 'p-3.5 rounded-2xl text-xs font-bold text-center bg-emerald-950/90 text-emerald-200 border border-emerald-500/40';
+          verdict.innerHTML = '🎉 สมบูรณ์แบบ! จัดลำดับ 4 ขั้นตอนสู้ภัยไซเบอร์ได้อย่างถูกต้อง กู้คืนบัญชีได้อย่างปลอดภัยสูงสุด';
+          confetti({ particleCount: 70, spread: 80, origin: { y: 0.6 } });
+        } else {
+          verdict.className = 'p-3.5 rounded-2xl text-xs font-bold text-center bg-rose-950/90 text-rose-200 border border-rose-500/40';
+          verdict.innerHTML = '❌ ลำดับขั้นตอนยังไม่ถูกต้อง: ต้องเปลี่ยนรหัสทันทีก่อนเป็นอันดับแรกเพื่อตัดสัญญาณแฮกเกอร์ แล้วจึงเปิด 2FA เก็บหลักฐาน และแจ้งผู้ใหญ่ครับ';
+        }
+      }
+    };
+
+    window.resetIncidentGame = function() {
+      incidentUserPicks = [];
+      const verdict = document.getElementById('gameIncidentVerdict');
+      verdict.classList.add('hidden');
+      renderIncidentGame();
     };
 
     window.logoutTeacher = async function() {
