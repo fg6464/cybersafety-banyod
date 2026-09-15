@@ -154,6 +154,28 @@
     </div>
   </div>
 
+  <!-- Delete Student Confirmation Modal (Safe Replacement for browser confirm) -->
+  <div id="deleteStudentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 text-center">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center text-2xl mb-3">
+        <i data-lucide="trash-2" class="w-7 h-7"></i>
+      </div>
+      <h3 class="text-base sm:text-lg font-bold text-slate-800 mb-1">ยืนยันการลบข้อมูลนักเรียน</h3>
+      <p id="deleteStudentMessage" class="text-xs sm:text-sm text-slate-600 mb-6 leading-relaxed">
+        ท่านต้องการลบข้อมูลนักเรียนคนนี้ออกจากระบบและ Cloud Firestore ใช่หรือไม่? ข้อมูลคะแนนและผลงานทั้งหมดจะถูกลบถาวร
+      </p>
+      <div class="flex items-center justify-center gap-2">
+        <button onclick="closeDeleteStudentModal()" class="w-1/2 py-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100 transition">
+          ยกเลิก
+        </button>
+        <button onclick="executeDeleteStudent()" class="w-1/2 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 hover:bg-rose-700 text-white shadow transition flex items-center justify-center gap-1.5">
+          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          <span>ยืนยันการลบ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Student Identification Modal -->
   <div id="studentModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-100">
@@ -218,7 +240,7 @@
       </div>
 
       <div class="space-y-3 my-3">
-        <input type="password" id="inputTeacherPin" placeholder="รหัส PIN ครู (ค่าเริ่มต้น: 2569)" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center text-sm font-bold tracking-widest focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        <input type="password" id="inputTeacherPin" placeholder="รหัส PIN ครู (ค่าเริ่มต้น: 2569)" autocomplete="off" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center text-sm font-bold tracking-widest focus:ring-2 focus:ring-emerald-500 focus:outline-none">
       </div>
 
       <div class="flex gap-2">
@@ -1189,7 +1211,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
-      getFirestore, collection, doc, setDoc, onSnapshot 
+      getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
     import { 
       getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged 
@@ -1253,7 +1275,7 @@
           );
           const pinInput = document.getElementById('inputTeacherPin');
           if (pinInput) {
-            pinInput.value = '2569';
+            pinInput.value = '';
             pinInput.focus();
           }
         } else {
@@ -1278,6 +1300,17 @@
         console.log("Student synced to Firestore successfully!");
       } catch (err) {
         console.error("Firestore Save Error:", err);
+      }
+    };
+
+    // Cloud Sync: Delete Student from Firestore
+    window.deleteStudentFromFirestore = async function(studentId) {
+      if (!db) return;
+      try {
+        await deleteDoc(doc(db, "students", studentId));
+        console.log(`Student ${studentId} deleted from Firestore!`);
+      } catch (err) {
+        console.error("Firestore Delete Error:", err);
       }
     };
 
@@ -1344,6 +1377,7 @@
 
     let currentStep = 'step-pretest';
     let selectedStudentRubricId = null;
+    let pendingDeleteStudentId = null;
 
     // Toast Notification System
     function showToast(message, type = 'info') {
@@ -1964,9 +1998,14 @@
             </td>
             <td class="px-4 py-3 text-center">${statusBadge}</td>
             <td class="px-4 py-3 text-center">
-              <button onclick="editStudentRecord('${s.id}')" class="text-slate-400 hover:text-indigo-600 p-1" title="แก้ไขคะแนน">
-                <i data-lucide="edit" class="w-4 h-4"></i>
-              </button>
+              <div class="flex items-center justify-center gap-1">
+                <button onclick="editStudentRecord('${s.id}')" class="text-slate-400 hover:text-indigo-600 p-1.5 rounded-lg hover:bg-indigo-50 transition" title="แก้ไขคะแนน">
+                  <i data-lucide="edit-3" class="w-4 h-4"></i>
+                </button>
+                <button onclick="openDeleteStudentModal('${s.id}')" class="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition" title="ลบข้อมูลนักเรียน">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
             </td>
           </tr>
         `;
@@ -2090,6 +2129,70 @@
       renderTeacherTable();
       updateDashboardKPIs();
       showToast('อัปเดตข้อมูลคะแนนเรียบร้อย', 'success');
+    }
+
+    // Delete Student Handler (Modal-based)
+    function openDeleteStudentModal(studentId) {
+      pendingDeleteStudentId = studentId;
+      const std = window.allStudents.find(s => s.id === studentId);
+      const name = std ? std.name : studentId;
+      const room = std ? `ห้อง ${std.room} เลขที่ ${std.no}` : '';
+
+      document.getElementById('deleteStudentMessage').innerHTML = `
+        ท่านต้องการลบข้อมูลของ <strong>${name}</strong> (${room}) ออกจากระบบและ Cloud Firestore ใช่หรือไม่? <br>
+        <span class="text-rose-600 text-xs mt-1 block font-medium">* การดำเนินการนี้จะลบคะแนนและการประเมินทั้งหมดถาวร</span>
+      `;
+      document.getElementById('deleteStudentModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeDeleteStudentModal() {
+      document.getElementById('deleteStudentModal').classList.add('hidden');
+      pendingDeleteStudentId = null;
+    }
+
+    async function executeDeleteStudent() {
+      if (!pendingDeleteStudentId) return;
+      const targetId = pendingDeleteStudentId;
+      const std = window.allStudents.find(s => s.id === targetId);
+      const studentName = std ? std.name : targetId;
+
+      // 1. Remove from local array
+      window.allStudents = window.allStudents.filter(s => s.id !== targetId);
+      localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+
+      // 2. If it's the active student, reset active state
+      if (activeStudent && activeStudent.id === targetId) {
+        activeStudent = {
+          id: 'std_m2_new',
+          no: 1,
+          name: '',
+          room: 'ม.2/1',
+          preDone: false,
+          preScore: null,
+          formativeDone: { 1: false, 2: false, 3: false, 4: false },
+          formativeScores: { 1: 0, 2: 0, 3: 0, 4: 0 },
+          canvaLink: '',
+          canvaTopic: '',
+          canvaScore: null,
+          postDone: false,
+          postScore: null
+        };
+        localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+        document.getElementById('navUserName').innerText = 'ยังไม่ลงทะเบียน';
+      }
+
+      // 3. Remove from Cloud Firestore
+      if (window.deleteStudentFromFirestore) {
+        await window.deleteStudentFromFirestore(targetId);
+      }
+
+      // 4. Update UI
+      closeDeleteStudentModal();
+      renderTeacherTable();
+      updateDashboardKPIs();
+      renderCanvaGallery();
+      showToast(`ลบข้อมูล ${studentName} ออกจากระบบเรียบร้อยแล้ว`, 'success');
     }
 
     function seedDemoStudents() {
