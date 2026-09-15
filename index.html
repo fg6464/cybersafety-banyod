@@ -191,10 +191,6 @@
 
       <div class="space-y-3 text-xs">
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">เลขประจำตัวนักเรียน *</label>
-          <input type="text" id="inputStudentId" placeholder="เช่น 10201" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-        </div>
-        <div>
           <label class="block font-semibold text-slate-700 mb-1">เลขที่นักเรียน *</label>
           <input type="number" id="inputStudentNo" min="1" max="50" placeholder="เช่น 1" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
         </div>
@@ -240,7 +236,7 @@
       </div>
 
       <div class="space-y-3 my-3">
-        <input type="password" id="inputTeacherPin" placeholder="รหัส PIN ครู (ค่าเริ่มต้น: 2569)" autocomplete="off" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center text-sm font-bold tracking-widest focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        <input type="password" id="inputTeacherPin" placeholder="กรอกรหัส PIN ครูผู้สอน" autocomplete="off" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-center text-sm font-bold tracking-widest focus:ring-2 focus:ring-emerald-500 focus:outline-none">
       </div>
 
       <div class="flex gap-2">
@@ -306,8 +302,11 @@
         <!-- Student Registration Fields in Pre-test -->
         <div class="my-6 p-4 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div>
-            <label class="block text-xs font-semibold text-slate-600 mb-1">เลขประจำตัวนักเรียน *</label>
-            <input type="text" id="pretestStudentId" placeholder="เช่น 10201" class="w-full px-3 py-2 bg-white rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+            <label class="block text-xs font-semibold text-slate-600 mb-1">ระดับชั้น / ห้องเรียน *</label>
+            <select id="pretestStudentClass" class="w-full px-3 py-2 bg-white rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option value="ม.2/1">มัธยมศึกษาปีที่ 2/1</option>
+              <option value="ม.2/2">มัธยมศึกษาปีที่ 2/2</option>
+            </select>
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-600 mb-1">เลขที่ *</label>
@@ -1076,7 +1075,6 @@
               <tr>
                 <th class="px-4 py-3">เลขที่</th>
                 <th class="px-4 py-3">ห้อง</th>
-                <th class="px-4 py-3">รหัสนักเรียน</th>
                 <th class="px-4 py-3">ชื่อ - นามสกุล</th>
                 <th class="px-4 py-3 text-center">ก่อนเรียน (20)</th>
                 <th class="px-4 py-3 text-center">แบบฝึกหัด (20)</th>
@@ -1146,6 +1144,89 @@
       <div class="mt-6 flex gap-2">
         <button onclick="closeRubricModal()" class="w-1/2 py-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100">ยกเลิก</button>
         <button onclick="saveRubricGrading()" class="w-1/2 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow">บันทึกผลการประเมิน</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Individual Student Edit Modal for Teacher Dashboard -->
+  <div id="editStudentAdminModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <i data-lucide="user-cog" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-800">แก้ไขข้อมูลและคะแนนนักเรียน</h3>
+            <p class="text-[11px] text-slate-500">ปรับปรุงข้อมูลรายคนและซิงก์ผลขึ้นระบบทันที</p>
+          </div>
+        </div>
+        <button onclick="closeEditStudentAdminModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <input type="hidden" id="editAdminTargetId" value="">
+
+      <div class="space-y-3.5 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">เลขที่ *</label>
+            <input type="number" id="editAdminStdNo" min="1" max="50" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-bold">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="block font-semibold text-slate-700 mb-1">ห้องเรียน *</label>
+            <select id="editAdminStdRoom" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+              <option value="ม.2/1">มัธยมศึกษาปีที่ 2/1</option>
+              <option value="ม.2/2">มัธยมศึกษาปีที่ 2/2</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">ชื่อ - นามสกุล *</label>
+          <input type="text" id="editAdminStdName" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+        </div>
+
+        <div class="pt-2 border-t border-slate-100">
+          <span class="block font-bold text-slate-800 mb-2">คะแนนการประเมิน ว.PA</span>
+          <div class="grid grid-cols-3 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-amber-700 font-semibold mb-1">ก่อนเรียน (20)</label>
+              <input type="number" id="editAdminPreScore" min="0" max="20" placeholder="0-20" class="w-full px-2.5 py-1.5 rounded-xl border border-amber-200 bg-amber-50/50 text-xs font-bold text-center">
+            </div>
+            <div>
+              <label class="block text-[11px] text-indigo-700 font-semibold mb-1">แบบฝึกหัด (20)</label>
+              <input type="number" id="editAdminFormScore" min="0" max="20" placeholder="0-20" class="w-full px-2.5 py-1.5 rounded-xl border border-indigo-200 bg-indigo-50/50 text-xs font-bold text-center">
+            </div>
+            <div>
+              <label class="block text-[11px] text-emerald-700 font-semibold mb-1">หลังเรียน (20)</label>
+              <input type="number" id="editAdminPostScore" min="0" max="20" placeholder="0-20" class="w-full px-2.5 py-1.5 rounded-xl border border-emerald-200 bg-emerald-50/50 text-xs font-bold text-center">
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-100">
+          <span class="block font-bold text-slate-800 mb-2">ข้อมูลชิ้นงาน Canva</span>
+          <div class="space-y-2">
+            <div>
+              <label class="block text-[11px] text-slate-600 font-semibold mb-1">ลิงก์ผลงาน Canva</label>
+              <input type="url" id="editAdminCanvaLink" placeholder="https://canva.com/design/..." class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
+            </div>
+            <div>
+              <label class="block text-[11px] text-slate-600 font-semibold mb-1">คะแนนชิ้นงาน Canva (เต็ม 12)</label>
+              <input type="number" id="editAdminCanvaScore" min="0" max="12" placeholder="0-12" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex gap-2">
+        <button onclick="closeEditStudentAdminModal()" class="w-1/2 py-2.5 rounded-xl text-xs font-medium text-slate-600 hover:bg-slate-100 transition">ยกเลิก</button>
+        <button onclick="saveEditStudentAdmin()" class="w-1/2 py-2.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow transition flex items-center justify-center gap-1.5">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>บันทึกการแก้ไข</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1269,7 +1350,7 @@
           const currentDomain = window.location.hostname || 'โดเมนปัจจุบัน';
           showCustomModal(
             'โดเมนยังไม่ได้รับอนุญาตใน Firebase',
-            `ระบบ Google Sign-In ปฏิเสธการเข้าถึงเนื่องจากโดเมน <code class="bg-slate-100 text-rose-600 px-1.5 py-0.5 rounded font-mono font-bold">${currentDomain}</code> ยังไม่ได้เพิ่มใน <strong>Authorized domains</strong> ของ Firebase Console<br><br><span class="text-emerald-700 font-semibold">👉 คุณครูสามารถใช้รหัส PIN สำรอง: <strong>2569</strong> ในช่องด้านล่างเพื่อเข้าสู่แดชบอร์ดได้ทันทีครับ</span>`,
+            `ระบบ Google Sign-In ปฏิเสธการเข้าถึงเนื่องจากโดเมน <code class="bg-slate-100 text-rose-600 px-1.5 py-0.5 rounded font-mono font-bold">${currentDomain}</code> ยังไม่ได้เพิ่มใน <strong>Authorized domains</strong> ของ Firebase Console<br><br><span class="text-emerald-700 font-semibold">👉 คุณครูสามารถใช้รหัส PIN ของครูผู้สอนในช่องด้านล่างเพื่อเข้าสู่แดชบอร์ดได้ทันทีครับ</span>`,
             'alert-circle',
             false
           );
@@ -1351,7 +1432,7 @@
   <script>
     // Current Active Student Profile
     let activeStudent = JSON.parse(localStorage.getItem('banyod_active_student')) || {
-      id: 'std_m2_10201',
+      id: 'std_m2_1',
       no: 1,
       name: 'ด.ช. ภูมิภัทร ศรีสวัสดิ์',
       room: 'ม.2/1',
@@ -1368,11 +1449,11 @@
 
     // Global Dataset for Q-Info Dashboard
     window.allStudents = JSON.parse(localStorage.getItem('banyod_all_students')) || [
-      { id: 'std_m2_10201', no: 1, room: 'ม.2/1', name: 'ด.ช. ภูมิภัทร ศรีสวัสดิ์', preScore: null, formTotal: 0, postScore: null, canvaLink: '', canvaTopic: '', canvaScore: null },
-      { id: 'std_m2_10202', no: 2, room: 'ม.2/1', name: 'ด.ช. ธนกฤต มั่งมี', preScore: 8, formTotal: 17, postScore: 17, canvaLink: 'https://canva.com/design/sample2', canvaTopic: 'รหัสผ่านปลอดภัย ตั้งอย่างไรให้แฮกเกอร์ปวดหัว', canvaScore: 11 },
-      { id: 'std_m2_10203', no: 3, room: 'ม.2/1', name: 'ด.ญ. กานต์พิชชา วงศ์ษา', preScore: 10, formTotal: 19, postScore: 19, canvaLink: 'https://canva.com/design/sample3', canvaTopic: 'บัญชีถูกแฮ็กต้องทำอย่างไร 4 สเต็ปฉุกเฉิน', canvaScore: 12 },
-      { id: 'std_m2_10204', no: 4, room: 'ม.2/1', name: 'ด.ญ. นภัสสร แก้วมณี', preScore: 7, formTotal: 15, postScore: 16, canvaLink: 'https://canva.com/design/sample4', canvaTopic: 'ภัยเงียบจาก Public Wi-Fi', canvaScore: 10 },
-      { id: 'std_m2_10205', no: 5, room: 'ม.2/1', name: 'ด.ช. วรัญญู สุขเกษม', preScore: 9, formTotal: 16, postScore: 18, canvaLink: '', canvaTopic: '5 วิธีสังเกตลิงก์ปลอม', canvaScore: null }
+      { id: 'std_m2_1', no: 1, room: 'ม.2/1', name: 'ด.ช. ภูมิภัทร ศรีสวัสดิ์', preScore: null, formTotal: 0, postScore: null, canvaLink: '', canvaTopic: '', canvaScore: null },
+      { id: 'std_m2_2', no: 2, room: 'ม.2/1', name: 'ด.ช. ธนกฤต มั่งมี', preScore: 8, formTotal: 17, postScore: 17, canvaLink: 'https://canva.com/design/sample2', canvaTopic: 'รหัสผ่านปลอดภัย ตั้งอย่างไรให้แฮกเกอร์ปวดหัว', canvaScore: 11 },
+      { id: 'std_m2_3', no: 3, room: 'ม.2/1', name: 'ด.ญ. กานต์พิชชา วงศ์ษา', preScore: 10, formTotal: 19, postScore: 19, canvaLink: 'https://canva.com/design/sample3', canvaTopic: 'บัญชีถูกแฮ็กต้องทำอย่างไร 4 สเต็ปฉุกเฉิน', canvaScore: 12 },
+      { id: 'std_m2_4', no: 4, room: 'ม.2/1', name: 'ด.ญ. นภัสสร แก้วมณี', preScore: 7, formTotal: 15, postScore: 16, canvaLink: 'https://canva.com/design/sample4', canvaTopic: 'ภัยเงียบจาก Public Wi-Fi', canvaScore: 10 },
+      { id: 'std_m2_5', no: 5, room: 'ม.2/1', name: 'ด.ช. วรัญญู สุขเกษม', preScore: 9, formTotal: 16, postScore: 18, canvaLink: '', canvaTopic: '5 วิธีสังเกตลิงก์ปลอม', canvaScore: null }
     ];
 
     let currentStep = 'step-pretest';
@@ -1566,12 +1647,12 @@
     async function submitPretest(e) {
       e.preventDefault();
       
-      const stdId = document.getElementById('pretestStudentId').value.trim();
+      const stdRoom = document.getElementById('pretestStudentClass').value;
       const stdNo = document.getElementById('pretestStudentNo').value.trim();
       const stdName = document.getElementById('pretestStudentName').value.trim();
 
-      if (!stdId || !stdNo || !stdName) {
-        showCustomModal('ข้อมูลไม่ครบถ้วน', 'กรุณากรอกเลขประจำตัว เลขที่ และชื่อ-สกุล ก่อนส่งแบบทดสอบ', 'alert-circle', false);
+      if (!stdNo || !stdName) {
+        showCustomModal('ข้อมูลไม่ครบถ้วน', 'กรุณากรอกเลขที่ และชื่อ-นามสกุล ก่อนส่งแบบทดสอบ', 'alert-circle', false);
         return;
       }
 
@@ -1597,17 +1678,22 @@
         return;
       }
 
+      // Auto generate internal ID without requiring student ID number
+      const cleanRoom = stdRoom.replace(/[^a-zA-Z0-9]/g, '');
+      const uniqueId = `std_${cleanRoom}_${stdNo}`;
+
       // Record Student Profile
-      activeStudent.id = stdId;
+      activeStudent.id = uniqueId;
       activeStudent.no = parseInt(stdNo);
       activeStudent.name = stdName;
+      activeStudent.room = stdRoom;
       activeStudent.preDone = true;
       activeStudent.preScore = score;
 
       localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
 
       // Update Database
-      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id || (s.room === stdRoom && s.no === parseInt(stdNo)));
       if (idx >= 0) {
         window.allStudents[idx] = { ...window.allStudents[idx], ...activeStudent };
       } else {
@@ -1621,7 +1707,7 @@
       }
 
       // Update UI
-      document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room})`;
+      document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room} เลขที่ ${activeStudent.no})`;
       document.getElementById('pretestForm').classList.add('hidden');
       const resCard = document.getElementById('pretestResultCard');
       resCard.classList.remove('hidden');
@@ -1943,7 +2029,7 @@
         navigateStep('teacher-dashboard');
         showToast('เข้าสู่ระบบจัดการหลังบ้านเรียบร้อย', 'success');
       } else {
-        showToast('รหัสผ่านไม่ถูกต้อง (ลอง 2569 หรือล็อกอินด้วย Google)', 'error');
+        showToast('รหัส PIN ไม่ถูกต้อง หรือล็อกอินด้วย Google', 'error');
       }
     }
 
@@ -1955,7 +2041,7 @@
 
       let filtered = window.allStudents.filter(s => {
         const matchesRoom = (roomFilter === 'all') || (s.room === roomFilter);
-        const matchesSearch = (s.name && s.name.toLowerCase().includes(search)) || (s.no && s.no.toString().includes(search)) || (s.id && s.id.includes(search));
+        const matchesSearch = (s.name && s.name.toLowerCase().includes(search)) || (s.no && s.no.toString().includes(search));
         return matchesRoom && matchesSearch;
       });
 
@@ -1982,9 +2068,8 @@
         return `
           <tr class="hover:bg-slate-50 transition">
             <td class="px-4 py-3 font-medium">${s.no || '-'}</td>
-            <td class="px-4 py-3">${s.room || 'ม.2/1'}</td>
-            <td class="px-4 py-3 text-slate-500 font-mono text-[11px]">${s.id || '-'}</td>
-            <td class="px-4 py-3 font-semibold text-slate-800">${s.name}</td>
+            <td class="px-4 py-3 font-semibold text-slate-700">${s.room || 'ม.2/1'}</td>
+            <td class="px-4 py-3 font-bold text-slate-800">${s.name}</td>
             <td class="px-4 py-3 text-center text-amber-600 font-bold">${pre}</td>
             <td class="px-4 py-3 text-center text-indigo-600 font-bold">${form}/20</td>
             <td class="px-4 py-3 text-center text-emerald-600 font-bold">${post}</td>
@@ -1998,12 +2083,14 @@
             </td>
             <td class="px-4 py-3 text-center">${statusBadge}</td>
             <td class="px-4 py-3 text-center">
-              <div class="flex items-center justify-center gap-1">
-                <button onclick="editStudentRecord('${s.id}')" class="text-slate-400 hover:text-indigo-600 p-1.5 rounded-lg hover:bg-indigo-50 transition" title="แก้ไขคะแนน">
-                  <i data-lucide="edit-3" class="w-4 h-4"></i>
+              <div class="flex items-center justify-center gap-1.5">
+                <button onclick="openEditStudentAdminModal('${s.id}')" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-bold text-xs border border-indigo-200 flex items-center gap-1 transition shadow-xs" title="แก้ไขข้อมูลนักเรียนรายนี้">
+                  <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                  <span>แก้</span>
                 </button>
-                <button onclick="openDeleteStudentModal('${s.id}')" class="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition" title="ลบข้อมูลนักเรียน">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <button onclick="openDeleteStudentModal('${s.id}')" class="px-2.5 py-1.5 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 font-bold text-xs border border-rose-200 flex items-center gap-1 transition shadow-xs" title="ลบข้อมูลนักเรียนรายนี้">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  <span>ลบ</span>
                 </button>
               </div>
             </td>
@@ -2038,7 +2125,7 @@
 
     // Export to Q-Info CSV File
     function exportToCSV() {
-      let csvContent = "\uFEFFเลขที่,ห้อง,รหัสนักเรียน,ชื่อ-นามสกุล,คะแนนก่อนเรียน (Pre-test 20),คะแนนแบบฝึกหัด (Formative 20),คะแนนหลังเรียน (Post-test 20),พัฒนาการ (+/-),คะแนนชิ้นงาน Canva (12),ผลการประเมิน PA (80%)\n";
+      let csvContent = "\uFEFFเลขที่,ห้อง,ชื่อ-นามสกุล,คะแนนก่อนเรียน (Pre-test 20),คะแนนแบบฝึกหัด (Formative 20),คะแนนหลังเรียน (Post-test 20),พัฒนาการ (+/-),คะแนนชิ้นงาน Canva (12),ผลการประเมิน PA (80%)\n";
       
       window.allStudents.forEach(s => {
         const pre = s.preScore !== null && s.preScore !== undefined ? s.preScore : '';
@@ -2048,7 +2135,7 @@
         const canva = s.canvaScore !== null && s.canvaScore !== undefined ? s.canvaScore : '';
         const status = s.postScore >= 16 ? 'ผ่านเกณฑ์ PA' : (s.postScore !== null ? 'กลุ่มซ่อมเสริม' : 'ยังไม่สอบหลัง');
 
-        csvContent += `"${s.no || ''}","${s.room || 'ม.2/1'}","${s.id || ''}","${s.name}","${pre}","${form}","${post}","${diff}","${canva}","${status}"\n`;
+        csvContent += `"${s.no || ''}","${s.room || 'ม.2/1'}","${s.name}","${pre}","${form}","${post}","${diff}","${canva}","${status}"\n`;
       });
 
       const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -2096,39 +2183,103 @@
           await window.syncStudentToFirestore(std);
         }
       }
-
       closeRubricModal();
       renderTeacherTable();
+      updateDashboardKPIs();
       renderCanvaGallery();
-      showToast(`บันทึกคะแนนรูบริกส์ ${std.name} สำเร็จ: ${total}/12 คะแนน`, 'success');
+      showToast(`บันทึกคะแนนรูบริกส์ Canva (${total}/12) เรียบร้อย`, 'success');
     }
 
-    function editStudentRecord(studentId) {
+    // Modal-based Admin Student Editor (Safe, reliable individual editing)
+    function openEditStudentAdminModal(studentId) {
       const std = window.allStudents.find(s => s.id === studentId);
-      if (!std) return;
+      if (!std) {
+        showToast('ไม่พบข้อมูลนักเรียนที่ต้องการแก้ไข', 'error');
+        return;
+      }
 
-      const newPre = prompt(`แก้ไขคะแนนก่อนเรียนของ ${std.name} (0-20):`, std.preScore !== null ? std.preScore : 0);
-      if (newPre === null) return;
-      const newPost = prompt(`แก้ไขคะแนนหลังเรียนของ ${std.name} (0-20):`, std.postScore !== null ? std.postScore : 0);
-      if (newPost === null) return;
+      document.getElementById('editAdminTargetId').value = std.id;
+      document.getElementById('editAdminStdName').value = std.name || '';
+      document.getElementById('editAdminStdNo').value = std.no || '';
+      document.getElementById('editAdminStdRoom').value = std.room || 'ม.2/1';
 
-      std.preScore = parseInt(newPre);
-      std.postScore = parseInt(newPost);
+      document.getElementById('editAdminPreScore').value = (std.preScore !== null && std.preScore !== undefined) ? std.preScore : '';
+      document.getElementById('editAdminFormScore').value = (std.formTotal !== null && std.formTotal !== undefined) ? std.formTotal : '';
+      document.getElementById('editAdminPostScore').value = (std.postScore !== null && std.postScore !== undefined) ? std.postScore : '';
 
-      if (std.id === activeStudent.id) {
+      document.getElementById('editAdminCanvaLink').value = std.canvaLink || '';
+      document.getElementById('editAdminCanvaScore').value = (std.canvaScore !== null && std.canvaScore !== undefined) ? std.canvaScore : '';
+
+      const modalEl = document.getElementById('editStudentAdminModal');
+      if (modalEl) {
+        modalEl.classList.remove('hidden');
+      }
+      lucide.createIcons();
+    }
+
+    function closeEditStudentAdminModal() {
+      const modalEl = document.getElementById('editStudentAdminModal');
+      if (modalEl) {
+        modalEl.classList.add('hidden');
+      }
+    }
+
+    async function saveEditStudentAdmin() {
+      const targetId = document.getElementById('editAdminTargetId').value;
+      const std = window.allStudents.find(s => s.id === targetId);
+      if (!std) {
+        showToast('ไม่พบข้อมูลที่ต้องการแก้ไข', 'error');
+        return;
+      }
+
+      const newName = document.getElementById('editAdminStdName').value.trim();
+      const newNo = parseInt(document.getElementById('editAdminStdNo').value);
+      const newRoom = document.getElementById('editAdminStdRoom').value;
+
+      const preVal = document.getElementById('editAdminPreScore').value.trim();
+      const formVal = document.getElementById('editAdminFormScore').value.trim();
+      const postVal = document.getElementById('editAdminPostScore').value.trim();
+      const canvaScoreVal = document.getElementById('editAdminCanvaScore').value.trim();
+      const canvaLinkVal = document.getElementById('editAdminCanvaLink').value.trim();
+
+      if (!newName || isNaN(newNo)) {
+        showToast('กรุณากรอกชื่อ-สกุล และเลขที่ให้ถูกต้อง', 'warning');
+        return;
+      }
+
+      std.name = newName;
+      std.no = newNo;
+      std.room = newRoom;
+      std.preScore = preVal !== '' ? parseInt(preVal) : null;
+      std.formTotal = formVal !== '' ? parseInt(formVal) : 0;
+      std.postScore = postVal !== '' ? parseInt(postVal) : null;
+      std.canvaScore = canvaScoreVal !== '' ? parseInt(canvaScoreVal) : null;
+      std.canvaLink = canvaLinkVal;
+
+      // Sync active student if matches
+      if (activeStudent && (activeStudent.id === targetId)) {
+        activeStudent.name = newName;
+        activeStudent.no = newNo;
+        activeStudent.room = newRoom;
         activeStudent.preScore = std.preScore;
         activeStudent.postScore = std.postScore;
+        activeStudent.canvaScore = std.canvaScore;
+        activeStudent.canvaLink = std.canvaLink;
         localStorage.setItem('banyod_active_student', JSON.stringify(activeStudent));
+        document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room} เลขที่ ${activeStudent.no})`;
       }
 
       localStorage.setItem('banyod_all_students', JSON.stringify(window.allStudents));
+
       if (window.syncStudentToFirestore) {
-        window.syncStudentToFirestore(std);
+        await window.syncStudentToFirestore(std);
       }
 
+      closeEditStudentAdminModal();
       renderTeacherTable();
       updateDashboardKPIs();
-      showToast('อัปเดตข้อมูลคะแนนเรียบร้อย', 'success');
+      renderCanvaGallery();
+      showToast(`อัปเดตข้อมูลของ ${std.name} เรียบร้อยแล้ว`, 'success');
     }
 
     // Delete Student Handler (Modal-based)
@@ -2206,7 +2357,7 @@
         const form = Math.floor(Math.random() * 4) + 16;
         const post = Math.floor(Math.random() * 5) + 16;
         window.allStudents.push({
-          id: `std_demo_${10200 + no}`,
+          id: `std_m2_${no}_${Date.now()}`,
           no: no,
           room: 'ม.2/1',
           name: name,
@@ -2228,10 +2379,9 @@
     // Student Profile Management
     function openStudentModal() {
       document.getElementById('studentModal').classList.remove('hidden');
-      document.getElementById('inputStudentId').value = activeStudent.id;
-      document.getElementById('inputStudentNo').value = activeStudent.no;
-      document.getElementById('inputStudentName').value = activeStudent.name;
-      document.getElementById('inputStudentClass').value = activeStudent.room;
+      document.getElementById('inputStudentNo').value = activeStudent.no || '';
+      document.getElementById('inputStudentName').value = activeStudent.name || '';
+      document.getElementById('inputStudentClass').value = activeStudent.room || 'ม.2/1';
       lucide.createIcons();
     }
 
@@ -2240,22 +2390,22 @@
     }
 
     function saveStudentProfile() {
-      const id = document.getElementById('inputStudentId').value.trim();
       const no = document.getElementById('inputStudentNo').value.trim();
       const name = document.getElementById('inputStudentName').value.trim();
       const room = document.getElementById('inputStudentClass').value;
 
-      if (!id || !no || !name) {
-        showToast('กรุณากรอกเลขประจำตัว เลขที่ และชื่อให้ครบถ้วน', 'warning');
+      if (!no || !name) {
+        showToast('กรุณากรอกเลขที่ และชื่อ-นามสกุลให้ครบถ้วน', 'warning');
         return;
       }
 
-      activeStudent.id = id;
+      const cleanRoom = room.replace(/[^a-zA-Z0-9]/g, '');
+      activeStudent.id = activeStudent.id || `std_${cleanRoom}_${no}`;
       activeStudent.no = parseInt(no);
       activeStudent.name = name;
       activeStudent.room = room;
 
-      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id);
+      const idx = window.allStudents.findIndex(s => s.id === activeStudent.id || (s.room === room && s.no === parseInt(no)));
       if (idx >= 0) {
         window.allStudents[idx] = { ...window.allStudents[idx], ...activeStudent };
       } else {
@@ -2269,9 +2419,19 @@
         window.syncStudentToFirestore(activeStudent);
       }
 
-      document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room})`;
+      document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room} เลขที่ ${activeStudent.no})`;
+
+      const preNameEl = document.getElementById('pretestStudentName');
+      const preNoEl = document.getElementById('pretestStudentNo');
+      const preClassEl = document.getElementById('pretestStudentClass');
+      if (preNameEl) preNameEl.value = activeStudent.name;
+      if (preNoEl) preNoEl.value = activeStudent.no;
+      if (preClassEl) preClassEl.value = activeStudent.room;
+
       closeStudentModal();
       showToast(`บันทึกข้อมูล ${name} เรียบร้อย`, 'success');
+      renderTeacherTable();
+      updateDashboardKPIs();
     }
 
     // Update Summary Step View
@@ -2319,13 +2479,13 @@
       updateLMSProgress();
 
       if (activeStudent && activeStudent.name) {
-        document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room})`;
+        document.getElementById('navUserName').innerText = `${activeStudent.name} (${activeStudent.room} เลขที่ ${activeStudent.no})`;
         const preNameEl = document.getElementById('pretestStudentName');
-        const preIdEl = document.getElementById('pretestStudentId');
         const preNoEl = document.getElementById('pretestStudentNo');
+        const preClassEl = document.getElementById('pretestStudentClass');
         if (preNameEl) preNameEl.value = activeStudent.name;
-        if (preIdEl) preIdEl.value = activeStudent.id;
         if (preNoEl) preNoEl.value = activeStudent.no;
+        if (preClassEl) preClassEl.value = activeStudent.room;
       }
     });
   </script>
