@@ -259,58 +259,71 @@
               </div>
             </div>
 
+            <!-- 16:9 Slide Presentation Viewer Container -->
+            <div id="slideViewerMod1" class="space-y-2"></div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-600 leading-relaxed">
               <div class="space-y-3">
                 <h4 class="font-bold text-slate-900 text-sm font-heading flex items-center gap-2">
-                  <i data-lucide="alert-circle" class="w-4 h-4 text-rose-600"></i> ข้อมูลส่วนบุคคลที่ไม่ควรโพสต์สาธารณะ
+                  <i data-lucide="file-lock" class="w-4 h-4 text-blue-600"></i> ข้อมูลส่วนบุคคล (PDPA เบื้องต้น)
                 </h4>
-                <p>ตาม พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA) ข้อมูลที่สามารถระบุตัวตนเราได้ ห้ามโพสต์ลงโซเชียลสาธารณะเด็ดขาด ได้แก่:</p>
-                <ul class="list-disc list-inside space-y-1 bg-rose-50/70 p-3.5 rounded-2xl border border-rose-200 text-rose-950 font-medium">
-                  <li>เลขประจำตัวประชาชน 13 หลัก</li>
-                  <li>ภาพบัตรนักเรียนที่มีชื่อ-เลขประจำตัวชัดเจน</li>
-                  <li>เบอร์โทรศัพท์ส่วนตัว และพิกัดตำแหน่งบ้านพักอาศัย</li>
+                <p>ข้อมูลส่วนบุคคลคือข้อมูลที่ระบุตัวตนเราได้ สิ่งที่<strong>ห้ามโพสต์สาธารณะ</strong>เด็ดขาด:</p>
+                <ul class="list-disc list-inside space-y-1 bg-rose-50/70 p-3.5 rounded-2xl border border-rose-200 text-rose-950 text-xs">
+                  <li><strong>เลขประจำตัวประชาชน 13 หลัก:</strong> เสี่ยงโดนนำไปเปิดบัญชีม้าหรือกู้เงิน</li>
+                  <li><strong>ภาพบัตรนักเรียน:</strong> เห็นชื่อ-สกุล เลขประจำตัว และโรงเรียนชัดเจน</li>
+                  <li><strong>พิกัดตำแหน่งบ้าน & เบอร์โทรศัพท์:</strong> เสี่ยงต่อการถูกสะกดรอยตาม</li>
                 </ul>
               </div>
 
               <div class="space-y-3">
                 <h4 class="font-bold text-slate-900 text-sm font-heading flex items-center gap-2">
-                  <i data-lucide="key" class="w-4 h-4 text-emerald-600"></i> สูตรการตั้งรหัสผ่านปลอดภัย & 2FA
+                  <i data-lucide="key" class="w-4 h-4 text-emerald-600"></i> สูตรลับรหัสผ่านแกร่ง & 2FA
                 </h4>
-                <p>รหัสผ่านที่ปลอดภัยควรมีความยาว 8-12 ตัวอักษรขึ้นไป ผสมตัวพิมพ์ใหญ่ พิมพ์เล็ก ตัวเลข และอักขระพิเศษ เช่น <code class="bg-emerald-100 text-emerald-950 font-mono px-2 py-0.5 rounded font-bold">T!ger29#Moon</code></p>
-                <div class="p-3.5 bg-indigo-50 rounded-2xl border border-indigo-200 text-indigo-950 text-xs">
-                  <strong>การยืนยันตัวตน 2 ขั้นตอน (2FA):</strong> แม้รหัสผ่านหลุด แต่มิจฉาชีพไม่มีโทรศัพท์เราสำหรับรับ OTP ก็ไม่สามารถล็อกอินเข้าบัญชีได้
+                <p>รหัสผ่านควรยาว 8-12 ตัวขึ้นไป ผสมพิมพ์ใหญ่ เล็ก ตัวเลข และอักขระพิเศษ</p>
+                <div class="p-3.5 bg-blue-50 rounded-2xl border border-blue-200 text-blue-950 text-xs leading-relaxed">
+                  <strong>เปิดใช้งาน 2FA เสมอ:</strong> แม้แฮกเกอร์รู้รหัสผ่าน แต่หากไม่มี OTP บนมือถือเรา ก็ไม่สามารถล็อกอินเข้าบัญชีได้
                 </div>
               </div>
             </div>
 
+            <!-- Mini Game 1: Password Cracker Simulator -->
             <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 border border-indigo-500/30 space-y-4 shadow-xl">
               <div class="flex items-center justify-between border-b border-white/10 pb-3">
                 <div class="flex items-center gap-2">
                   <div class="p-2 rounded-xl bg-indigo-500/20 text-indigo-400">
-                    <i data-lucide="gamepad-2" class="w-5 h-5"></i>
+                    <i data-lucide="terminal" class="w-5 h-5"></i>
                   </div>
                   <div>
                     <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">มินิเกมฐานที่ 1</span>
-                    <h4 class="font-bold text-sm text-white font-heading">Password Cracker Simulator (ทดสอบแฮกรหัสผ่าน)</h4>
+                    <h4 class="font-bold text-sm text-white font-heading">เครื่องจำลองการเจาะรหัสผ่าน (Password Cracker Simulator)</h4>
                   </div>
                 </div>
-                <span class="text-[10px] bg-indigo-500/30 text-indigo-200 px-2.5 py-1 rounded-full font-bold">พิมพ์ทดสอบสด</span>
+                <span class="text-[11px] bg-indigo-500/30 text-indigo-200 px-3 py-1 rounded-full font-bold">ทดสอบสด</span>
               </div>
 
               <div class="space-y-3">
+                <p class="text-xs text-indigo-200">พิมพ์รหัสผ่านจำลองที่คุณคิด เพื่อทดสอบว่าคอมพิวเตอร์แฮกเกอร์จะใช้เวลาแฮกกี่วินาที:</p>
                 <div class="relative">
-                  <input type="text" id="gamePwInput" oninput="runPasswordGame()" placeholder="ลองพิมพ์รหัสผ่าน เช่น 123456 หรือ K@oMao#89!Safe" class="w-full px-4 py-3 bg-slate-800/90 border border-slate-600 rounded-2xl text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-400 font-mono pr-28" />
+                  <input type="text" id="gamePwInput" oninput="runPasswordGame()" placeholder="ลองพิมพ์รหัสผ่าน เช่น 123456 หรือ K@oMao#89!" class="w-full px-4 py-3 rounded-2xl bg-slate-800/90 border border-indigo-500/40 text-white text-xs font-mono focus:outline-none focus:border-indigo-400 placeholder-slate-500" />
                   <span id="gamePwTimeText" class="absolute right-3 top-2.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-600 text-white">0 วินาที</span>
                 </div>
 
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
-                  <div id="pwRuleLen" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> ยาว 8 ตัวขึ้นไป</div>
-                  <div id="pwRuleUpper" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> มีตัวพิมพ์ใหญ่ (A-Z)</div>
-                  <div id="pwRuleNum" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> มีตัวเลข (0-9)</div>
-                  <div id="pwRuleSpecial" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition"><span class="w-2 h-2 rounded-full bg-slate-600"></span> มีอักขระพิเศษ (!@#)</div>
+                  <div id="pwRuleLen" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition">
+                    <span class="w-2 h-2 rounded-full bg-slate-600"></span> ยาว 8 ตัวขึ้นไป
+                  </div>
+                  <div id="pwRuleUpper" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition">
+                    <span class="w-2 h-2 rounded-full bg-slate-600"></span> มีตัวพิมพ์ใหญ่
+                  </div>
+                  <div id="pwRuleNum" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition">
+                    <span class="w-2 h-2 rounded-full bg-slate-600"></span> มีตัวเลข 0-9
+                  </div>
+                  <div id="pwRuleSpecial" class="p-2 rounded-xl bg-slate-800 text-slate-400 flex items-center gap-1.5 transition">
+                    <span class="w-2 h-2 rounded-full bg-slate-600"></span> มีสัญลักษณ์พิเศษ
+                  </div>
                 </div>
 
-                <div id="gamePwVerdict" class="text-xs text-center py-2 rounded-xl font-bold bg-slate-800 text-slate-300">
+                <div id="gamePwVerdict" class="text-xs text-center py-2.5 rounded-xl font-bold bg-slate-800 text-slate-300">
                   พิมพ์รหัสผ่านเพื่อเริ่มทดสอบความแข็งแกร่งสู้แฮกเกอร์
                 </div>
               </div>
@@ -342,21 +355,18 @@
               </div>
             </div>
 
+            <!-- 16:9 Slide Presentation Viewer Container -->
+            <div id="slideViewerMod2" class="space-y-2"></div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-600 leading-relaxed">
               <div class="space-y-3">
                 <h4 class="font-bold text-slate-900 text-sm font-heading flex items-center gap-2">
-                  <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i> 3 สัญญาณจับโป๊ะ Phishing (Red Flags)
+                  <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-600"></i> 3 สัญญาณเตือนภัย Phishing
                 </h4>
-                <div class="space-y-2 text-xs">
-                  <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-950">
-                    <strong>1. เร่งเร้ากดดัน:</strong> "คลิกภายใน 5 นาที", "บัญชีจะถูกระงับทันที" เพื่อให้เหยื่อตกใจ
-                  </div>
-                  <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-950">
-                    <strong>2. ลิงก์สะกดเพี้ยน:</strong> เช่น <code>paypaI.com</code> (ตัวไอแทนแอล) หรือเว็บย่อแปลกๆ
-                  </div>
-                  <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-950">
-                    <strong>3. รางวัลใหญ่ฟรี:</strong> "แจกเงิน 5,000 บาทฟรี", "รับมือถือฟรี" ทั้งที่ไม่เคยร่วมกิจกรรม
-                  </div>
+                <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 space-y-1.5 text-xs">
+                  <div><strong>1. เร่งเร้าผิดปกติ:</strong> บังคับให้คลิกหรือโอนเงินใน 5-10 นาที เพื่อให้ตกใจจนขาดสติ</div>
+                  <div><strong>2. ลิงก์สะกดเพี้ยน:</strong> เช่น <code>faceb00k.xyz</code> หรือเว็บแปลกปลอม</div>
+                  <div><strong>3. ข้อเสนอดีเกินจริง:</strong> แจกเงินฟรี ได้รับรางวัลใหญ่เกินจริง</div>
                 </div>
               </div>
 
@@ -415,6 +425,9 @@
                 <h3 class="text-lg font-bold text-slate-900 font-heading">มัลแวร์ สิทธิ์แอป และ Wi-Fi สาธารณะ</h3>
               </div>
             </div>
+
+            <!-- 16:9 Slide Presentation Viewer Container -->
+            <div id="slideViewerMod3" class="space-y-2"></div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-slate-600 leading-relaxed">
               <div class="space-y-2">
@@ -479,6 +492,9 @@
                 <h3 class="text-lg font-bold text-slate-900 font-heading">แผนรับมือเมื่อเกิดเหตุทางไซเบอร์</h3>
               </div>
             </div>
+
+            <!-- 16:9 Slide Presentation Viewer Container -->
+            <div id="slideViewerMod4" class="space-y-2"></div>
 
             <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
               <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 space-y-1">
@@ -817,6 +833,79 @@
         </div>
       </div>
 
+      <!-- ================= TEACHER SLIDE DECK MANAGER ================= -->
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-2xl bg-indigo-50 text-indigo-600">
+              <i data-lucide="presentation" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm sm:text-base font-heading">ระบบจัดการสไลด์การสอน 16:9 ประจำบทเรียน</h4>
+              <p class="text-xs text-slate-500">เพิ่มหรือปรับเปลี่ยนภาพสไลด์การสอน (Canva/PPT) ในแต่ละแกน ซิงก์ขึ้นจอเด็กแบบเรียลไทม์</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-500 font-medium">เลือกแกนบทเรียน:</span>
+            <select onchange="changeAdminSlideMod(this.value)" class="px-3 py-1.5 rounded-xl border border-slate-300 text-xs font-bold text-indigo-700 bg-indigo-50 focus:outline-none focus:border-indigo-500">
+              <option value="1">แกนที่ 1: ข้อมูลส่วนบุคคล & รหัสผ่าน</option>
+              <option value="2">แกนที่ 2: Phishing & กลโกง</option>
+              <option value="3">แกนที่ 3: มัลแวร์ สิทธิ์แอป & Wi-Fi</option>
+              <option value="4">แกนที่ 4: แผนรับมือเมื่อเกิดเหตุ</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Add slide form -->
+          <form id="adminAddSlideForm" onsubmit="handleAdminAddSlide(event)" class="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200 space-y-3 text-xs">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="plus-circle" class="w-4 h-4 text-indigo-600"></i> เพิ่มสไลด์ใหม่ (อัตราส่วน 16:9)
+              </span>
+              <button type="button" onclick="resetCurrentModuleSlides()" class="text-[11px] text-slate-500 hover:text-slate-800 underline">
+                คืนค่าสไลด์เดิม
+              </button>
+            </div>
+
+            <div>
+              <label class="block font-medium text-slate-600 mb-1">หัวข้อสไลด์ *</label>
+              <input type="text" id="adminSlideTitle" required placeholder="เช่น 3 กฎเหล็กรหัสผ่านปลอดภัย" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-indigo-500" />
+            </div>
+
+            <div>
+              <label class="block font-medium text-slate-600 mb-1">ลิงก์รูปภาพสไลด์ 16:9 (URL) *</label>
+              <input type="url" id="adminSlideUrl" required placeholder="https://... ลิงก์รูปภาพ 16:9 จาก Canva หรือเว็บฝากรูป" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-indigo-500" />
+            </div>
+
+            <div>
+              <label class="block font-medium text-slate-600 mb-1">คำบรรยาย / สรุปสาระสำคัญใต้สไลด์</label>
+              <textarea id="adminSlideCaption" rows="2" placeholder="อธิบายประเด็นสำคัญของสไลด์นี้..." class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white focus:outline-none focus:border-indigo-500"></textarea>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl transition shadow-sm flex items-center justify-center gap-1.5">
+              <i data-lucide="upload" class="w-4 h-4"></i> เพิ่มสไลด์เข้าสู่บทเรียน
+            </button>
+          </form>
+
+          <!-- Slides preview in selected module -->
+          <div class="lg:col-span-2 space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="layers" class="w-4 h-4 text-indigo-600"></i> สไลด์ในแกนนี้ที่มีอยู่ในระบบ
+              </span>
+              <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full font-bold">
+                มีทั้งหมด <span id="adminSlideCountText">0</span> สไลด์
+              </span>
+            </div>
+
+            <div id="adminSlidesPreviewContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[380px] overflow-y-auto p-1">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm space-y-4">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
@@ -1019,6 +1108,25 @@
     </div>
   </div>
 
+  <!-- ================= SLIDE ZOOM FULLSCREEN MODAL ================= -->
+  <div id="slideZoomModal" class="hidden fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col p-3 sm:p-6 items-center justify-center">
+    <div class="w-full max-w-5xl flex items-center justify-between text-white pb-3">
+      <div class="flex items-center gap-2">
+        <span id="zoomSlideNumberTag" class="text-[11px] font-bold bg-blue-600 px-2.5 py-0.5 rounded-full"></span>
+        <h4 id="zoomSlideTitleTag" class="text-sm sm:text-base font-bold truncate max-w-md sm:max-w-2xl"></h4>
+      </div>
+      <button onclick="closeSlideZoom()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition flex items-center gap-1 text-xs font-semibold">
+        <i data-lucide="x" class="w-5 h-5"></i> <span class="hidden sm:inline">ปิด</span>
+      </button>
+    </div>
+    <div class="w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl flex items-center justify-center">
+      <img id="zoomSlideImg" src="" alt="Zoom Slide" class="w-full h-full object-contain" />
+    </div>
+    <div class="w-full max-w-5xl pt-3 text-center">
+      <p id="zoomSlideCaptionTag" class="text-xs text-slate-300"></p>
+    </div>
+  </div>
+
   <!-- ================= CUSTOM MESSAGE MODAL ================= -->
   <div id="customModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white max-w-sm w-full rounded-3xl p-6 text-center space-y-4 shadow-2xl border border-slate-100">
@@ -1151,10 +1259,86 @@
       if (typeof window.renderCanvaGallery === 'function') window.renderCanvaGallery();
       if (typeof window.renderAdminCanvaTable === 'function') window.renderAdminCanvaTable();
     });
+
+    // Realtime listener for Module Slides
+    window.syncSlidesToFirestore = async function(slidesData) {
+      try {
+        await setDoc(doc(db, "settings", "module_slides"), { slides: JSON.stringify(slidesData), updatedAt: new Date().toISOString() }, { merge: true });
+        console.log("Synced slides to Firestore");
+      } catch (err) {
+        console.error("Firestore slides sync error:", err);
+      }
+    };
+
+    onSnapshot(doc(db, "settings", "module_slides"), (docSnap) => {
+      if (docSnap.exists() && docSnap.data()?.slides) {
+        try {
+          const remoteSlides = JSON.parse(docSnap.data().slides);
+          window.moduleSlides = remoteSlides;
+          localStorage.setItem('local_module_slides', JSON.stringify(remoteSlides));
+          if (typeof window.renderAllSlideViewers === 'function') window.renderAllSlideViewers();
+          if (typeof window.renderAdminSlideManager === 'function') window.renderAdminSlideManager();
+        } catch (e) {
+          console.error("Error parsing remote slides", e);
+        }
+      }
+    });
   </script>
 
   <!-- ================= APPLICATION CLIENT LOGIC ================= -->
   <script>
+    // Default 16:9 Educational Slides for all 4 modules
+    const DEFAULT_SLIDES = {
+      1: [
+        {
+          title: "PDPA และข้อมูลส่วนบุคคลที่ไม่ควรโพสต์สาธารณะ",
+          url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=1280&auto=format&fit=crop&q=80",
+          caption: "3 ข้อมูลสำคัญห้ามเผยแพร่: เลขประจำตัวประชาชน 13 หลัก, ข้อมูลบัตรนักเรียน, และพิกัดตำแหน่งบ้าน"
+        },
+        {
+          title: "สูตรลับการตั้งรหัสผ่านที่แข็งแกร่ง (Strong Passwords) & 2FA",
+          url: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=1280&auto=format&fit=crop&q=80",
+          caption: "ความยาว 8-12 ตัวอักษรขึ้นไป ผสมพิมพ์ใหญ่ พิมพ์เล็ก ตัวเลข และอักขระพิเศษ พร้อมเปิดระบบ 2FA สองขั้นตอน"
+        }
+      ],
+      2: [
+        {
+          title: "3 สัญญาณเตือนภัย Phishing จับโป๊ะกลโกงออนไลน์",
+          url: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1280&auto=format&fit=crop&q=80",
+          caption: "1. ข้อความเร่งเร้ากดดันเวลา  2. โดเมนและลิงก์สะกดเพี้ยน  3. รางวัลใหญ่ฟรีที่เกินจริง"
+        },
+        {
+          title: "เพื่อนทักแชตมายืมเงินด่วน รับมืออย่างไรไม่ให้ตกเป็นเหยื่อ?",
+          url: "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=1280&auto=format&fit=crop&q=80",
+          caption: "ห้ามโอนเงินทันที! ให้โทรสายตรงหรือเปิดวิดีโอคอลเพื่อยืนยันตัวตนจริงของเพื่อนก่อนเสมอ"
+        }
+      ],
+      3: [
+        {
+          title: "มัลแวร์ 3 ชนิดตัวร้าย: Ransomware, Trojan และ Spyware",
+          url: "https://images.unsplash.com/photo-1618060932014-4deda4932554?w=1280&auto=format&fit=crop&q=80",
+          caption: "ระวังการดาวน์โหลดโปรแกรมโกงเกม หรือไฟล์จากเว็บไซต์ที่ไม่น่าเชื่อถือเพราะอาจติดม้าโทรจัน"
+        },
+        {
+          title: "ความเสี่ยงจาก Wi-Fi สาธารณะ & ด่านตรวจสิทธิ์แอปในมือถือ",
+          url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=1280&auto=format&fit=crop&q=80",
+          caption: "หลีกเลี่ยงการทำธุรกรรมการเงินบน Wi-Fi ฟรี และปฏิเสธสิทธิ์แอปที่ขอสิทธิ์เกินความจำเป็น"
+        }
+      ],
+      4: [
+        {
+          title: "แผนรับมือ 4 ขั้นตอนเมื่อบัญชีถูกแฮกหรือเกิดเหตุทางไซเบอร์",
+          url: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=1280&auto=format&fit=crop&q=80",
+          caption: "1. เปลี่ยนรหัสผ่านทันที  2. เปิดใช้งานระบบ 2FA  3. แคปหลักฐานหน้าจอ  4. แจ้งผู้ใหญ่หรือโทร 1441"
+        }
+      ]
+    };
+
+    // State for module slides and current active slide index in viewer
+    window.moduleSlides = JSON.parse(localStorage.getItem('local_module_slides')) || DEFAULT_SLIDES;
+    let currentSlideIdx = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    let adminSelectedMod = 1;
+
     // 20 Exam Questions
     const EXAM_QUESTIONS = [
       { id: 1, q: "1. ข้อใดเป็นข้อมูลส่วนบุคคลที่ไม่ควรเผยแพร่ต่อสาธารณะมากที่สุด", opts: ["วิชาที่ชอบ", "สีที่ชอบ", "เลขประจำตัวประชาชน", "งานอดิเรก"], ans: 2 },
@@ -1373,6 +1557,8 @@
       renderPretestQuestions();
       renderPosttestQuestions();
       renderAllFormativeQuizzes();
+      renderAllSlideViewers();
+      renderAdminSlideManager();
       initMiniGames();
       renderCanvaGallery();
       renderAdminCanvaTable();
@@ -1380,6 +1566,219 @@
       renderAdminTable();
       refreshKPIs();
     });
+
+    /* ========================================================================= */
+    /* 16:9 SLIDE PRESENTATION VIEWER LOGIC                                      */
+    /* ========================================================================= */
+    window.renderAllSlideViewers = function() {
+      [1, 2, 3, 4].forEach(modId => renderSlideViewer(modId));
+    };
+
+    window.renderSlideViewer = function(modId) {
+      const container = document.getElementById(`slideViewerMod${modId}`);
+      if (!container) return;
+
+      const slides = (window.moduleSlides && window.moduleSlides[modId]) ? window.moduleSlides[modId] : (DEFAULT_SLIDES[modId] || []);
+      if (!slides || slides.length === 0) {
+        container.innerHTML = `
+          <div class="w-full aspect-video rounded-2xl bg-slate-100 border border-slate-200 flex flex-col items-center justify-center text-slate-400 text-xs">
+            <i data-lucide="presentation" class="w-8 h-8 mb-1"></i>
+            <span>ยังไม่มีสไลด์การสอนในบทเรียนนี้</span>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      const total = slides.length;
+      if (currentSlideIdx[modId] >= total) currentSlideIdx[modId] = 0;
+      if (currentSlideIdx[modId] < 0) currentSlideIdx[modId] = total - 1;
+      const cur = slides[currentSlideIdx[modId]];
+
+      container.innerHTML = `
+        <div class="relative bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-xl group">
+          <!-- Top Slide Header -->
+          <div class="absolute top-0 inset-x-0 z-20 bg-gradient-to-b from-slate-950/80 via-slate-950/40 to-transparent p-3 sm:p-4 flex items-center justify-between text-white">
+            <div class="flex items-center gap-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider bg-blue-600/90 text-white px-2.5 py-0.5 rounded-full shadow-xs">
+                สไลด์การสอน 16:9
+              </span>
+              <span class="text-xs font-semibold text-slate-200 truncate max-w-[200px] sm:max-w-md">${cur.title || ''}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="text-xs font-bold bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full">
+                ${currentSlideIdx[modId] + 1} / ${total}
+              </span>
+              <button onclick="openSlideZoom(${modId}, ${currentSlideIdx[modId]})" class="p-1.5 rounded-xl bg-white/20 hover:bg-white/30 transition text-white" title="ขยายดูภาพสไลด์เต็มจอ">
+                <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 16:9 Aspect Video Container -->
+          <div class="w-full aspect-video bg-black flex items-center justify-center relative cursor-pointer" onclick="openSlideZoom(${modId}, ${currentSlideIdx[modId]})">
+            <img 
+              src="${cur.url}" 
+              alt="${cur.title}" 
+              class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.01]"
+              onerror="this.onerror=null; this.src='https://placehold.co/1280x720/1e293b/94a3b8?text=16:9+Teaching+Slide';"
+            />
+          </div>
+
+          <!-- Slide Caption & Navigation Footer -->
+          <div class="p-3.5 sm:p-4 bg-slate-950 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
+            <p class="text-xs text-slate-300 leading-relaxed max-w-2xl">
+              ${cur.caption ? `💡 <strong>สรุปสาระสำคัญ:</strong> ${cur.caption}` : cur.title}
+            </p>
+
+            <div class="flex items-center gap-2 self-end sm:self-auto shrink-0">
+              <button onclick="prevSlide(${modId})" ${total <= 1 ? 'disabled' : ''} class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-30 disabled:pointer-events-none text-xs font-semibold text-white transition flex items-center gap-1">
+                <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i> ย้อนกลับ
+              </button>
+              <button onclick="nextSlide(${modId})" ${total <= 1 ? 'disabled' : ''} class="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-30 disabled:pointer-events-none text-xs font-bold text-white transition flex items-center gap-1 shadow-sm">
+                ถัดไป <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      lucide.createIcons();
+    };
+
+    window.nextSlide = function(modId) {
+      const slides = (window.moduleSlides && window.moduleSlides[modId]) ? window.moduleSlides[modId] : [];
+      if (!slides || slides.length === 0) return;
+      currentSlideIdx[modId] = (currentSlideIdx[modId] + 1) % slides.length;
+      renderSlideViewer(modId);
+    };
+
+    window.prevSlide = function(modId) {
+      const slides = (window.moduleSlides && window.moduleSlides[modId]) ? window.moduleSlides[modId] : [];
+      if (!slides || slides.length === 0) return;
+      currentSlideIdx[modId] = (currentSlideIdx[modId] - 1 + slides.length) % slides.length;
+      renderSlideViewer(modId);
+    };
+
+    window.openSlideZoom = function(modId, idx) {
+      const slides = (window.moduleSlides && window.moduleSlides[modId]) ? window.moduleSlides[modId] : [];
+      if (!slides || !slides[idx]) return;
+      const s = slides[idx];
+
+      document.getElementById('zoomSlideNumberTag').innerText = `สไลด์ ${idx + 1}/${slides.length}`;
+      document.getElementById('zoomSlideTitleTag').innerText = s.title || `แกนที่ ${modId}`;
+      document.getElementById('zoomSlideImg').src = s.url;
+      document.getElementById('zoomSlideCaptionTag').innerText = s.caption || '';
+      document.getElementById('slideZoomModal').classList.remove('hidden');
+      lucide.createIcons();
+    };
+
+    window.closeSlideZoom = function() {
+      document.getElementById('slideZoomModal').classList.add('hidden');
+    };
+
+    /* ========================================================================= */
+    /* TEACHER ADMIN SLIDE MANAGER LOGIC                                         */
+    /* ========================================================================= */
+    window.changeAdminSlideMod = function(modVal) {
+      adminSelectedMod = parseInt(modVal) || 1;
+      renderAdminSlideManager();
+    };
+
+    window.renderAdminSlideManager = function() {
+      const container = document.getElementById('adminSlidesPreviewContainer');
+      const countEl = document.getElementById('adminSlideCountText');
+      if (!container) return;
+
+      const modId = adminSelectedMod;
+      const slides = (window.moduleSlides && window.moduleSlides[modId]) ? window.moduleSlides[modId] : [];
+      if (countEl) countEl.innerText = slides.length;
+
+      if (slides.length === 0) {
+        container.innerHTML = '<div class="p-6 text-center text-slate-400 col-span-2 text-xs bg-slate-50 rounded-2xl border border-dashed border-slate-200">ยังไม่มีสไลด์การสอนในแกนนี้ คุณครูสามารถเพิ่มสไลด์ใหม่ทางซ้ายมือได้เลยครับ</div>';
+        return;
+      }
+
+      container.innerHTML = slides.map((s, idx) => `
+        <div class="bg-white rounded-2xl p-3 border border-slate-200 shadow-xs space-y-2 relative group text-xs">
+          <div class="w-full aspect-video rounded-xl bg-slate-900 overflow-hidden relative border border-slate-100">
+            <img src="${s.url}" alt="${s.title}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/1280x720/1e293b/94a3b8?text=16:9+Slide';" />
+            <span class="absolute top-1.5 left-1.5 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+              สไลด์ #${idx + 1}
+            </span>
+          </div>
+          <div>
+            <h6 class="font-bold text-slate-900 truncate">${s.title}</h6>
+            <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5">${s.caption || '-'}</p>
+          </div>
+          <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+            <a href="${s.url}" target="_blank" class="text-indigo-600 hover:underline text-[11px] font-semibold inline-flex items-center gap-1">
+              <i data-lucide="external-link" class="w-3 h-3"></i> ดูภาพต้นฉบับ
+            </a>
+            <button onclick="deleteSlideFromAdmin(${modId}, ${idx})" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[11px] font-bold transition flex items-center gap-1">
+              <i data-lucide="trash-2" class="w-3 h-3"></i> ลบสไลด์
+            </button>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    };
+
+    window.handleAdminAddSlide = async function(e) {
+      e.preventDefault();
+      const modId = adminSelectedMod;
+      const title = document.getElementById('adminSlideTitle').value.trim();
+      const url = document.getElementById('adminSlideUrl').value.trim();
+      const caption = document.getElementById('adminSlideCaption').value.trim();
+
+      if (!title || !url) {
+        showCustomModal('กรอกข้อมูลไม่ครบ', 'กรุณาระบุหัวข้อสไลด์และลิงก์รูปภาพ 16:9', 'alert-circle', 'rose');
+        return;
+      }
+
+      if (!window.moduleSlides) window.moduleSlides = { ...DEFAULT_SLIDES };
+      if (!window.moduleSlides[modId]) window.moduleSlides[modId] = [];
+
+      window.moduleSlides[modId].push({ title, url, caption });
+      localStorage.setItem('local_module_slides', JSON.stringify(window.moduleSlides));
+
+      if (window.syncSlidesToFirestore) {
+        await window.syncSlidesToFirestore(window.moduleSlides);
+      }
+
+      document.getElementById('adminAddSlideForm').reset();
+      renderSlideViewer(modId);
+      renderAdminSlideManager();
+      showCustomModal('เพิ่มสไลด์สำเร็จ', `เพิ่มสไลด์ 16:9 เข้าสู่แกนที่ ${modId} และซิงก์ขึ้นระบบเรียบร้อยแล้ว`, 'check-circle', 'emerald');
+    };
+
+    window.deleteSlideFromAdmin = async function(modId, idx) {
+      if (!window.moduleSlides || !window.moduleSlides[modId]) return;
+      window.moduleSlides[modId].splice(idx, 1);
+      localStorage.setItem('local_module_slides', JSON.stringify(window.moduleSlides));
+
+      if (window.syncSlidesToFirestore) {
+        await window.syncSlidesToFirestore(window.moduleSlides);
+      }
+
+      renderSlideViewer(modId);
+      renderAdminSlideManager();
+      showCustomModal('ลบสไลด์เรียบร้อย', 'ลบสไลด์ออกจากบทเรียนสำเร็จ', 'trash-2', 'emerald');
+    };
+
+    window.resetCurrentModuleSlides = async function() {
+      const modId = adminSelectedMod;
+      if (!window.moduleSlides) window.moduleSlides = { ...DEFAULT_SLIDES };
+      window.moduleSlides[modId] = [...(DEFAULT_SLIDES[modId] || [])];
+      localStorage.setItem('local_module_slides', JSON.stringify(window.moduleSlides));
+
+      if (window.syncSlidesToFirestore) {
+        await window.syncSlidesToFirestore(window.moduleSlides);
+      }
+
+      renderSlideViewer(modId);
+      renderAdminSlideManager();
+      showCustomModal('คืนค่าสไลด์เดิมสำเร็จ', `รีเซ็ตสไลด์แกนที่ ${modId} กลับเป็นสไลด์มาตรฐานเรียบร้อยครับ`, 'rotate-ccw', 'blue');
+    };
 
     // Navigation Stepper
     window.navigateStep = function(stepId) {
@@ -1434,6 +1833,7 @@
       const activeTab = document.getElementById(`modTab${modNum}`);
       activeTab.classList.add('text-blue-600', 'border-b-2', 'border-blue-600', 'font-bold');
       activeTab.classList.remove('text-slate-500');
+      if (typeof renderSlideViewer === 'function') renderSlideViewer(modNum);
       lucide.createIcons();
     };
 
@@ -1460,6 +1860,7 @@
           document.getElementById('lockIconModules').setAttribute('data-lucide', 'unlock');
           document.getElementById('lockIconCanva').setAttribute('data-lucide', 'unlock');
           document.getElementById('lockIconPosttest').setAttribute('data-lucide', 'unlock');
+          if (typeof renderAllSlideViewers === 'function') renderAllSlideViewers();
         }
 
         // Check Post-test Lock
